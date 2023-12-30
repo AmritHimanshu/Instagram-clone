@@ -19,7 +19,7 @@ function Profile() {
     }
 
     return (
-        <div>
+        <div className='h-[93vh] overflow-x-scroll'>
             {/* Profile header */}
             <div className='p-3 flex items-center justify-between'>
                 <div className='text-[19px] font-bold flex items-center'>himanshu_the_heart_hacker <KeyboardArrowDownIcon /></div>
@@ -87,10 +87,10 @@ function Profile() {
                     <div className={`py-3 ${postStatus === 'posts' && 'border-b-2'}`} onClick={() => setPostStatus('posts')}><GridOnIcon style={{ fontSize: '30px' }} /></div>
                     <div className={`py-3 ${postStatus === 'reels' && 'border-b-2'}`} onClick={() => setPostStatus('reels')}><AssignmentIndOutlinedIcon style={{ fontSize: '35px' }} /></div>
                 </div>
-                {postStatus === 'posts' && <div className='mt-1 grid grid-cols-3'>
-                    <div className='w-[137px] h-[137px]'><img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg" alt="" /></div>
-                    <div className='w-[137px] h-[137px]'><img src="https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg" alt="" /></div>
-                    <div className='w-[137px] h-[137px]'><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7RiVZS_4KTNqwEJi-YQxPg99li-eoDuafYZCcCuCW1Ayj2D3Izsx0d_xm3UfuaCinGeM&usqp=CAU" alt="" /></div>
+                {postStatus === 'posts' && <div className='mt-1 grid grid-cols-3 gap-1'>
+                    <div><img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg" alt="" /></div>
+                    <div><img src="https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg" alt="" /></div>
+                    <div><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7RiVZS_4KTNqwEJi-YQxPg99li-eoDuafYZCcCuCW1Ayj2D3Izsx0d_xm3UfuaCinGeM&usqp=CAU" alt="" /></div>
                 </div>}
             </div>
 
