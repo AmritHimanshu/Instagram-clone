@@ -70,14 +70,17 @@ function Profile() {
                     </div>
                     {storyStatus ? <div><KeyboardArrowUpIcon onClick={storyArrow} /></div> : <div><KeyboardArrowDownIcon onClick={storyArrow} /></div>}
                 </div>
-                {storyStatus && <div className='py-3 flex space-x-4'>
-                    <div className='text-center'>
-                        <div className='w-[80px] h-[80px] rounded-full border-[1px] flex items-center justify-center'><AddIcon style={{ fontSize: '40px' }} /></div>
-                        <div className='mt-1'>New</div>
+                {storyStatus && <div className='w-[374px] overflow-x-scroll'>
+                    <div className='py-3 flex space-x-3 min-w-max'>
+                        <div className='text-center'>
+                            <div className='w-[80px] h-[80px] rounded-full border-[1px] flex items-center justify-center'><AddIcon style={{ fontSize: '40px' }} /></div>
+                            <div className='mt-1'>New</div>
+                        </div>
+                        <div className='w-[80px] h-[80px] rounded-full bg-neutral-800'></div>
+                        <div className='w-[80px] h-[80px] rounded-full bg-neutral-800'></div>
+                        <div className='w-[80px] h-[80px] rounded-full bg-neutral-800'></div>
+                        <div className='w-[80px] h-[80px] rounded-full bg-neutral-800'></div>
                     </div>
-                    <div className='w-[80px] h-[80px] rounded-full bg-neutral-800'></div>
-                    <div className='w-[80px] h-[80px] rounded-full bg-neutral-800'></div>
-                    <div className='w-[80px] h-[80px] rounded-full bg-neutral-800'></div>
                 </div>}
             </div>
 
