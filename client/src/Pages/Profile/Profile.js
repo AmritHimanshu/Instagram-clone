@@ -6,6 +6,7 @@ import AddIcon from '@mui/icons-material/Add';
 import MenuIcon from '@mui/icons-material/Menu';
 import GridOnIcon from '@mui/icons-material/GridOn';
 import AssignmentIndOutlinedIcon from '@mui/icons-material/AssignmentIndOutlined';
+import CloseIcon from '@mui/icons-material/Close';
 import Footer from '../Footer/Footer';
 
 function Profile() {
@@ -14,13 +15,29 @@ function Profile() {
 
     const [postStatus, setPostStatus] = useState('posts');
 
+    const [imagePreview, setImagePreview] = useState(null);
+
     const storyArrow = () => {
         if (storyStatus) setStoryStatus(false);
         else setStoryStatus(true);
     }
 
+    const handleImage = (imageUrl) => {
+        setImagePreview(imageUrl);
+    }
+
     return (
         <>
+            {imagePreview && 
+                <div className='h-[93vh] absolute backdrop-blur-md flex flex-col items-center justify-center'>
+                    <div className='w-[100%] p-2 text-end' onClick={()=>setImagePreview(null)}>
+                        <CloseIcon />
+                    </div>
+                    <div>
+                        <img src={imagePreview} alt="" />
+                    </div>
+                </div>
+            }
             <div className='h-[93vh] overflow-x-scroll no-scrollbar'>
                 {/* Profile header */}
                 <div className='p-3 flex items-center justify-between'>
@@ -33,7 +50,7 @@ function Profile() {
                 <div className='p-5'>
                     <div className='grid grid-rows-1 grid-cols-4 place-items-center'>
                         <div className='w-[90px] h-[90px] rounded-full overflow-hidden'>
-                            <img src="https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61NRxcV4VML.jpg" alt="" className='w-full h-full rounded-full' />
+                            <img src="https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61NRxcV4VML.jpg" alt="" className='w-full h-full rounded-full' onClick={() => handleImage("https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61NRxcV4VML.jpg")} />
                         </div>
                         <div>
                             <div className='font-bold'>1</div>
@@ -100,7 +117,7 @@ function Profile() {
                 </div>
 
             </div>
-            <Footer/>
+            <Footer />
         </>
     )
 }
