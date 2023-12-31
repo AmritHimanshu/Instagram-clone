@@ -16,6 +16,8 @@ function Profile() {
     const [postStatus, setPostStatus] = useState('posts');
 
     const [imagePreview, setImagePreview] = useState(null);
+    const [profilePicOption, setProfilePicOption] = useState(false);
+    const [profileUrl, setProfileUrl] = useState(null);
 
     const storyArrow = () => {
         if (storyStatus) setStoryStatus(false);
@@ -23,6 +25,7 @@ function Profile() {
     }
 
     const handleImage = (imageUrl) => {
+        setProfilePicOption(false);
         setImagePreview(imageUrl);
     }
 
@@ -50,7 +53,7 @@ function Profile() {
                 <div className='p-5'>
                     <div className='grid grid-rows-1 grid-cols-4 place-items-center'>
                         <div className='w-[90px] h-[90px] rounded-full overflow-hidden'>
-                            <img src="https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61NRxcV4VML.jpg" alt="" className='w-full h-full rounded-full' onClick={() => handleImage("https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61NRxcV4VML.jpg")} />
+                            <img src="https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61NRxcV4VML.jpg" alt="" className='w-full h-full rounded-full' onClick={() => { setProfilePicOption(true); setProfileUrl('https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61NRxcV4VML.jpg')}} />
                         </div>
                         <div>
                             <div className='font-bold'>1</div>
@@ -115,8 +118,18 @@ function Profile() {
                         <div><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7RiVZS_4KTNqwEJi-YQxPg99li-eoDuafYZCcCuCW1Ayj2D3Izsx0d_xm3UfuaCinGeM&usqp=CAU" alt="" /></div>
                     </div>}
                 </div>
-
             </div>
+            {profilePicOption && <div className='h-[93vh] w-[100%] backdrop-blur-md absolute'>
+                <div className='h-[20vh] absolute bottom-10 w-[100%] bg-black flex flex-col items-center justify-center'>
+                    <div className='w-[100%] p-2 text-end' onClick={() => setProfilePicOption(false)}>
+                        <CloseIcon />
+                    </div>
+                    <div className='space-y-5'>
+                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold' onClick={() => handleImage(profileUrl)}>Preview Profile pic</div>
+                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold'>Change Profile pic</div>
+                    </div>
+                </div>
+            </div>}
             <Footer />
         </>
     )
