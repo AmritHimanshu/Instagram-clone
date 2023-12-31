@@ -19,7 +19,7 @@ function Profile() {
     }
 
     return (
-        <div className='h-[93vh] overflow-x-scroll'>
+        <div className='h-[93vh] overflow-x-scroll no-scrollbar'>
             {/* Profile header */}
             <div className='p-3 flex items-center justify-between'>
                 <div className='text-[19px] font-bold flex items-center'>himanshu_the_heart_hacker <KeyboardArrowDownIcon /></div>
