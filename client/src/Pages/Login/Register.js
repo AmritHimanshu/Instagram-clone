@@ -56,11 +56,11 @@ function Register() {
                     </div>
 
                     <form action="" onSubmit={submitForm} className='flex flex-col space-y-5'>
-                        <input type="email" name='email' value={user.email} className='p-4 text-[16px] text-white bg-neutral-700 bg-opacity-60 rounded-md outline-0 placeholder:text-neutral-500' placeholder='Email' onChange={handleOnChange} />
-                        <input type="text" name='username' value={user.username} className='p-4 text-[16px] text-white bg-neutral-700 bg-opacity-60 rounded-md outline-0 placeholder:text-neutral-500' placeholder='username' onChange={handleOnChange} />
-                        <input type="text" name='phone' value={user.phone} className='p-4 text-[16px] text-white bg-neutral-700 bg-opacity-60 rounded-md outline-0 placeholder:text-neutral-500' placeholder='Phone number' onChange={handleOnChange} />
-                        <input type="text" name='password' value={user.password} className='p-4 text-[16px] text-white bg-neutral-700 bg-opacity-60 rounded-md outline-0 placeholder:text-neutral-500' placeholder='Password' onChange={handleOnChange} />
-                        <input type="password" name='cpassword' value={user.cpassword} className='p-4 text-[16px] text-white bg-neutral-700 bg-opacity-60 rounded-md outline-0 placeholder:text-neutral-500' placeholder='Confirm Password' onChange={handleOnChange} />
+                        <input type="email" id="email" name='email' value={user.email} className='p-4 text-[16px] text-white bg-neutral-700 bg-opacity-60 rounded-md outline-0 placeholder:text-neutral-500' placeholder='Email' autoComplete='false' onChange={handleOnChange} />
+                        <input type="text" id="username" name='username' value={user.username} className='p-4 text-[16px] text-white bg-neutral-700 bg-opacity-60 rounded-md outline-0 placeholder:text-neutral-500' placeholder='username' autoComplete='false' onChange={handleOnChange} />
+                        <input type="text" id="phone" name='phone' value={user.phone} className='p-4 text-[16px] text-white bg-neutral-700 bg-opacity-60 rounded-md outline-0 placeholder:text-neutral-500' placeholder='Phone number' autoComplete='false' onChange={handleOnChange} />
+                        <input type="text" id="password" name='password' value={user.password} className='p-4 text-[16px] text-white bg-neutral-700 bg-opacity-60 rounded-md outline-0 placeholder:text-neutral-500' placeholder='Password' autoComplete='false' onChange={handleOnChange} />
+                        <input type="password" id="cpassword" name='cpassword' value={user.cpassword} className='p-4 text-[16px] text-white bg-neutral-700 bg-opacity-60 rounded-md outline-0 placeholder:text-neutral-500' placeholder='Confirm Password' autoComplete='false' onChange={handleOnChange} />
                         <button type='submit' className='p-4 text-[16px] font-bold bg-blue-950 opacity-80 rounded-lg'>Log in</button>
                     </form>
                 </div>

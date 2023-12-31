@@ -30,8 +30,8 @@ function Login() {
                     </div>
 
                     <form action="" onSubmit={submitForm} className='flex flex-col space-y-5'>
-                        <input type="text" name='email' value={user.email} className='p-4 text-[16px] text-white bg-neutral-700 bg-opacity-60 rounded-md outline-0 placeholder:text-neutral-500' placeholder='Phone number, email or username' onChange={handleOnChange} />
-                        <input type="text" name='password' value={user.password} className='p-4 text-[16px] text-white bg-neutral-700 bg-opacity-60 rounded-md outline-0 placeholder:text-neutral-500' placeholder='Password' onChange={handleOnChange} />
+                        <input type="text" id="email" name='email' value={user.email} className='p-4 text-[16px] text-white bg-neutral-700 bg-opacity-60 rounded-md outline-0 placeholder:text-neutral-500' placeholder='Phone number, email or username' autoComplete='false' onChange={handleOnChange} />
+                        <input type="text" id="password" name='password' value={user.password} className='p-4 text-[16px] text-white bg-neutral-700 bg-opacity-60 rounded-md outline-0 placeholder:text-neutral-500' placeholder='Password' autoComplete='false' onChange={handleOnChange} />
                         <button type='submit' className='p-4 text-[16px] font-bold bg-blue-950 opacity-80 rounded-lg'>Log in</button>
                     </form>
 
