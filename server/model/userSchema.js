@@ -26,6 +26,22 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    tokens: [
+        {
+            token: {
+                type: String,
+                required: true,
+            }
+        }
+    ],
+    posts: [
+        {
+            post: {
+                type: String,
+                required: true
+            }
+        }
+    ],
 });
 
 userSchema.pre('save', async function (next) {
@@ -35,6 +51,17 @@ userSchema.pre('save', async function (next) {
     }
     next();
 });
+
+// Saving posts by the user
+userSchema.methods.addPost = async function (post) {
+    try {
+        this.posts = this.posts.concat({ post });
+        await this.save();
+        return this.posts;
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 const User = mongoose.model('USER', userSchema);
 
