@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Logo from '../Images/InstagramTextLogo.png';
-import { Link } from 'react-router-dom';
 
 function Register() {
 
@@ -17,6 +17,14 @@ function Register() {
 
     const submitForm = (e) => {
         e.preventDefault();
+        const { email, username, phone, password, cpassword } = user;
+        if (!email || !username || !phone || !password || !cpassword) {
+            return window.alert("Fill all the fields");
+        }
+        if (password !== cpassword) {
+            return window.alert("Password and Confirm password not match");
+        }
+
     };
 
     return (
