@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Logo from '../Images/InstagramTextLogo.png'
+import { Link } from 'react-router-dom';
 
 function Login() {
 
@@ -37,7 +38,7 @@ function Login() {
                     <div className='my-4 text-[14px]'>Forgot your login details? <span className='text-white font-bold'>Get help logging in.</span></div>
                 </div>
 
-                <div className='w-[100%] pt-2 border-t-[2px] border-neutral-700'>Don't have an account? <span className='text-white font-bold'>Sign up.</span></div>
+                <div className='w-[100%] pt-2 border-t-[2px] border-neutral-700'>Don't have an account? <Link to="/register"><span className='text-white font-bold'>Sign up.</span></Link></div>
             </div>
         </>
     )
