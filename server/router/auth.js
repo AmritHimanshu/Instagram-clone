@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
+const authenticate = require('../middleware/authenticate');
 
 const User = require('../model/userSchema');
 
@@ -24,6 +26,82 @@ router.post('/register', async (req, res) => {
         if (userRegister) {
             return res.status(201).json({ message: "User registered successfully" });
         }
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+router.post('/signin', async (req, res) => {
+    const { email, password } = req.body;
+
+    if (!email || !password) { return res.status(422).json({ error: "Fill all the fields" }); }
+
+    try {
+        const emailLogin = await User.findOne({ email: email });
+        const usernameLogin = await User.findOne({ username: email });
+        const phoneLogin = await User.findOne({ phone: email });
+
+        if (emailLogin) {
+            const isMatch = await bcrypt.compare(password, emailLogin.password);
+
+            const Token = await emailLogin.generateAuthToken();
+
+            res.cookie("jwtoken", Token, {
+                expires: new Date(Date.now() + 25892000000),
+                httpOnly: true,
+                secure: true,  // Mark as secure if using HTTPS
+                sameSite: 'None',  // Set SameSite attribute for cross-origin requests
+                path: '/',
+            });
+
+            if (isMatch) {
+                res.status(200).json(emailLogin);
+            }
+            else {
+                res.status(400).json({ error: "Invalid Credentials" });
+            }
+        }
+        else if (usernameLogin) {
+            const isMatch = await bcrypt.compare(password, usernameLogin.password);
+
+            const Token = await usernameLogin.generateAuthToken();
+
+            res.cookie("jwtoken", Token, {
+                expires: new Date(Date.now() + 25892000000),
+                httpOnly: true,
+                secure: true,  // Mark as secure if using HTTPS
+                sameSite: 'None',  // Set SameSite attribute for cross-origin requests
+                path: '/',
+            });
+
+            if (isMatch) {
+                res.status(200).json(usernameLogin);
+            }
+            else {
+                res.status(400).json({ error: "Invalid Credentials" });
+            }
+        }
+        else if (phoneLogin) {
+            const isMatch = await bcrypt.compare(password, phoneLogin.password);
+
+            const Token = await phoneLogin.generateAuthToken();
+
+            res.cookie("jwtoken", Token, {
+                expires: new Date(Date.now() + 25892000000),
+                httpOnly: true,
+                secure: true,  // Mark as secure if using HTTPS
+                sameSite: 'None',  // Set SameSite attribute for cross-origin requests
+                path: '/',
+            });
+
+            if (isMatch) {
+                res.status(200).json(phoneLogin);
+            }
+            else {
+                res.status(400).json({ error: "Invalid Credentials" });
+            }
+        }
+        else res.status(400).json({ error: "Invalid Credentials" });
     } catch (error) {
         console.log(error);
     }

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Logo from '../Images/InstagramTextLogo.png'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
+
+    const navigate = useNavigate();
 
     const [user, setUser] = useState({
         email: '', password: ''
@@ -15,8 +17,30 @@ function Login() {
         setUser({ ...user, [name]: value });
     }
 
-    const submitForm = (e) => {
+    const submitForm = async (e) => {
         e.preventDefault();
+        const { email, password } = user;
+        if (!email || !password) return window.alert("Fill all the fields");
+
+        const res = await fetch('/signin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include', // Include cookies in the request
+            body: JSON.stringify({
+                email, password
+            })
+        });
+        const data = await res.json();
+
+        if (res.status === 400 || !data) window.alert(`${data.error}`);
+        else if (res.status === 422) window.alert(`${data.error}`);
+        else {
+            window.alert("Signin successfully");
+            navigate('/');
+            window.location.reload();
+        }
     };
 
     return (
