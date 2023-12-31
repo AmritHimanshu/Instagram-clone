@@ -24,7 +24,7 @@ function Profile() {
         else setStoryStatus(true);
     }
 
-    const handleImage = (imageUrl) => {
+    const viewProfileImage = (imageUrl) => {
         setProfilePicOption(false);
         setImagePreview(imageUrl);
     }
@@ -32,7 +32,7 @@ function Profile() {
     return (
         <>
             {imagePreview && 
-                <div className='h-[93vh] absolute backdrop-blur-md flex flex-col items-center justify-center'>
+                <div className='h-[93vh] absolute backdrop-blur-xl flex flex-col items-center justify-center'>
                     <div className='w-[100%] p-2 text-end' onClick={()=>setImagePreview(null)}>
                         <CloseIcon />
                     </div>
@@ -125,7 +125,7 @@ function Profile() {
                         <CloseIcon />
                     </div>
                     <div className='space-y-5'>
-                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold' onClick={() => handleImage(profileUrl)}>Preview Profile pic</div>
+                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold' onClick={() => viewProfileImage(profileUrl)}>Preview Profile pic</div>
                         <div className='px-7 py-3 text-sm bg-neutral-800 font-bold'>Change Profile pic</div>
                     </div>
                 </div>
