@@ -1,10 +1,10 @@
-import React from 'react'
+import React from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import HomeIcon from '@mui/icons-material/Home';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import AddIcon from '@mui/icons-material/Add';
 import SlideshowOutlinedIcon from '@mui/icons-material/SlideshowOutlined';
-import { NavLink, useLocation } from 'react-router-dom';
 
 function Footer() {
 
