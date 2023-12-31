@@ -9,7 +9,7 @@ import AssignmentIndOutlinedIcon from '@mui/icons-material/AssignmentIndOutlined
 
 function Profile() {
 
-    const [storyStatus, setStoryStatus] = useState(false);
+    const [storyStatus, setStoryStatus] = useState(true);
 
     const [postStatus, setPostStatus] = useState('posts');
 
@@ -70,7 +70,7 @@ function Profile() {
                     </div>
                     {storyStatus ? <div><KeyboardArrowUpIcon onClick={storyArrow} /></div> : <div><KeyboardArrowDownIcon onClick={storyArrow} /></div>}
                 </div>
-                {storyStatus && <div className='w-[374px] overflow-x-scroll'>
+                {storyStatus && <div className='w-[374px] overflow-x-scroll no-scrollbar'>
                     <div className='py-3 flex space-x-3 min-w-max'>
                         <div className='text-center'>
                             <div className='w-[80px] h-[80px] rounded-full border-[1px] flex items-center justify-center'><AddIcon style={{ fontSize: '40px' }} /></div>
