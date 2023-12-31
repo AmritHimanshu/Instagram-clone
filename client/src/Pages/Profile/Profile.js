@@ -18,6 +18,7 @@ function Profile() {
     const [imagePreview, setImagePreview] = useState(null);
     const [profilePicOption, setProfilePicOption] = useState(false);
     const [profileUrl, setProfileUrl] = useState(null);
+    const [selectedImage, setSelectedImage] = useState(null);
 
     const storyArrow = () => {
         if (storyStatus) setStoryStatus(false);
@@ -29,19 +30,28 @@ function Profile() {
         setImagePreview(imageUrl);
     }
 
+    const handleFileChange = (e) => {
+        setProfilePicOption(false);
+        const file = e.target.files[0];
+
+        if (file) {
+            displaySelectedImage(file);
+        }
+    };
+
+    const displaySelectedImage = (file) => {
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+            setSelectedImage(e.target.result);
+        };
+
+        // Read the selected file as a data URL
+        reader.readAsDataURL(file);
+    };
+
     return (
         <>
-            {imagePreview && 
-                <div className='h-[93vh] absolute backdrop-blur-xl flex flex-col items-center justify-center'>
-                    <div className='w-[100%] p-2 text-end' onClick={()=>setImagePreview(null)}>
-                        <CloseIcon />
-                    </div>
-                    <div>
-                        <img src={imagePreview} alt="" />
-                    </div>
-                </div>
-            }
-            
             <div className='h-[93vh] overflow-x-scroll no-scrollbar'>
                 {/* Profile header */}
                 <div className='p-3 flex items-center justify-between'>
@@ -121,6 +131,7 @@ function Profile() {
                 </div>
             </div>
 
+            {/* Profile pic option */}
             {profilePicOption && <div className='h-[93vh] w-[100%] backdrop-blur-md absolute'>
                 <div className='h-[20vh] absolute bottom-10 w-[100%] bg-black flex flex-col items-center justify-center'>
                     <div className='w-[100%] p-2 text-end' onClick={() => setProfilePicOption(false)}>
@@ -128,10 +139,37 @@ function Profile() {
                     </div>
                     <div className='space-y-5'>
                         <div className='px-7 py-3 text-sm bg-neutral-800 font-bold' onClick={() => viewProfileImage(profileUrl)}>Preview Profile pic</div>
-                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold'>Change Profile pic</div>
+                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold'>
+                            <label htmlFor="fileInput">Change Profile pic</label>
+                            <input type="file" id='fileInput' style={{ display: 'none' }} onChange={handleFileChange} />
+                        </div>
                     </div>
                 </div>
             </div>}
+
+            {/* Previewing profile pic */}
+            {imagePreview &&
+                <div className='h-[93vh] absolute backdrop-blur-xl flex flex-col items-center justify-center'>
+                    <div className='w-[100%] p-2 text-end' onClick={() => setImagePreview(null)}>
+                        <CloseIcon />
+                    </div>
+                    <div>
+                        <img src={imagePreview} alt="" />
+                    </div>
+                </div>
+            }
+
+            {/* Previewing selected image file */}
+            {selectedImage &&
+                <div className='h-[93vh] absolute backdrop-blur-xl flex flex-col items-center justify-center'>
+                    <div className='w-[100%] p-2 text-end' onClick={() => setSelectedImage(null)}>
+                        <CloseIcon />
+                    </div>
+                    <div>
+                        <img src={selectedImage} alt="" />
+                    </div>
+                </div>
+            }
             <Footer />
         </>
     )
