@@ -11,7 +11,7 @@ function Footer() {
     const { pathname } = useLocation();
 
     return (
-        <div className='py-2 grid grid-rows-1 grid-cols-5 place-items-center border-t-[1px] border-neutral-700'>
+        <div className='py-3 grid grid-rows-1 grid-cols-5 place-items-center border-t-[1px] border-neutral-700'>
             <div><NavLink to="/">{pathname === "/" ? <HomeIcon style={{ fontSize: "40px" }} /> : <HomeOutlinedIcon style={{ fontSize: "40px" }} /> }</NavLink></div>
             <div><SearchOutlinedIcon style={{ fontSize: "40px" }} /></div>
             <div className='border-2 rounded-lg max-w-min'><AddIcon style={{ fontSize: "30px" }} /></div>
