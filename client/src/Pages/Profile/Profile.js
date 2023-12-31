@@ -41,6 +41,7 @@ function Profile() {
                     </div>
                 </div>
             }
+            
             <div className='h-[93vh] overflow-x-scroll no-scrollbar'>
                 {/* Profile header */}
                 <div className='p-3 flex items-center justify-between'>
@@ -119,6 +120,7 @@ function Profile() {
                     </div>}
                 </div>
             </div>
+
             {profilePicOption && <div className='h-[93vh] w-[100%] backdrop-blur-md absolute'>
                 <div className='h-[20vh] absolute bottom-10 w-[100%] bg-black flex flex-col items-center justify-center'>
                     <div className='w-[100%] p-2 text-end' onClick={() => setProfilePicOption(false)}>
