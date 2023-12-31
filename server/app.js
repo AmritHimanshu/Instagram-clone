@@ -1,12 +1,19 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const app = express();
+const cors = require('cors');
+
 
 dotenv.config({ path: './config.env' });
 
 const PORT = process.env.PORT;
 
 require('./db/conn');
+
+// app.use(cors({
+//     origin: true,
+//     credentials: true,  // Enable credentials (cookies)
+// }));
 
 app.use(express.json());
 
