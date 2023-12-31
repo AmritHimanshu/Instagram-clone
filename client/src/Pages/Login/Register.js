@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Logo from '../Images/InstagramTextLogo.png';
 
 function Register() {
+
+    const navigate = useNavigate();
 
     const [user, setUser] = useState({
         email: '', username: '', phone:'', password: '', cpassword:''
@@ -15,7 +17,7 @@ function Register() {
         setUser({ ...user, [name]: value });
     }
 
-    const submitForm = (e) => {
+    const submitForm = async (e) => {
         e.preventDefault();
         const { email, username, phone, password, cpassword } = user;
         if (!email || !username || !phone || !password || !cpassword) {
@@ -24,7 +26,23 @@ function Register() {
         if (password !== cpassword) {
             return window.alert("Password and Confirm password not match");
         }
+        const res = await fetch('/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                email,username,phone,password,cpassword
+            })
+        })
 
+        const data = await res.json();
+        if (res.status === 422 || !data) window.alert(`${data.error}`);
+        else {
+            window.alert(`${data.message}`);
+            navigate('/login');
+            window.location.reload();
+        }
     };
 
     return (
