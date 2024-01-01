@@ -108,11 +108,11 @@ function Profile() {
                 {/* Profile Section */}
                 <div className='p-5'>
                     <div className='grid grid-rows-1 grid-cols-4 place-items-center'>
-                        <div className='w-[90px] h-[90px] border-2 rounded-full overflow-hidden'>
+                        <div className='w-[90px] h-[90px] border-2 rounded-full overflow-hidden' onClick={() => { setProfilePicOption(true) }}>
                             {user?.profilePicture &&
                                 <img
                                     src={`data:${user?.profilePicture.contentType};base64,${uint8ArrayToBase64(user?.profilePicture.data.data)}`}
-                                    alt="" className='w-full h-full rounded-full' onClick={() => { setProfilePicOption(true); setProfilePic(`data:${user?.profilePicture.contentType};base64,${uint8ArrayToBase64(user?.profilePicture.data.data)}`) }} />}
+                                    alt="" className='w-full h-full rounded-full' onClick={() => setProfilePic(`data:${user?.profilePicture.contentType};base64,${uint8ArrayToBase64(user?.profilePicture.data.data)}`)} />}
                         </div>
                         <div>
                             <div className='font-bold'>1</div>
@@ -129,7 +129,7 @@ function Profile() {
                     </div>
 
                     <div className='text-start mt-4'>
-                        <div className='font-bold'>Singh Sahab</div>
+                        <div className='font-bold'>{user?.name}</div>
                         <div className='text-[15px]'>still living on mom's pocket money</div>
                         <div className='text-[15px]'>----- selectively social -----</div>
                         <div className='text-[15px]'>can't change people, so I changed how I f*ck with them.</div>

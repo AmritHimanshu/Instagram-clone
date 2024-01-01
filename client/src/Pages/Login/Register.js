@@ -8,7 +8,7 @@ function Register() {
     const navigate = useNavigate();
 
     const [user, setUser] = useState({
-        email: '', username: '', phone:'', password: '', cpassword:''
+        email: '', username: '', name: '', phone: '', password: '', cpassword: ''
     })
 
     const handleOnChange = (e) => {
@@ -19,8 +19,8 @@ function Register() {
 
     const submitForm = async (e) => {
         e.preventDefault();
-        const { email, username, phone, password, cpassword } = user;
-        if (!email || !username || !phone || !password || !cpassword) {
+        const { email, username, name, phone, password, cpassword } = user;
+        if (!email || !username || !name || !phone || !password || !cpassword) {
             return window.alert("Fill all the fields");
         }
         if (password !== cpassword) {
@@ -29,10 +29,10 @@ function Register() {
         const res = await fetch('/register', {
             method: 'POST',
             headers: {
-                'Content-Type':'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                email,username,phone,password,cpassword
+                email, username, name, phone, password, cpassword
             })
         })
 
@@ -58,10 +58,11 @@ function Register() {
                     <form action="" onSubmit={submitForm} className='flex flex-col space-y-5'>
                         <input type="email" id="email" name='email' value={user.email} className='p-4 text-[16px] text-white bg-neutral-700 bg-opacity-60 rounded-md outline-0 placeholder:text-neutral-500' placeholder='Email' autoComplete='false' onChange={handleOnChange} />
                         <input type="text" id="username" name='username' value={user.username} className='p-4 text-[16px] text-white bg-neutral-700 bg-opacity-60 rounded-md outline-0 placeholder:text-neutral-500' placeholder='username' autoComplete='false' onChange={handleOnChange} />
+                        <input type="text" id="name" name='name' value={user.name} className='p-4 text-[16px] text-white bg-neutral-700 bg-opacity-60 rounded-md outline-0 placeholder:text-neutral-500' placeholder='name' autoComplete='false' onChange={handleOnChange} />
                         <input type="text" id="phone" name='phone' value={user.phone} className='p-4 text-[16px] text-white bg-neutral-700 bg-opacity-60 rounded-md outline-0 placeholder:text-neutral-500' placeholder='Phone number' autoComplete='false' onChange={handleOnChange} />
                         <input type="text" id="password" name='password' value={user.password} className='p-4 text-[16px] text-white bg-neutral-700 bg-opacity-60 rounded-md outline-0 placeholder:text-neutral-500' placeholder='Password' autoComplete='false' onChange={handleOnChange} />
                         <input type="password" id="cpassword" name='cpassword' value={user.cpassword} className='p-4 text-[16px] text-white bg-neutral-700 bg-opacity-60 rounded-md outline-0 placeholder:text-neutral-500' placeholder='Confirm Password' autoComplete='false' onChange={handleOnChange} />
-                        <button type='submit' className='p-4 text-[16px] font-bold bg-blue-950 opacity-80 rounded-lg'>Log in</button>
+                        <button type='submit' className='p-4 text-[16px] font-bold bg-blue-950 opacity-80 rounded-lg'>Register now</button>
                     </form>
                 </div>
 

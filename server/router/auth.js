@@ -14,8 +14,8 @@ const User = require('../model/userSchema');
 
 
 router.post('/register', async (req, res) => {
-    const { email, username, phone, password, cpassword } = req.body;
-    if (!email || !username || !phone || !password || !cpassword) {
+    const { email, username, name, phone, password, cpassword } = req.body;
+    if (!email || !username || !name || !phone || !password || !cpassword) {
         return res.status(422).json({ error: "Fill all the fields" });
     }
     if (password !== cpassword) return res.status(422).json({ error: "Password and Confirm Password not matched" });
@@ -29,7 +29,7 @@ router.post('/register', async (req, res) => {
         if (usernameExist) {
             return res.status(422).json({ error: "Username is already registered" });
         }
-        const user = new User({ email, username, phone, password, cpassword });
+        const user = new User({ email, username, name, phone, password, cpassword });
         const userRegister = await user.save();
         if (userRegister) {
             return res.status(201).json({ message: "User registered successfully" });
