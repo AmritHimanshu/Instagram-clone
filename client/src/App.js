@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, selectUser } from "./features/userSlice";
 import Home from './Pages/Home/Home';
 import Profile from './Pages/Profile/Profile';
+import EditProfile from './Pages/Profile/EditProfile';
 import Login from './Pages/Login/Login';
 import Register from './Pages/Login/Register';
 import './App.css';
@@ -49,6 +50,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/profile' element={<Profile/>} />
+          <Route path='/edit-profile' element={<EditProfile/>} />
           <Route path='/login' element={<Login/>} />
           <Route path='/register' element={<Register/>} />
         </Routes>

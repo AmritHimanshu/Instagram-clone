@@ -128,7 +128,7 @@ router.post('/uploadProfilePic', authenticate, upload.single('file'), async (req
         res.status(201).send({ message: 'Profile picture uploaded successfully' });
     } catch (error) {
         console.error(error);
-        res.status(500).send({ error: 'Internal Server Error' });
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 })
 

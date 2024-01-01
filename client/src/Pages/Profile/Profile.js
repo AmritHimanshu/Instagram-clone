@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
@@ -13,75 +14,17 @@ import Footer from '../Footer/Footer';
 
 function Profile() {
 
-    const user = useSelector(selectUser);
-
     const [storyStatus, setStoryStatus] = useState(true);
     const [postStatus, setPostStatus] = useState('posts');
-    const [imagePreview, setImagePreview] = useState(null);
-    const [profilePicOption, setProfilePicOption] = useState(false);
     const [profilePic, setProfilePic] = useState(null);
-    const [selectedImage, setSelectedImage] = useState(null);
-    const [profileImageFile, setProfileImageFile] = useState(null);
+    
+    const user = useSelector(selectUser);
 
-
+    const navigate = useNavigate();
 
     const storyArrow = () => {
         if (storyStatus) setStoryStatus(false);
         else setStoryStatus(true);
-    }
-
-    const viewProfileImage = (imageUrl) => {
-        setProfilePicOption(false);
-        setImagePreview(imageUrl);
-    }
-
-    const handleFileChange = (e) => {
-        setProfilePicOption(false);
-        const file = e.target.files[0];
-        setProfileImageFile(file);
-
-        if (file) {
-            displaySelectedImage(file);
-        }
-    };
-
-    const displaySelectedImage = (file) => {
-        const reader = new FileReader();
-
-        reader.onload = (e) => {
-            setSelectedImage(e.target.result);
-        };
-
-        // Read the selected file as a data URL
-        reader.readAsDataURL(file);
-    };
-
-    const uploadPic = async () => {
-        // setSelectedImage(false);
-        try {
-
-            const formData = new FormData();
-            formData.append('file', profileImageFile);
-
-            const res = await fetch('/uploadProfilePic', {
-                method: 'POST',
-                // Header is not required here
-                headers: {
-                    // 'Content-Type': 'multipart/form-data'
-                },
-                credentials: 'include', // Include cookies in the request
-                body: formData,
-            });
-
-            const data = await res.json();
-            if (data) {
-                window.alert("Profile pic uploaded successfully");
-                window.location.reload();
-            }
-            setSelectedImage(null);
-        } catch (error) {
-            console.log("Frontend" + error);
-        }
     }
 
     // Helper function to convert Uint8Array to Base64
@@ -108,7 +51,7 @@ function Profile() {
                 {/* Profile Section */}
                 <div className='p-5'>
                     <div className='grid grid-rows-1 grid-cols-4 place-items-center'>
-                        <div className='w-[90px] h-[90px] border-2 rounded-full overflow-hidden' onClick={() => { setProfilePicOption(true) }}>
+                        <div className='w-[90px] h-[90px] border-2 rounded-full overflow-hidden'>
                             {user?.profilePicture &&
                                 <img
                                     src={`data:${user?.profilePicture.contentType};base64,${uint8ArrayToBase64(user?.profilePicture.data.data)}`}
@@ -136,7 +79,7 @@ function Profile() {
                     </div>
 
                     <div className='mt-4 flex items-center justify-evenly'>
-                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold rounded-lg cursor-pointer'>Edit profile</div>
+                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold rounded-lg cursor-pointer' onClick={()=>navigate('/edit-profile')}>Edit profile</div>
                         <div className='px-7 py-3 text-sm bg-neutral-800 font-bold rounded-lg cursor-pointer'>Share profile</div>
                         <div className='px-3 py-2 bg-neutral-800 rounded-lg cursor-pointer'><PersonAddIcon /></div>
                     </div>
@@ -179,50 +122,18 @@ function Profile() {
                 </div>
             </div>
 
-            {/* Profile pic option */}
-            {profilePicOption && <div className='h-[92vh] w-[100%] backdrop-blur-md absolute'>
-                <div className='h-[20vh] absolute bottom-10 w-[100%] bg-black flex flex-col items-center justify-center'>
-                    <div className='w-[100%] p-2 text-end' onClick={() => setProfilePicOption(false)}>
-                        <CloseIcon />
-                    </div>
-                    <div className='space-y-5'>
-                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold' onClick={() => viewProfileImage(profilePic)}>Preview Profile pic</div>
-                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold'>
-                            <label htmlFor="fileInput">Change Profile pic</label>
-                            <input type="file" id='fileInput' style={{ display: 'none' }} onChange={handleFileChange} />
-                        </div>
-                    </div>
-                </div>
-            </div>}
-
             {/* Previewing profile pic */}
-            {imagePreview &&
-                <div className='h-[92vh] absolute backdrop-blur-xl flex flex-col items-center justify-center'>
-                    <div className='w-[100%] p-2 text-end' onClick={() => setImagePreview(null)}>
+            {profilePic &&
+                <div className='h-[92vh] w-[100%] absolute backdrop-blur-xl flex flex-col items-center justify-center space-y-3'>
+                    <div className='w-[100%] p-2 text-end' onClick={() => setProfilePic(null)}>
                         <CloseIcon />
                     </div>
                     <div>
-                        <img src={imagePreview} alt="" />
+                        <img src={profilePic} alt="" />
                     </div>
                 </div>
             }
 
-            {/* Previewing selected image file */}
-            {selectedImage &&
-                <div className='h-[92vh] w-[100%] absolute backdrop-blur-xl flex flex-col items-center justify-center'>
-                    <div>
-                        <img src={selectedImage} alt="" />
-                    </div>
-                    <div className='p-2 w-[100%] flex justify-between'>
-                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold rounded-lg' onClick={() => setSelectedImage(null)}>
-                            Cancel
-                        </div>
-                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold rounded-lg' onClick={uploadPic}>
-                            Confirm
-                        </div>
-                    </div>
-                </div>
-            }
             <Footer />
         </>
     )
