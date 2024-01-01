@@ -1,9 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
+const multer = require('multer');
 const authenticate = require('../middleware/authenticate');
 
+const cookieParser = require("cookie-parser");
+router.use(cookieParser());
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
 const User = require('../model/userSchema');
+
 
 router.post('/register', async (req, res) => {
     const { email, username, phone, password, cpassword } = req.body;
@@ -104,6 +112,23 @@ router.post('/signin', async (req, res) => {
         else res.status(400).json({ error: "Invalid Credentials" });
     } catch (error) {
         console.log(error);
+    }
+})
+
+router.post('/uploadProfilePic', authenticate, upload.single('file'), async (req, res) => {
+    try {
+        req.rootUser.profilePicture = {
+            data: req.file.buffer,
+            contentType: req.file.mimetype,
+        };
+
+        // Save the updated user document
+        await req.rootUser.save();
+
+        res.status(201).send({ message: 'Profile picture uploaded successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ error: 'Internal Server Error' });
     }
 })
 

@@ -19,6 +19,7 @@ function Profile() {
     const [profilePicOption, setProfilePicOption] = useState(false);
     const [profileUrl, setProfileUrl] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
+    const [imageFile, setImageFile] = useState(null);
 
     const storyArrow = () => {
         if (storyStatus) setStoryStatus(false);
@@ -33,6 +34,7 @@ function Profile() {
     const handleFileChange = (e) => {
         setProfilePicOption(false);
         const file = e.target.files[0];
+        setImageFile(file);
 
         if (file) {
             displaySelectedImage(file);
@@ -45,14 +47,38 @@ function Profile() {
         reader.onload = (e) => {
             setSelectedImage(e.target.result);
         };
-
+        
         // Read the selected file as a data URL
         reader.readAsDataURL(file);
     };
 
+    const uploadPic = async () => {
+        // setSelectedImage(false);
+        try {
+
+            const formData = new FormData();
+            formData.append('file', imageFile);
+
+            const res = await fetch('/uploadProfilePic', {
+                method: 'POST',
+                credentials: 'include', // Include cookies in the request
+                body: formData,
+            });
+
+            const data = await res.json();
+            if (data) {
+                window.alert("Profile pic uploaded successfully");
+                console.log(data);
+            }
+            setSelectedImage(null);
+        } catch (error) {
+            console.log("Frontend" + error);
+        }
+    }
+
     return (
         <>
-            <div className='h-[93vh] overflow-x-scroll no-scrollbar'>
+            <div className='h-[92vh] overflow-x-scroll no-scrollbar'>
                 {/* Profile header */}
                 <div className='p-3 flex items-center justify-between'>
                     <div className='text-[19px] font-bold flex items-center'>himanshu_the_heart_hacker <KeyboardArrowDownIcon /></div>
@@ -132,7 +158,7 @@ function Profile() {
             </div>
 
             {/* Profile pic option */}
-            {profilePicOption && <div className='h-[93vh] w-[100%] backdrop-blur-md absolute'>
+            {profilePicOption && <div className='h-[92vh] w-[100%] backdrop-blur-md absolute'>
                 <div className='h-[20vh] absolute bottom-10 w-[100%] bg-black flex flex-col items-center justify-center'>
                     <div className='w-[100%] p-2 text-end' onClick={() => setProfilePicOption(false)}>
                         <CloseIcon />
@@ -149,7 +175,7 @@ function Profile() {
 
             {/* Previewing profile pic */}
             {imagePreview &&
-                <div className='h-[93vh] absolute backdrop-blur-xl flex flex-col items-center justify-center'>
+                <div className='h-[92vh] absolute backdrop-blur-xl flex flex-col items-center justify-center'>
                     <div className='w-[100%] p-2 text-end' onClick={() => setImagePreview(null)}>
                         <CloseIcon />
                     </div>
@@ -161,12 +187,17 @@ function Profile() {
 
             {/* Previewing selected image file */}
             {selectedImage &&
-                <div className='h-[93vh] absolute backdrop-blur-xl flex flex-col items-center justify-center'>
-                    <div className='w-[100%] p-2 text-end' onClick={() => setSelectedImage(null)}>
-                        <CloseIcon />
-                    </div>
+                <div className='h-[92vh] absolute backdrop-blur-xl flex flex-col items-center justify-center'>
                     <div>
                         <img src={selectedImage} alt="" />
+                    </div>
+                    <div className='p-2 w-[100%] flex justify-between'>
+                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold rounded-lg' onClick={() => setSelectedImage(null)}>
+                            Cancel
+                        </div>
+                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold rounded-lg' onClick={uploadPic}>
+                            Confirm
+                        </div>
                     </div>
                 </div>
             }
