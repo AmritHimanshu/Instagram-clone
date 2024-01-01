@@ -107,11 +107,10 @@ function Profile() {
                 <div className='p-5'>
                     <div className='grid grid-rows-1 grid-cols-4 place-items-center'>
                         <div className='w-[90px] h-[90px] rounded-full overflow-hidden'>
-                            {user?.profilePicture && <img
-                                
-                                src={`data:${user?.profilePicture.contentType};base64,${uint8ArrayToBase64(user?.profilePicture.data.data)}`}
-
-                                alt="" className='w-full h-full rounded-full' onClick={() => { setProfilePicOption(true); setProfilePic(`data:${user?.profilePicture.contentType};base64,${uint8ArrayToBase64(user?.profilePicture.data.data)}`) }} />}
+                            {user?.profilePicture &&
+                                <img
+                                    src={`data:${user?.profilePicture.contentType};base64,${uint8ArrayToBase64(user?.profilePicture.data.data)}`}
+                                    alt="" className='w-full h-full rounded-full' onClick={() => { setProfilePicOption(true); setProfilePic(`data:${user?.profilePicture.contentType};base64,${uint8ArrayToBase64(user?.profilePicture.data.data)}`) }} />}
                         </div>
                         <div>
                             <div className='font-bold'>1</div>
