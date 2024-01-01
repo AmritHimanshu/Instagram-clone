@@ -17,9 +17,9 @@ function Profile() {
 
     const [imagePreview, setImagePreview] = useState(null);
     const [profilePicOption, setProfilePicOption] = useState(false);
-    const [profileUrl, setProfileUrl] = useState(null);
+    const [profilePic, setProfilePic] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
-    const [imageFile, setImageFile] = useState(null);
+    const [profileImageFile, setProfileImageFile] = useState(null);
 
     const storyArrow = () => {
         if (storyStatus) setStoryStatus(false);
@@ -34,7 +34,7 @@ function Profile() {
     const handleFileChange = (e) => {
         setProfilePicOption(false);
         const file = e.target.files[0];
-        setImageFile(file);
+        setProfileImageFile(file);
 
         if (file) {
             displaySelectedImage(file);
@@ -57,7 +57,7 @@ function Profile() {
         try {
 
             const formData = new FormData();
-            formData.append('file', imageFile);
+            formData.append('file', profileImageFile);
 
             const res = await fetch('/uploadProfilePic', {
                 method: 'POST',
@@ -94,7 +94,7 @@ function Profile() {
                 <div className='p-5'>
                     <div className='grid grid-rows-1 grid-cols-4 place-items-center'>
                         <div className='w-[90px] h-[90px] rounded-full overflow-hidden'>
-                            <img src="https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61NRxcV4VML.jpg" alt="" className='w-full h-full rounded-full' onClick={() => { setProfilePicOption(true); setProfileUrl('https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61NRxcV4VML.jpg')}} />
+                            <img src="https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61NRxcV4VML.jpg" alt="" className='w-full h-full rounded-full' onClick={() => { setProfilePicOption(true); setProfilePic('https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61NRxcV4VML.jpg')}} />
                         </div>
                         <div>
                             <div className='font-bold'>1</div>
@@ -168,7 +168,7 @@ function Profile() {
                         <CloseIcon />
                     </div>
                     <div className='space-y-5'>
-                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold' onClick={() => viewProfileImage(profileUrl)}>Preview Profile pic</div>
+                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold' onClick={() => viewProfileImage(profilePic)}>Preview Profile pic</div>
                         <div className='px-7 py-3 text-sm bg-neutral-800 font-bold'>
                             <label htmlFor="fileInput">Change Profile pic</label>
                             <input type="file" id='fileInput' style={{ display: 'none' }} onChange={handleFileChange} />
