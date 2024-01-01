@@ -98,15 +98,17 @@ function Profile() {
             <div className='h-[92vh] overflow-x-scroll no-scrollbar'>
                 {/* Profile header */}
                 <div className='p-3 flex items-center justify-between'>
-                    <div className='text-[19px] font-bold flex items-center'>{user?.username} <KeyboardArrowDownIcon /></div>
-                    <div className='border-2 rounded-lg'><AddIcon /></div>
-                    <div><MenuIcon style={{ fontSize: '40px' }} /></div>
+                    <div className='text-[19px] font-bold flex items-center'>{user?.username} {user && <KeyboardArrowDownIcon />}</div>
+                    <div className='flex items-center space-x-5'>
+                        <div className='w-[30px] h-[30px] border-2 rounded-lg'><AddIcon /></div>
+                        <div><MenuIcon style={{ fontSize: '40px' }} /></div>
+                    </div>
                 </div>
 
                 {/* Profile Section */}
                 <div className='p-5'>
                     <div className='grid grid-rows-1 grid-cols-4 place-items-center'>
-                        <div className='w-[90px] h-[90px] rounded-full overflow-hidden'>
+                        <div className='w-[90px] h-[90px] border-2 rounded-full overflow-hidden'>
                             {user?.profilePicture &&
                                 <img
                                     src={`data:${user?.profilePicture.contentType};base64,${uint8ArrayToBase64(user?.profilePicture.data.data)}`}
