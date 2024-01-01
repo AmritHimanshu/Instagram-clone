@@ -61,6 +61,10 @@ function Profile() {
 
             const res = await fetch('/uploadProfilePic', {
                 method: 'POST',
+                // Header is not required here
+                headers: {
+                    // 'Content-Type': 'multipart/form-data'
+                },
                 credentials: 'include', // Include cookies in the request
                 body: formData,
             });
@@ -187,7 +191,7 @@ function Profile() {
 
             {/* Previewing selected image file */}
             {selectedImage &&
-                <div className='h-[92vh] absolute backdrop-blur-xl flex flex-col items-center justify-center'>
+                <div className='h-[92vh] w-[100%] absolute backdrop-blur-xl flex flex-col items-center justify-center'>
                     <div>
                         <img src={selectedImage} alt="" />
                     </div>
