@@ -29,7 +29,7 @@ function Footer() {
             <div><SearchOutlinedIcon style={{ fontSize: "40px" }} /></div>
             <div className='border-2 rounded-lg max-w-min'><AddIcon style={{ fontSize: "30px" }} /></div>
             <div><SlideshowOutlinedIcon style={{ fontSize: "40px" }} /></div>
-            <NavLink to="/profile"><div className={`w-[40px] h-[40px] rounded-full overflow-hidden ${pathname === "/profile" ? 'border-2' : ''}`}>
+            <NavLink to="/profile"><div className={`w-[40px] h-[40px] border-2 rounded-full overflow-hidden ${pathname === "/profile" ? 'border-2' : ''}`}>
                 {user?.profilePicture &&
                     <img src={`data:${user?.profilePicture.contentType};base64,${uint8ArrayToBase64(user?.profilePicture.data.data)}`} alt="" className='w-[40px] h-[40px]' />}
             </div></NavLink>
