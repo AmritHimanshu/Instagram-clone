@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../features/userSlice';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -11,15 +13,17 @@ import Footer from '../Footer/Footer';
 
 function Profile() {
 
+    const user = useSelector(selectUser);
+
     const [storyStatus, setStoryStatus] = useState(true);
-
     const [postStatus, setPostStatus] = useState('posts');
-
     const [imagePreview, setImagePreview] = useState(null);
     const [profilePicOption, setProfilePicOption] = useState(false);
     const [profilePic, setProfilePic] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
     const [profileImageFile, setProfileImageFile] = useState(null);
+
+
 
     const storyArrow = () => {
         if (storyStatus) setStoryStatus(false);
@@ -47,7 +51,7 @@ function Profile() {
         reader.onload = (e) => {
             setSelectedImage(e.target.result);
         };
-        
+
         // Read the selected file as a data URL
         reader.readAsDataURL(file);
     };
@@ -72,7 +76,7 @@ function Profile() {
             const data = await res.json();
             if (data) {
                 window.alert("Profile pic uploaded successfully");
-                console.log(data);
+                window.location.reload();
             }
             setSelectedImage(null);
         } catch (error) {
@@ -80,12 +84,21 @@ function Profile() {
         }
     }
 
+    // Helper function to convert Uint8Array to Base64
+    function uint8ArrayToBase64(uint8Array) {
+        let binary = '';
+        uint8Array.forEach((byte) => {
+            binary += String.fromCharCode(byte);
+        });
+        return btoa(binary);
+    }
+
     return (
         <>
             <div className='h-[92vh] overflow-x-scroll no-scrollbar'>
                 {/* Profile header */}
                 <div className='p-3 flex items-center justify-between'>
-                    <div className='text-[19px] font-bold flex items-center'>himanshu_the_heart_hacker <KeyboardArrowDownIcon /></div>
+                    <div className='text-[19px] font-bold flex items-center'>{user?.username} <KeyboardArrowDownIcon /></div>
                     <div className='border-2 rounded-lg'><AddIcon /></div>
                     <div><MenuIcon style={{ fontSize: '40px' }} /></div>
                 </div>
@@ -94,7 +107,11 @@ function Profile() {
                 <div className='p-5'>
                     <div className='grid grid-rows-1 grid-cols-4 place-items-center'>
                         <div className='w-[90px] h-[90px] rounded-full overflow-hidden'>
-                            <img src="https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61NRxcV4VML.jpg" alt="" className='w-full h-full rounded-full' onClick={() => { setProfilePicOption(true); setProfilePic('https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/61NRxcV4VML.jpg')}} />
+                            {user?.profilePicture && <img
+                                
+                                src={`data:${user?.profilePicture.contentType};base64,${uint8ArrayToBase64(user?.profilePicture.data.data)}`}
+
+                                alt="" className='w-full h-full rounded-full' onClick={() => { setProfilePicOption(true); setProfilePic(`data:${user?.profilePicture.contentType};base64,${uint8ArrayToBase64(user?.profilePicture.data.data)}`) }} />}
                         </div>
                         <div>
                             <div className='font-bold'>1</div>
