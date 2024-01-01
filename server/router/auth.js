@@ -132,6 +132,10 @@ router.post('/uploadProfilePic', authenticate, upload.single('file'), async (req
     }
 })
 
+router.get('/getData', authenticate, (req, res) => {
+    res.status(200).send(req.rootUser);
+});
+
 router.get('/', (req, res) => {
     res.send("This is from auth of backend");
 })
