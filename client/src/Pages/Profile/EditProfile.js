@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
@@ -6,15 +6,27 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import CloseIcon from '@mui/icons-material/Close';
 
 function EditProfile() {
+    
+    const navigate = useNavigate();
+    const user = useSelector(selectUser);
 
     const [profilePicOption, setProfilePicOption] = useState(false);
     const [imagePreview, setImagePreview] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
     const [profileImageFile, setProfileImageFile] = useState(null);
 
-    const user = useSelector(selectUser);
+    const [editName, setEditName] = useState(user?.name || '');
+    const [editUsername, setEditUsername] = useState(user?.username || '');
 
-    const navigate = useNavigate();
+    useEffect(() => {
+        // Update the name state once the Redux state is available
+        if (user?.name) {
+            setEditName(user.name);
+        }
+        if (user?.username) {
+            setEditUsername(user.username);
+        }
+    }, [user]);
 
 
     // Helper function to convert Uint8Array to Base64
@@ -105,11 +117,11 @@ function EditProfile() {
                 <div className='p-3 text-start space-y-5'>
                     <div className='flex flex-col'>
                         <label htmlFor='name' className='text-neutral-300'>Name</label>
-                        <input type="text" id='name' className='p-1 text-[18px] outline-0 bg-black border-b-2' autoComplete='false' />
+                        <input type="text" id='name' value={editName} className='p-1 text-[18px] outline-0 bg-black border-b-2' autoComplete='false' onChange={(e) => setEditName(e.target.value)} />
                     </div>
                     <div className='flex flex-col'>
                         <label htmlFor='username' className='text-neutral-300'>Username</label>
-                        <input type="text" id='username' className='p-1 text-[18px] outline-0 bg-black border-b-2' autoComplete='false' />
+                        <input type="text" id='username' value={editUsername} className='p-1 text-[18px] outline-0 bg-black border-b-2' autoComplete='false' onChange={(e) => setEditUsername(e.target.value)} />
                     </div>
                     <div className='flex flex-col'>
                         <label htmlFor='bio' className='text-neutral-300'>Bio</label>
