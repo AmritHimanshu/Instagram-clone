@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import CloseIcon from '@mui/icons-material/Close';
+import CheckIcon from '@mui/icons-material/Check';
 
 function EditProfile() {
     
@@ -14,6 +15,7 @@ function EditProfile() {
     const [imagePreview, setImagePreview] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
     const [profileImageFile, setProfileImageFile] = useState(null);
+    const [isEdit, setIsEdit] = useState(false);
 
     const [editName, setEditName] = useState(user?.name || '');
     const [editUsername, setEditUsername] = useState(user?.username || '');
@@ -97,9 +99,14 @@ function EditProfile() {
     return (
         <>
             <div className='h-[100vh]'>
-                <div className='p-3 text-start flex items-center'>
-                    <KeyboardBackspaceIcon style={{ fontSize: '35px' }} onClick={()=>navigate('/profile')} />
-                    <div className='mx-5 text-[23px] font-bold'>Edit profile</div>
+                <div className='p-3 text-start flex items-center justify-between'>
+                    <div className='text-start flex items-center'>
+                        <KeyboardBackspaceIcon style={{ fontSize: '35px' }} onClick={() => navigate('/profile')} />
+                        <div className='mx-5 text-[23px] font-bold'>Edit profile</div>
+                    </div>
+                    {isEdit && <div>
+                        <CheckIcon style={{ fontSize: '35px' }} />
+                    </div>}
                 </div>
 
                 <div className='pt-7 pb-3 flex flex-col items-center space-y-3' onClick={() => { setProfilePicOption(true) }}>
@@ -117,11 +124,11 @@ function EditProfile() {
                 <div className='p-3 text-start space-y-5'>
                     <div className='flex flex-col'>
                         <label htmlFor='name' className='text-neutral-300'>Name</label>
-                        <input type="text" id='name' value={editName} className='p-1 text-[18px] outline-0 bg-black border-b-2' autoComplete='false' onChange={(e) => setEditName(e.target.value)} />
+                        <input type="text" id='name' value={editName} className='p-1 text-[18px] outline-0 bg-black border-b-2' autoComplete='false' onChange={(e) => {setEditName(e.target.value); setIsEdit(true)}} />
                     </div>
                     <div className='flex flex-col'>
                         <label htmlFor='username' className='text-neutral-300'>Username</label>
-                        <input type="text" id='username' value={editUsername} className='p-1 text-[18px] outline-0 bg-black border-b-2' autoComplete='false' onChange={(e) => setEditUsername(e.target.value)} />
+                        <input type="text" id='username' value={editUsername} className='p-1 text-[18px] outline-0 bg-black border-b-2' autoComplete='false' onChange={(e) => {setEditUsername(e.target.value); setIsEdit(true)}} />
                     </div>
                     <div className='flex flex-col'>
                         <label htmlFor='bio' className='text-neutral-300'>Bio</label>
