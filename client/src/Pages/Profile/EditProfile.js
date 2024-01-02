@@ -99,6 +99,11 @@ function EditProfile() {
     };
 
     const saveChanges = async () => {
+        if (editName === user.name && editUsername === user.username && editBio === user.bio) {
+            window.alert("Profile updated successfully");
+            navigate('/profile');
+            return;
+        }
         const res = await fetch('/saveProfile', {
             method: 'POST',
             headers: {
