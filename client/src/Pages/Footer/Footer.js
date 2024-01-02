@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
@@ -11,6 +11,8 @@ import SlideshowOutlinedIcon from '@mui/icons-material/SlideshowOutlined';
 function Footer() {
 
     const { pathname } = useLocation();
+
+    const navigate = useNavigate();
 
     const user = useSelector(selectUser);
 
@@ -27,7 +29,7 @@ function Footer() {
         <div className='py-3 grid grid-rows-1 grid-cols-5 place-items-center border-t-[1px] border-neutral-700'>
             <div><NavLink to="/">{pathname === "/" ? <HomeIcon style={{ fontSize: "40px" }} /> : <HomeOutlinedIcon style={{ fontSize: "40px" }} /> }</NavLink></div>
             <div><SearchOutlinedIcon style={{ fontSize: "40px" }} /></div>
-            <div className='border-2 rounded-lg max-w-min'><AddIcon style={{ fontSize: "30px" }} /></div>
+            <div className='border-2 rounded-lg max-w-min'><AddIcon style={{ fontSize: "30px" }} onClick={() => navigate('/uploadPost')} /></div>
             <div><SlideshowOutlinedIcon style={{ fontSize: "40px" }} /></div>
             <NavLink to="/profile"><div className={`w-[40px] h-[40px] border-2 rounded-full overflow-hidden ${pathname === "/profile" ? 'border-2' : ''}`}>
                 {user?.profilePicture &&

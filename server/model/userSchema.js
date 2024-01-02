@@ -41,9 +41,13 @@ const userSchema = new mongoose.Schema({
     ],
     posts: [
         {
-            post: {
+            image: {
+                data: Buffer,
+                contentType: String
+            },
+            caption: {
                 type: String,
-                required: true
+                required: true,
             }
         }
     ],
@@ -80,7 +84,7 @@ userSchema.methods.generateAuthToken = async function () {
 // Saving posts by the user
 userSchema.methods.addPost = async function (post) {
     try {
-        this.posts = this.posts.concat({ post });
+        this.posts = this.posts.concat(post);
         await this.save();
         return this.posts;
     } catch (error) {

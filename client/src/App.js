@@ -5,6 +5,7 @@ import { login, selectUser } from "./features/userSlice";
 import Home from './Pages/Home/Home';
 import Profile from './Pages/Profile/Profile';
 import EditProfile from './Pages/Profile/EditProfile';
+import Post from './Pages/Post/Post';
 import Login from './Pages/Login/Login';
 import Register from './Pages/Login/Register';
 import './App.css';
@@ -51,6 +52,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/profile' element={<Profile/>} />
           <Route path='/edit-profile' element={<EditProfile/>} />
+          <Route path='/uploadPost' element={<Post/>} />
           <Route path='/login' element={<Login/>} />
           <Route path='/register' element={<Register/>} />
         </Routes>

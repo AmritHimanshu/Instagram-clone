@@ -148,6 +148,31 @@ router.post('/saveProfile', authenticate, async (req, res) => {
     }
 })
 
+router.post('/uploadPost', authenticate, upload.single('image'), async (req, res) => {
+    try {
+        const imageFile = req.file;
+        const caption = req.body.caption;
+
+        const post = {
+            image: {
+                data: imageFile.buffer,
+                contentType: imageFile.mimetype,
+            },
+            caption: caption,
+        };
+
+        const userPost = await req.rootUser.addPost(post);
+
+        // req.rootUser.posts.push(post);
+        // await req.rootUser.save();
+
+        res.status(201).send({ message: 'Profile picture uploaded successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+})
+
 router.get('/getData', authenticate, (req, res) => {
     res.status(200).send(req.rootUser);
 });

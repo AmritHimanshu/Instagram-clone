@@ -43,7 +43,7 @@ function Profile() {
                 <div className='p-3 flex items-center justify-between'>
                     <div className='text-[19px] font-bold flex items-center'>{user?.username} {user && <KeyboardArrowDownIcon />}</div>
                     <div className='flex items-center space-x-5'>
-                        <div className='w-[30px] h-[30px] border-2 rounded-lg'><AddIcon /></div>
+                        <div className='w-[30px] h-[30px] border-2 rounded-lg'><AddIcon onClick={()=>navigate('/uploadPost')} /></div>
                         <div><MenuIcon style={{ fontSize: '40px' }} /></div>
                     </div>
                 </div>
