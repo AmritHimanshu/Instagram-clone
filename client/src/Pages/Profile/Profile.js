@@ -73,7 +73,7 @@ function Profile() {
 
                     <div className='text-start mt-4'>
                         <div className='font-bold'>{user?.name}</div>
-                        <div className='text-[15px]'>{user?.bio}</div>
+                        <div className='text-[15px] w-[50%]'>{user?.bio}</div>
                     </div>
 
                     <div className='mt-4 flex items-center justify-evenly'>

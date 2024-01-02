@@ -74,17 +74,17 @@ function Home() {
                     </div>
 
                     <div>
-                        <img src="https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg" alt="" />
+                        <img src="https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg" alt="" className='m-auto' />
                     </div>
 
                     <div className='p-3 flex items-center justify-between'>
                         <div className='space-x-5'>
-                            <FavoriteBorderOutlinedIcon style={{fontSize:'30px'}} />
-                            <ChatBubbleOutlineOutlinedIcon style={{fontSize:'30px'}} />
-                            <SendOutlinedIcon style={{fontSize:'30px'}} />
+                            <FavoriteBorderOutlinedIcon style={{ fontSize: '30px' }} />
+                            <ChatBubbleOutlineOutlinedIcon style={{ fontSize: '30px' }} />
+                            <SendOutlinedIcon style={{ fontSize: '30px' }} />
                         </div>
                         <div>
-                            <BookmarkBorderOutlinedIcon style={{fontSize:'30px'}} />
+                            <BookmarkBorderOutlinedIcon style={{ fontSize: '30px' }} />
                         </div>
                     </div>
 
@@ -107,17 +107,17 @@ function Home() {
                     </div>
 
                     <div>
-                        <img src="https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="" />
+                        <img src="https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="" className='m-auto' />
                     </div>
 
                     <div className='p-3 flex items-center justify-between'>
                         <div className='space-x-5'>
-                            <FavoriteBorderOutlinedIcon style={{fontSize:'30px'}} />
-                            <ChatBubbleOutlineOutlinedIcon style={{fontSize:'30px'}} />
-                            <SendOutlinedIcon style={{fontSize:'30px'}} />
+                            <FavoriteBorderOutlinedIcon style={{ fontSize: '30px' }} />
+                            <ChatBubbleOutlineOutlinedIcon style={{ fontSize: '30px' }} />
+                            <SendOutlinedIcon style={{ fontSize: '30px' }} />
                         </div>
                         <div>
-                            <BookmarkBorderOutlinedIcon style={{fontSize:'30px'}} />
+                            <BookmarkBorderOutlinedIcon style={{ fontSize: '30px' }} />
                         </div>
                     </div>
 
@@ -140,17 +140,17 @@ function Home() {
                     </div>
 
                     <div>
-                        <img src="https://live.staticflickr.com/65535/50765359822_47886bffc5_b.jpg" alt="" />
+                        <img src="https://live.staticflickr.com/65535/50765359822_47886bffc5_b.jpg" alt="" className='m-auto' />
                     </div>
 
                     <div className='p-3 flex items-center justify-between'>
                         <div className='space-x-5'>
-                            <FavoriteBorderOutlinedIcon style={{fontSize:'30px'}} />
-                            <ChatBubbleOutlineOutlinedIcon style={{fontSize:'30px'}} />
-                            <SendOutlinedIcon style={{fontSize:'30px'}} />
+                            <FavoriteBorderOutlinedIcon style={{ fontSize: '30px' }} />
+                            <ChatBubbleOutlineOutlinedIcon style={{ fontSize: '30px' }} />
+                            <SendOutlinedIcon style={{ fontSize: '30px' }} />
                         </div>
                         <div>
-                            <BookmarkBorderOutlinedIcon style={{fontSize:'30px'}} />
+                            <BookmarkBorderOutlinedIcon style={{ fontSize: '30px' }} />
                         </div>
                     </div>
 
