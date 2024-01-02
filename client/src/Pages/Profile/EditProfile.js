@@ -19,7 +19,7 @@ function EditProfile() {
 
     const [editName, setEditName] = useState(user?.name || '');
     const [editUsername, setEditUsername] = useState(user?.username || '');
-    const [editBio, setEditBio] = useState('');
+    const [editBio, setEditBio] = useState(user?.bio || '');
 
     useEffect(() => {
         // Update the name state once the Redux state is available
