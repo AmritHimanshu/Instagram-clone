@@ -58,7 +58,7 @@ function Profile() {
                                     alt="" className='w-full h-full rounded-full' onClick={() => setProfilePic(`data:${user?.profilePicture.contentType};base64,${uint8ArrayToBase64(user?.profilePicture.data.data)}`)} />}
                         </div>
                         <div>
-                            <div className='font-bold'>1</div>
+                            <div className='font-bold'>{user?.posts.length}</div>
                             <div className='text-[15px]'>Posts</div>
                         </div>
                         <div>
