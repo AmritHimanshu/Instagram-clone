@@ -133,11 +133,11 @@ router.post('/uploadProfilePic', authenticate, upload.single('file'), async (req
 })
 
 router.post('/saveProfile', authenticate, async (req, res) => {
-    const { editName, editUsername, bio } = req.body;
+    const { editName, editUsername, editBio } = req.body;
     try {
         req.rootUser.name = editName;
         req.rootUser.username = editUsername;
-        req.rootUser.bio = bio;
+        req.rootUser.bio = editBio;
 
         await req.rootUser.save();
 

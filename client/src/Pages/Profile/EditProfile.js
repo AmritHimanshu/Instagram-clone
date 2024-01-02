@@ -19,7 +19,7 @@ function EditProfile() {
 
     const [editName, setEditName] = useState(user?.name || '');
     const [editUsername, setEditUsername] = useState(user?.username || '');
-    const [bio, setBio] = useState('');
+    const [editBio, setEditBio] = useState('');
 
     useEffect(() => {
         // Update the name state once the Redux state is available
@@ -28,6 +28,9 @@ function EditProfile() {
         }
         if (user?.username) {
             setEditUsername(user.username);
+        }
+        if (user?.bio) {
+            setEditBio(user.bio);
         }
     }, [user]);
 
@@ -103,7 +106,7 @@ function EditProfile() {
             },
             // credentials: 'include',
             body: JSON.stringify({
-                editName, editUsername, bio
+                editName, editUsername, editBio
             })
         });
         const data = await res.json();
@@ -153,7 +156,7 @@ function EditProfile() {
                     </div>
                     <div className='flex flex-col'>
                         <label htmlFor='bio' className='text-neutral-300'>Bio</label>
-                        <input type="text" id='bio' value={bio} className='p-1 text-[18px] outline-0 bg-black border-b-2' autoComplete='false' onChange={(e) => { setBio(e.target.value); setIsEdit(true) }} />
+                        <input type="text" id='bio' value={editBio} className='p-1 text-[18px] outline-0 bg-black border-b-2' autoComplete='false' onChange={(e) => { setEditBio(e.target.value); setIsEdit(true) }} />
                     </div>
                 </div>
             </div>
