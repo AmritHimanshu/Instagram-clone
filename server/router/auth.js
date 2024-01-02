@@ -132,6 +132,22 @@ router.post('/uploadProfilePic', authenticate, upload.single('file'), async (req
     }
 })
 
+router.post('/saveProfile', authenticate, async (req, res) => {
+    const { editName, editUsername, bio } = req.body;
+    try {
+        req.rootUser.name = editName;
+        req.rootUser.username = editUsername;
+        req.rootUser.bio = bio;
+
+        await req.rootUser.save();
+
+        res.status(201).json({ message: 'Profile updated successfully' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+})
+
 router.get('/getData', authenticate, (req, res) => {
     res.status(200).send(req.rootUser);
 });

@@ -73,9 +73,7 @@ function Profile() {
 
                     <div className='text-start mt-4'>
                         <div className='font-bold'>{user?.name}</div>
-                        <div className='text-[15px]'>still living on mom's pocket money</div>
-                        <div className='text-[15px]'>----- selectively social -----</div>
-                        <div className='text-[15px]'>can't change people, so I changed how I f*ck with them.</div>
+                        <div className='text-[15px]'>{user?.bio}</div>
                     </div>
 
                     <div className='mt-4 flex items-center justify-evenly'>

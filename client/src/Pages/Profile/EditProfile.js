@@ -19,6 +19,7 @@ function EditProfile() {
 
     const [editName, setEditName] = useState(user?.name || '');
     const [editUsername, setEditUsername] = useState(user?.username || '');
+    const [bio, setBio] = useState('');
 
     useEffect(() => {
         // Update the name state once the Redux state is available
@@ -38,12 +39,12 @@ function EditProfile() {
             binary += String.fromCharCode(byte);
         });
         return btoa(binary);
-    }
+    };
 
     const viewProfileImage = (imageUrl) => {
         setProfilePicOption(false);
         setImagePreview(imageUrl);
-    }
+    };
 
     const handleFileChange = (e) => {
         setProfilePicOption(false);
@@ -92,7 +93,27 @@ function EditProfile() {
         } catch (error) {
             console.log("Frontend" + error);
         }
-    }
+    };
+
+    const saveChanges = async () => {
+        const res = await fetch('/saveProfile', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            // credentials: 'include',
+            body: JSON.stringify({
+                editName, editUsername, bio
+            })
+        });
+        const data = await res.json();
+        if (res.status !== 201 || !data) window.alert(`${data.error}`);
+        else {
+            window.alert(`${data.message}`);
+            navigate('/profile');
+            window.location.reload();
+        }
+    };
 
 
 
@@ -104,7 +125,7 @@ function EditProfile() {
                         <KeyboardBackspaceIcon style={{ fontSize: '35px' }} onClick={() => navigate('/profile')} />
                         <div className='mx-5 text-[23px] font-bold'>Edit profile</div>
                     </div>
-                    {isEdit && <div>
+                    {isEdit && <div onClick={saveChanges}>
                         <CheckIcon style={{ fontSize: '35px' }} />
                     </div>}
                 </div>
@@ -132,7 +153,7 @@ function EditProfile() {
                     </div>
                     <div className='flex flex-col'>
                         <label htmlFor='bio' className='text-neutral-300'>Bio</label>
-                        <input type="text" id='bio' className='p-1 text-[18px] outline-0 bg-black border-b-2' autoComplete='false' />
+                        <input type="text" id='bio' value={bio} className='p-1 text-[18px] outline-0 bg-black border-b-2' autoComplete='false' onChange={(e) => { setBio(e.target.value); setIsEdit(true) }} />
                     </div>
                 </div>
             </div>
