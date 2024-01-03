@@ -203,13 +203,13 @@ router.get('/getUserPost', authenticate, async (req, res) => {
 })
 
 router.get('/getAllPost', async (req, res) => {
-    // res.status(200).json({message:"hii this is get all post"})
-    // try {
+    try {
     const allPost = await Post.find();
         res.status(200).send(allPost);
-    // } catch (error) {
-    //     console.log("GetAllPost" + error);
-    // }
+    } catch (error) {
+        console.log("GetAllPost" + error);
+        res.status(500).send({error:"This is error"})
+    }
 })
 
 router.get('/getData', authenticate, (req, res) => {
