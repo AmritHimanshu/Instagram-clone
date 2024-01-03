@@ -20,7 +20,7 @@ function App() {
 
   const getData = async () => {
     try {
-      const res = await fetch('https://instagram-clone-api-xi.vercel.app/getData', {
+      const res = await fetch('/getData', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'

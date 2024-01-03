@@ -39,7 +39,7 @@ function Profile() {
 
     const userPost = async () => {
         try {
-            const res = await fetch('https://instagram-clone-api-xi.vercel.app/getUserPost', {
+            const res = await fetch('/getUserPost', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -85,7 +85,7 @@ function Profile() {
                                     alt="" className='w-full h-full rounded-full' onClick={() => setProfilePic(`data:${user?.profilePicture.contentType};base64,${uint8ArrayToBase64(user?.profilePicture.data.data)}`)} />}
                         </div>
                         <div>
-                            <div className='font-bold'>{user?.posts.length}</div>
+                            <div className='font-bold'>{posts?.length}</div>
                             <div className='text-[15px]'>Posts</div>
                         </div>
                         <div>

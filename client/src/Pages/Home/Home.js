@@ -15,7 +15,7 @@ function Home() {
 
     const getPosts = async () => {
         try {
-            const res = await fetch('https://instagram-clone-api-xi.vercel.app/getAllPost', {
+            const res = await fetch('/getAllPost', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -28,7 +28,7 @@ function Home() {
             }
             else {
                 const data = await res.json();
-                setAllPosts(data);
+                setAllPosts(data.reverse());
             }
         } catch (error) {
             console.log("getPosts" + error);

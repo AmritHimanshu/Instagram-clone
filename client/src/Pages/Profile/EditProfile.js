@@ -76,7 +76,7 @@ function EditProfile() {
             const formData = new FormData();
             formData.append('file', profileImageFile);
 
-            const res = await fetch('https://instagram-clone-api-xi.vercel.app/uploadProfilePic', {
+            const res = await fetch('/uploadProfilePic', {
                 method: 'POST',
                 // Header is not required here
                 headers: {

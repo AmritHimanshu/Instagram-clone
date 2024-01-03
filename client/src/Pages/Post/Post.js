@@ -33,7 +33,7 @@ function Post() {
             formData.append('image', imageFile);
             formData.append('caption', caption);
 
-            const res = await fetch('https://instagram-clone-api-xi.vercel.app/uploadPost', {
+            const res = await fetch('/uploadPost', {
                 method: 'POST',
                 headers: {
                     // 'Content-Type': 'multipart/form-data',
