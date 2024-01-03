@@ -11,6 +11,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 const User = require('../model/userSchema');
+const Post = require('../model/postSchema');
 
 
 router.post('/register', async (req, res) => {
@@ -151,22 +152,39 @@ router.post('/saveProfile', authenticate, async (req, res) => {
 router.post('/uploadPost', authenticate, upload.single('image'), async (req, res) => {
     try {
         const imageFile = req.file;
+        const postImage = {
+            data: imageFile.buffer,
+            contentType:imageFile.mimetype,
+        }
         const caption = req.body.caption;
+        const username = req.rootUser.username;
+        const userImage = req.rootUser.profilePicture;
 
-        const post = {
-            image: {
-                data: imageFile.buffer,
-                contentType: imageFile.mimetype,
-            },
-            caption: caption,
-        };
+        const post = new Post({ postImage, caption, username, userImage });
+        const postUpload = await post.save();
 
-        const userPost = await req.rootUser.addPost(post);
+        if (postUpload) {
+            return res.status(201).json({ message: "Profile picture uploaded successfully" });
+        }
+        else {
+            return res.status(500).json({ error: "Post is not uploaded" });
+        }
 
+        // // First way for userSchema
+        // const post = {
+        //     image: {
+        //         data: imageFile.buffer,
+        //         contentType: imageFile.mimetype,
+        //     },
+        //     caption: caption,
+        // };
+        // const userPost = await req.rootUser.addPost(post);
+
+        // // Second way for userSchema
         // req.rootUser.posts.push(post);
         // await req.rootUser.save();
 
-        res.status(201).send({ message: 'Profile picture uploaded successfully' });
+        // res.status(201).send({ message: 'Profile picture uploaded successfully' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
