@@ -102,7 +102,7 @@ function Home() {
                     <div key={index} className='my-3'>
                         <div className='p-3 flex items-center justify-between'>
                             <div className='flex items-center space-x-2'>
-                                <img src={`data:${post.userImage.contentType};base64,${uint8ArrayToBase64(post.userImage.data.data)}`} alt="" className='w-[35px] h-[35px] rounded-full' />
+                                <img src={`data:${post.userImage?.contentType};base64,${uint8ArrayToBase64(post.userImage?.data.data)}`} alt="" className='w-[35px] h-[35px] rounded-full' />
                                 <span className='font-bold'>{post.username}</span>
                             </div>
                             <div className='flex items-center space-x-3'>
@@ -112,7 +112,7 @@ function Home() {
                         </div>
 
                         <div>
-                            <img src={`data:${post.postImage.contentType};base64,${uint8ArrayToBase64(post.postImage.data.data)}`} alt="" className='m-auto' />
+                            <img src={`data:${post.postImage?.contentType};base64,${uint8ArrayToBase64(post.postImage?.data.data)}`} alt="" className='m-auto' />
                         </div>
 
                         <div className='p-3 flex items-center justify-between'>
