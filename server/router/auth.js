@@ -25,10 +25,10 @@ router.post('/register', async (req, res) => {
         const emailExist = await User.findOne({ email: email });
         const usernameExist = await User.findOne({ username: username });
         if (emailExist) {
-            res.status(422).json({ error: "Email id already registered" });
+            return res.status(422).json({ error: "Email id already registered" });
         }
         else if (usernameExist) {
-            res.status(422).json({ error: "Username is already registered" });
+            return res.status(422).json({ error: "Username is already registered" });
         }
         else {
             const user = new User({ email, username, name, phone, password, cpassword });
@@ -210,7 +210,7 @@ router.get('/getAllPost', async (req, res) => {
         res.status(200).send(allPost);
     } catch (error) {
         console.log("GetAllPost" + error);
-        res.status(500).send({error:"This is error"})
+        res.status(500).send({error:error})
     }
 })
 

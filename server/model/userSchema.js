@@ -51,10 +51,10 @@ const userSchema = new mongoose.Schema({
     //         }
     //     }
     // ],
-    // profilePicture: {
-    //     data: Buffer,
-    //     contentType: String
-    // },
+    profilePicture: {
+        data: Buffer,
+        contentType: String
+    },
     bio: {
         type: String,
         default: true,
