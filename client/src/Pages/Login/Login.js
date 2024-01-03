@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Logo from '../Images/InstagramTextLogo.png'
-import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
 
@@ -16,6 +16,33 @@ function Login() {
         let value = e.target.value;
         setUser({ ...user, [name]: value });
     }
+
+    const callLogOut = async () => {
+        try {
+            const res = await fetch('/logout', {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json', // For cookies
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include' // For tokens
+            });
+
+            const data = await res.json();
+
+            if (!res.status === 200) {
+                const error = new Error(res.error);
+                throw error;
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        callLogOut();
+    }, []);
 
     const submitForm = async (e) => {
         e.preventDefault();
