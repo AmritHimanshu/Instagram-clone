@@ -39,22 +39,22 @@ const userSchema = new mongoose.Schema({
             }
         }
     ],
-    posts: [
-        {
-            image: {
-                data: Buffer,
-                contentType: String
-            },
-            caption: {
-                type: String,
-                required: true,
-            }
-        }
-    ],
-    profilePicture: {
-        data: Buffer,
-        contentType: String
-    },
+    // posts: [
+    //     {
+    //         image: {
+    //             data: Buffer,
+    //             contentType: String
+    //         },
+    //         caption: {
+    //             type: String,
+    //             required: true,
+    //         }
+    //     }
+    // ],
+    // profilePicture: {
+    //     data: Buffer,
+    //     contentType: String
+    // },
     bio: {
         type: String,
         default: true,
