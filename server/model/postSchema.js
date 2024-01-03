@@ -13,6 +13,10 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    // userImage: {
+    //     data: Buffer,
+    //     contentType: String
+    // }
 });
 
 const Post = mongoose.model('POST', postSchema);
