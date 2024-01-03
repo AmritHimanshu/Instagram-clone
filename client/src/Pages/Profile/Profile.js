@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
@@ -17,6 +17,7 @@ function Profile() {
     const [storyStatus, setStoryStatus] = useState(true);
     const [postStatus, setPostStatus] = useState('posts');
     const [profilePic, setProfilePic] = useState(null);
+    const [posts, setPosts] = useState();
 
     const user = useSelector(selectUser);
 
@@ -35,6 +36,32 @@ function Profile() {
         });
         return btoa(binary);
     }
+
+    const userPost = async () => {
+        try {
+            const res = await fetch('/getUserPost', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+
+            if (res.status !== 200) {
+                const error = new Error(res.error);
+                throw error;
+            }
+            else {
+                const data = await res.json();
+                setPosts(data);
+            }
+        } catch (error) {
+            console.log("UserPost" + error);
+        }
+    }
+
+    useEffect(() => {
+        userPost();
+    },[user])
 
     return (
         <>
@@ -114,9 +141,9 @@ function Profile() {
                     </div>
                     {postStatus === 'posts' && <div className='mt-1 grid grid-cols-3 gap-1'>
 
-                        {user?.posts.map((post, index) => (
+                        {posts?.map((post, index) => (
                             <div key={index}>
-                                <img src={`data:${post.image.contentType};base64,${uint8ArrayToBase64(post.image.data.data)}`} alt="" />
+                                <img src={`data:${post.postImage.contentType};base64,${uint8ArrayToBase64(post.postImage.data.data)}`} alt="" />
                             </div>
                         ))}
 

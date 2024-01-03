@@ -193,6 +193,15 @@ router.post('/uploadPost', authenticate, upload.single('image'), async (req, res
     }
 })
 
+router.get('/getUserPost', authenticate, async (req, res) => {
+    try {
+        const userPost = await Post.find({ username: req.rootUser.username });
+        res.status(200).send(userPost);
+    } catch (error) {
+        console.log("GetUserPost" + error);
+    }
+})
+
 router.get('/getData', authenticate, (req, res) => {
     res.status(200).send(req.rootUser);
 });
