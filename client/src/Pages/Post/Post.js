@@ -38,6 +38,7 @@ function Post() {
                 headers: {
                     // 'Content-Type': 'multipart/form-data',
                 },
+                credentials: 'include', // Include cookies in the request
                 body: formData,
             });
 

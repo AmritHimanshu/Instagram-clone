@@ -109,7 +109,7 @@ function EditProfile() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            // credentials: 'include',
+            credentials: 'include', // Include cookies in the request
             body: JSON.stringify({
                 editName, editUsername, editBio
             })
