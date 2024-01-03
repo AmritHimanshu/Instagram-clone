@@ -12,7 +12,7 @@ require('./db/conn');
 
 app.use(cors({
     // origin:true,
-    origin: 'https://instagram-clone-api-xi.vercel.app',
+    origin: 'https://instagram-clone-gamma-cyan-50.vercel.app',
     credentials: true,  // Enable credentials (cookies)
 }));
 
