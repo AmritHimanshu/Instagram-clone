@@ -206,8 +206,7 @@ router.get('/getAllPost', async (req, res) => {
     // res.status(200).json({message:"hii this is get all post"})
     // try {
     // const allPost = await Post.find();
-    const allPost = await User.find();
-        res.status(200).send(allPost);
+        res.status(200).send("jhgg");
     // } catch (error) {
     //     console.log("GetAllPost" + error);
     // }
