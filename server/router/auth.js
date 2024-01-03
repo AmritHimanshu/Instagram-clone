@@ -167,8 +167,10 @@ router.post('/uploadPost', authenticate, upload.single('image'), async (req, res
             return res.status(201).json({ message: "Profile picture uploaded successfully" });
         }
         else {
-            return res.status(500).json({ error: "Post is not uploaded" });
+            return res.status(500).json({ error: "Post is not uploaded try after sometime" });
         }
+
+        // // ---------- Saving Post in the user collection ----------
 
         // // First way for userSchema
         // const post = {
