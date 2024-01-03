@@ -10,10 +10,11 @@ const PORT = process.env.PORT;
 
 require('./db/conn');
 
-// app.use(cors({
-//     origin: true,
-//     credentials: true,  // Enable credentials (cookies)
-// }));
+app.use(cors({
+    // origin:true,
+    origin: 'https://instagram-clone-api-xi.vercel.app/',
+    credentials: true,  // Enable credentials (cookies)
+}));
 
 app.use(express.json());
 

@@ -16,6 +16,8 @@ function App() {
 
   const dispatch = useDispatch();
 
+  // https://instagram-clone-api-xi.vercel.app/
+
   const getData = async () => {
     try {
       const res = await fetch('/getData', {
