@@ -16,11 +16,11 @@ function App() {
 
   const dispatch = useDispatch();
 
-  // https://instagram-clone-api-xi.vercel.app/
+  // https://instagram-clone-api-xi.vercel.app
 
   const getData = async () => {
     try {
-      const res = await fetch('/getData', {
+      const res = await fetch('https://instagram-clone-api-xi.vercel.app/getData', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'

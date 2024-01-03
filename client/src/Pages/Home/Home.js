@@ -15,7 +15,7 @@ function Home() {
 
     const getPosts = async () => {
         try {
-            const res = await fetch('/getAllPost', {
+            const res = await fetch('https://instagram-clone-api-xi.vercel.app/getAllPost', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'

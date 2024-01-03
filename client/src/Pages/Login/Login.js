@@ -19,7 +19,7 @@ function Login() {
 
     const callLogOut = async () => {
         try {
-            const res = await fetch('/logout', {
+            const res = await fetch('https://instagram-clone-api-xi.vercel.app/logout', {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json', // For cookies
@@ -49,7 +49,7 @@ function Login() {
         const { email, password } = user;
         if (!email || !password) return window.alert("Fill all the fields");
 
-        const res = await fetch('/signin', {
+        const res = await fetch('https://instagram-clone-api-xi.vercel.app/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
