@@ -12,15 +12,15 @@ require('./db/conn');
 
 app.use(cors({
     // origin:true,
-    origin: 'https://instagram-clone-gamma-cyan-50.vercel.app',
+    origin: 'https://instagram-clone-gamma-cyan-50.vercel.app/',
     credentials: true,  // Enable credentials (cookies)
 }));
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Credentials', true);
-    // ...
-    next();
-});
+// app.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Credentials', true);
+//     // ...
+//     next();
+// });
 
 app.use(express.json());
 
