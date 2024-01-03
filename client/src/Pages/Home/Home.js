@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Footer from '../Footer/Footer';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
@@ -10,6 +10,43 @@ import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutline
 import Logo from '../Images/InstagramTextLogo.png';
 
 function Home() {
+
+    const [allPosts, setAllPosts] = useState();
+
+    const getPosts = async () => {
+        try {
+            const res = await fetch('/getAllPost', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+
+            if (res.status !== 200) {
+                const error = new Error(res.error);
+                throw error;
+            }
+            else {
+                const data = await res.json();
+                setAllPosts(data);
+            }
+        } catch (error) {
+            console.log("getPosts" + error);
+        }
+    }
+
+    useEffect(() => {
+        getPosts();
+    }, [])
+
+    function uint8ArrayToBase64(uint8Array) {
+        let binary = '';
+        uint8Array.forEach((byte) => {
+            binary += String.fromCharCode(byte);
+        });
+        return btoa(binary);
+    }
+
     return (
         <>
             {/* Header */}
@@ -61,104 +98,40 @@ function Home() {
                 </div>
 
                 {/* Post Section */}
-                <div className='my-3'>
-                    <div className='p-3 flex items-center justify-between'>
-                        <div className='flex items-center space-x-2'>
-                            <img src="https://img.freepik.com/free-photo/photo-joyful-dark-skinned-woman-dances-carefree-keeps-fists-raised-looks-positively-aside-dressed-casual-jumper-moves_273609-45244.jpg" alt="" className='w-[35px] h-[35px] rounded-full' />
-                            <span className='font-bold'>mech_queen_</span>
+                {allPosts?.map((post, index) => (
+                    <div key={index} className='my-3'>
+                        <div className='p-3 flex items-center justify-between'>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`data:${post.userImage.contentType};base64,${uint8ArrayToBase64(post.userImage.data.data)}`} alt="" className='w-[35px] h-[35px] rounded-full' />
+                                <span className='font-bold'>{post.username}</span>
+                            </div>
+                            <div className='flex items-center space-x-3'>
+                                <div className='py-2 px-3 text-white font-bold bg-neutral-80 border-[1px] rounded-xl'>Follow</div>
+                                <MoreVertOutlinedIcon />
+                            </div>
                         </div>
-                        <div className='flex items-center space-x-3'>
-                            <div className='py-2 px-3 text-white font-bold bg-neutral-80 border-[1px] rounded-xl'>Follow</div>
-                            <MoreVertOutlinedIcon />
-                        </div>
-                    </div>
 
-                    <div>
-                        <img src="https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg" alt="" className='m-auto' />
-                    </div>
-
-                    <div className='p-3 flex items-center justify-between'>
-                        <div className='space-x-5'>
-                            <FavoriteBorderOutlinedIcon style={{ fontSize: '30px' }} />
-                            <ChatBubbleOutlineOutlinedIcon style={{ fontSize: '30px' }} />
-                            <SendOutlinedIcon style={{ fontSize: '30px' }} />
-                        </div>
                         <div>
-                            <BookmarkBorderOutlinedIcon style={{ fontSize: '30px' }} />
+                            <img src={`data:${post.postImage.contentType};base64,${uint8ArrayToBase64(post.postImage.data.data)}`} alt="" className='m-auto' />
+                        </div>
+
+                        <div className='p-3 flex items-center justify-between'>
+                            <div className='space-x-5'>
+                                <FavoriteBorderOutlinedIcon style={{ fontSize: '30px' }} />
+                                <ChatBubbleOutlineOutlinedIcon style={{ fontSize: '30px' }} />
+                                <SendOutlinedIcon style={{ fontSize: '30px' }} />
+                            </div>
+                            <div>
+                                <BookmarkBorderOutlinedIcon style={{ fontSize: '30px' }} />
+                            </div>
+                        </div>
+
+                        <div className='px-3 text-start'>
+                            <div>48,185 likes</div>
+                            <div><span className='font-bold'>{post.username}</span> {post.caption}</div>
                         </div>
                     </div>
-
-                    <div className='px-3 text-start'>
-                        <div>48,185 likes</div>
-                        <div><span className='font-bold'>mech_queen_</span> Feel the pic</div>
-                    </div>
-                </div>
-
-                <div className='my-3'>
-                    <div className='p-3 flex items-center justify-between'>
-                        <div className='flex items-center space-x-2'>
-                            <img src="https://www.indiafilings.com/learn/wp-content/uploads/2023/03/Can-a-single-person-own-a-firm-in-India.jpg" alt="" className='w-[35px] h-[35px] rounded-full' />
-                            <span className='font-bold'>shalinikumar231</span>
-                        </div>
-                        <div className='flex items-center space-x-3'>
-                            <div className='py-2 px-3 text-white font-bold bg-neutral-80 border-[1px] rounded-xl'>Follow</div>
-                            <MoreVertOutlinedIcon />
-                        </div>
-                    </div>
-
-                    <div>
-                        <img src="https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="" className='m-auto' />
-                    </div>
-
-                    <div className='p-3 flex items-center justify-between'>
-                        <div className='space-x-5'>
-                            <FavoriteBorderOutlinedIcon style={{ fontSize: '30px' }} />
-                            <ChatBubbleOutlineOutlinedIcon style={{ fontSize: '30px' }} />
-                            <SendOutlinedIcon style={{ fontSize: '30px' }} />
-                        </div>
-                        <div>
-                            <BookmarkBorderOutlinedIcon style={{ fontSize: '30px' }} />
-                        </div>
-                    </div>
-
-                    <div className='px-3 text-start'>
-                        <div>48,185 likes</div>
-                        <div><span className='font-bold'>shalinikumar231</span> Feel the pic</div>
-                    </div>
-                </div>
-
-                <div className='my-3'>
-                    <div className='p-3 flex items-center justify-between'>
-                        <div className='flex items-center space-x-2'>
-                            <img src="https://live.staticflickr.com/65535/50765359822_47886bffc5_b.jpg" alt="" className='w-[35px] h-[35px] rounded-full' />
-                            <span className='font-bold'>ezsnippet</span>
-                        </div>
-                        <div className='flex items-center space-x-3'>
-                            <div className='py-2 px-3 text-white font-bold bg-neutral-80 border-[1px] rounded-xl'>Follow</div>
-                            <MoreVertOutlinedIcon />
-                        </div>
-                    </div>
-
-                    <div>
-                        <img src="https://live.staticflickr.com/65535/50765359822_47886bffc5_b.jpg" alt="" className='m-auto' />
-                    </div>
-
-                    <div className='p-3 flex items-center justify-between'>
-                        <div className='space-x-5'>
-                            <FavoriteBorderOutlinedIcon style={{ fontSize: '30px' }} />
-                            <ChatBubbleOutlineOutlinedIcon style={{ fontSize: '30px' }} />
-                            <SendOutlinedIcon style={{ fontSize: '30px' }} />
-                        </div>
-                        <div>
-                            <BookmarkBorderOutlinedIcon style={{ fontSize: '30px' }} />
-                        </div>
-                    </div>
-
-                    <div className='px-3 text-start'>
-                        <div>48,185 likes</div>
-                        <div><span className='font-bold'>ezsnippet</span> Feel the pic</div>
-                    </div>
-                </div>
+                ))}
             </div>
             <Footer />
         </>

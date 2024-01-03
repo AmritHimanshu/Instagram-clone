@@ -164,7 +164,7 @@ router.post('/uploadPost', authenticate, upload.single('image'), async (req, res
         const postUpload = await post.save();
 
         if (postUpload) {
-            return res.status(201).json({ message: "Profile picture uploaded successfully" });
+            return res.status(201).json({ message: "Post uploaded successfully" });
         }
         else {
             return res.status(500).json({ error: "Post is not uploaded try after sometime" });
@@ -199,6 +199,15 @@ router.get('/getUserPost', authenticate, async (req, res) => {
         res.status(200).send(userPost);
     } catch (error) {
         console.log("GetUserPost" + error);
+    }
+})
+
+router.get('/getAllPost', async (req, res) => {
+    try {
+        const allPost = await Post.find();
+        res.status(200).send(allPost);
+    } catch (error) {
+        console.log("GetAllPost" + error);
     }
 })
 
