@@ -49,7 +49,7 @@ function Post() {
 
             if (dataCloudinary && dataCloudinary.url) {
                 const imageUrl = dataCloudinary.url;
-                const res = await fetch('/uploadPost', {
+                const res = await fetch('https://instagram-clone-1-api.onrender.com/uploadPost', {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/json',

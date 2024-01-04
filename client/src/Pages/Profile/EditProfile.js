@@ -80,7 +80,7 @@ function EditProfile() {
 
             if (dataCloudinary) {
                 setImageUrl(dataCloudinary.url);
-                const res = await fetch('/saveProfile', {
+                const res = await fetch('https://instagram-clone-1-api.onrender.com/saveProfile', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
