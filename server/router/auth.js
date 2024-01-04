@@ -194,6 +194,37 @@ router.get('/getAllPost', authenticate, async (req, res) => {
     }
 })
 
+// Put is used when we update the data in the schema
+router.put('/like', authenticate, async (req, res) => {
+    try {
+        const like = await Post.findByIdAndUpdate(req.body.postId, {
+            $push: { likes: req.userID }
+        }, {
+            new: true
+        }).populate("postedBy", "_id username profilePic");
+        if (like) {
+            return res.status(201).json(like);
+        }
+    } catch (error) {
+        return res.status(422).json({ error: error });
+    }
+})
+
+router.put('/unlike', authenticate, async (req, res) => {
+    try {
+        const unlike = await Post.findByIdAndUpdate(req.body.postId, {
+            $pull: { likes: req.userID }
+        }, {
+            new: true
+        }).populate("postedBy", "_id username profilePic");
+        if (unlike) {
+            return res.status(201).json(unlike);
+        }
+    } catch (error) {
+        return res.status(422).json({ error: error });
+    }
+})
+
 router.get('/getData', authenticate, (req, res) => {
     res.status(200).send(req.rootUser);
 });

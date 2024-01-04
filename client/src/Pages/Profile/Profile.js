@@ -55,7 +55,7 @@ function Profile() {
     useEffect(() => {
         userPost();
     }, [user])
-    
+
     useEffect(() => {
         // if (!user) navigate('/login');
     }, [])
@@ -68,7 +68,7 @@ function Profile() {
                     <div className='text-[19px] font-bold flex items-center'>{user?.username} {user && <KeyboardArrowDownIcon />}</div>
                     <div className='flex items-center space-x-5'>
                         <div className='w-[30px] h-[30px] border-2 rounded-lg'><AddIcon onClick={() => navigate('/uploadPost')} /></div>
-                        <div><MenuIcon style={{ fontSize: '40px' }} onClick={()=>navigate('/login')} /></div>
+                        <div><MenuIcon style={{ fontSize: '40px' }} onClick={() => navigate('/login')} /></div>
                     </div>
                 </div>
 
@@ -78,8 +78,8 @@ function Profile() {
                         <div className='w-[90px] h-[90px] border-2 rounded-full overflow-hidden'>
                             {user?.profilePic &&
                                 <img
-                                src={user?.profilePic}
-                                alt="" className='w-full h-full rounded-full' onClick={() => setProfilePic(user?.profilePic)} />}
+                                    src={user?.profilePic}
+                                    alt="" className='w-full h-full rounded-full' onClick={() => setProfilePic(user?.profilePic)} />}
                         </div>
                         <div>
                             <div className='font-bold'>{posts?.length}</div>
@@ -140,9 +140,9 @@ function Profile() {
 
                         {posts?.map((post, index) => (
                             <div key={index}>
-                            <img src={post.photo} alt="" />
+                                <img src={post.photo} alt="" />
                             </div>
-                         ))}
+                        ))}
 
                     </div>}
                 </div>

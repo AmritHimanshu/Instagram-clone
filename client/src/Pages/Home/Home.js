@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
 import Footer from '../Footer/Footer';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import AddIcon from '@mui/icons-material/Add';
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
@@ -46,6 +47,74 @@ function Home() {
         // if (!user) navigate('/login');
         getPosts();
     }, [])
+
+
+    const likePost = async (postId) => {
+        try {
+            const res = await fetch('https://instagram-clone-1-api.onrender.com/like', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    postId: postId
+                })
+            });
+
+            const data = await res.json();
+
+            if (res.status !== 201 || !data) {
+                const error = new Error(res.error);
+                throw error;
+            }
+            else {
+                // For re-rendering the liked posts
+                const newPost = posts.map((post) => {
+                    if (post._id === data._id) return data;
+                    else return post;
+                })
+                setPosts(newPost);
+            }
+
+        } catch (error) {
+            console.log("likes ", error);
+        }
+    }
+
+    const unlikePost = async (postId) => {
+        try {
+            const res = await fetch('https://instagram-clone-1-api.onrender.com/unlike', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    postId: postId
+                })
+            });
+
+            const data = await res.json();
+
+            if (res.status !== 201 || !data) {
+                const error = new Error(res.error);
+                throw error;
+            }
+            else {
+                // For re-rendering the liked posts
+                const newPost = posts.map((post) => {
+                    if (post._id === data._id) return data;
+                    else return post;
+                })
+                setPosts(newPost);
+            }
+
+        } catch (error) {
+            console.log("unlike ", error);
+        }
+    }
+
 
     return (
         <>
@@ -116,8 +185,10 @@ function Home() {
                         </div>
 
                         <div className='p-3 flex items-center justify-between'>
-                            <div className='space-x-5'>
-                                <FavoriteBorderOutlinedIcon style={{ fontSize: '30px' }} />
+                            <div className='space-x-5 flex items-center'>
+                                {
+                                    post?.likes.includes(user?._id) ? <FavoriteIcon style={{ fontSize: '30px', color: "red" }} onClick={() => { unlikePost(post._id) }} /> : <FavoriteBorderOutlinedIcon style={{ fontSize: '30px' }} onClick={() => { likePost(post._id) }} />
+                                }
                                 <ChatBubbleOutlineOutlinedIcon style={{ fontSize: '30px' }} />
                                 <SendOutlinedIcon style={{ fontSize: '30px' }} />
                             </div>
@@ -127,8 +198,8 @@ function Home() {
                         </div>
 
                         <div className='px-3 text-start'>
-                            <div>48,185 likes</div>
-                            <div><span className='font-bold mr-2'>Vikash</span>{post.caption}</div>
+                            <div>{post.likes.length} likes</div>
+                            <div><span className='font-bold mr-2'>{post.postedBy.username}</span>{post.caption}</div>
                         </div>
                     </div>
                 ))}
