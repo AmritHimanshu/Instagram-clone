@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../features/userSlice';
 import Footer from '../Footer/Footer';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
@@ -12,6 +15,9 @@ import Logo from '../Images/InstagramTextLogo.png';
 function Home() {
 
     const [allPosts, setAllPosts] = useState();
+
+    const user = useSelector(selectUser);
+    const navigate = useNavigate();
 
     const getPosts = async () => {
         try {
@@ -36,6 +42,7 @@ function Home() {
     }
 
     useEffect(() => {
+        if (!user) navigate('/login');
         // getPosts();
     }, [])
 

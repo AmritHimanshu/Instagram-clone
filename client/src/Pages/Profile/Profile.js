@@ -54,7 +54,11 @@ function Profile() {
 
     useEffect(() => {
         userPost();
-    },[user])
+    }, [user])
+    
+    useEffect(() => {
+        if (!user) navigate('/login');
+    }, [])
 
     return (
         <>

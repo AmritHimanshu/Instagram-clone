@@ -57,6 +57,7 @@ function App() {
           <Route path='/uploadPost' element={<Post/>} />
           <Route path='/login' element={<Login/>} />
           <Route path='/register' element={<Register/>} />
+          <Route path='*' element={<Home/>} />
         </Routes>
       </Router>
     </div>

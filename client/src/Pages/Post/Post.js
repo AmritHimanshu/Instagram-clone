@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../features/userSlice';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import CheckIcon from '@mui/icons-material/Check';
 
@@ -9,6 +11,8 @@ function Post() {
     const [caption, setCaption] = useState('');
     const [imagePreview, setImagePreview] = useState('');
     const [isEdit, setIsEdit] = useState(false);
+
+    const user = useSelector(selectUser);
 
     const navigate = useNavigate();
 
@@ -69,6 +73,11 @@ function Post() {
             console.log("Post: ", error);
         }
     }
+
+    useEffect(() => {
+        if (!user) navigate('/login');
+        console.log(user)
+    }, [])
 
     return (
         <>

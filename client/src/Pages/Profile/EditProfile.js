@@ -103,6 +103,10 @@ function EditProfile() {
         }
     };
 
+    useEffect(() => {
+        if (!user) navigate('/login');
+    }, [])
+
 
 
     return (
