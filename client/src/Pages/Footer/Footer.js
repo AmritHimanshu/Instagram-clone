@@ -17,7 +17,7 @@ function Footer() {
     const user = useSelector(selectUser);
 
     return (
-        <div className='py-3 px-1 w-[100%] flex items-center justify-between border-t-[1px] border-neutral-700 absolute bottom-0'>
+        <div className='py-3 px-1 flex items-center justify-between border-t-[1px] border-neutral-700'>
             <div><NavLink to="/">{pathname === "/" ? <HomeIcon style={{ fontSize: "40px" }} /> : <HomeOutlinedIcon style={{ fontSize: "40px" }} /> }</NavLink></div>
             <div><SearchOutlinedIcon style={{ fontSize: "40px" }} /></div>
             <div className='border-2 rounded-lg max-w-min'><AddIcon style={{ fontSize: "30px" }} onClick={() => navigate('/uploadPost')} /></div>

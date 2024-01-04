@@ -87,7 +87,7 @@ function EditProfile() {
                     },
                     credentials: 'include', // Include cookies in the request
                     body: JSON.stringify({
-                        editName, editUsername, editBio, pic:imageUrl
+                        editName, editUsername, editBio, pic: imageUrl
                     })
                 });
                 const data = await res.json();
@@ -146,7 +146,7 @@ function EditProfile() {
             </div>
 
             {/* Profile pic option */}
-            {profilePicOption && <div className='h-[100vh] w-[100%] backdrop-blur-md absolute'>
+            <div className={`w-[100%] backdrop-blur-md absolute bottom-0 ${profilePicOption ? "h-[100vh] opacity-100" : "h-0 opacity-0"} duration-300`}>
                 <div className='h-[20vh] absolute bottom-10 w-[100%] bg-black flex flex-col items-center justify-center'>
                     <div className='w-[100%] p-2 text-end' onClick={() => setProfilePicOption(false)}>
                         <CloseIcon />
@@ -159,19 +159,17 @@ function EditProfile() {
                         </div>
                     </div>
                 </div>
-            </div>}
+            </div>
 
             {/* Previewing profile pic */}
-            {imagePreview &&
-                <div className='h-[100vh] w-[100%] absolute backdrop-blur-xl flex flex-col items-center justify-center space-y-3'>
-                    <div className='w-[100%] p-2 text-end' onClick={() => setImagePreview(null)}>
-                        <CloseIcon />
-                    </div>
-                    <div>
-                        <img src={imagePreview} alt="" />
-                    </div>
+            <div className={`w-[100%] absolute backdrop-blur-xl flex flex-col items-center justify-center space-y-3 ${imagePreview ? 'h-[100vh] opacity-100' : 'h-0 opacity-0'} duration-300`}>
+                <div className='w-[100%] p-2 text-end' onClick={() => setImagePreview(null)}>
+                    <CloseIcon />
                 </div>
-            }
+                <div>
+                    <img src={imagePreview} alt="" />
+                </div>
+            </div>
 
             {/* Previewing selected image file */}
             {selectedImagePreview &&

@@ -48,7 +48,7 @@ function App() {
   }, [])
 
   return (
-    <div className="App bg-black text-white max-w-[414px] min-h-[100vh] m-auto flex flex-col justify-between">
+    <div className="App bg-black text-white max-w-[414px] min-h-[100vh] m-auto flex flex-col justify-between relative">
       <Router>
         <Routes>
           <Route path='/' element={<Home />} />
