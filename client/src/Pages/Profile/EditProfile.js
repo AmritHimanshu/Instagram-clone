@@ -7,14 +7,16 @@ import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 
 function EditProfile() {
-    
+
     const navigate = useNavigate();
     const user = useSelector(selectUser);
 
     const [profilePicOption, setProfilePicOption] = useState(false);
     const [imagePreview, setImagePreview] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedImagePreview, setSelectedImagePreview] = useState(null);
     const [profileImageFile, setProfileImageFile] = useState(null);
+    const [imageUrl, setImageUrl] = useState('');
     const [isEdit, setIsEdit] = useState(false);
 
     const [editName, setEditName] = useState(user?.name || '');
@@ -33,16 +35,6 @@ function EditProfile() {
             setEditBio(user.bio);
         }
     }, [user]);
-
-
-    // Helper function to convert Uint8Array to Base64
-    function uint8ArrayToBase64(uint8Array) {
-        let binary = '';
-        uint8Array.forEach((byte) => {
-            binary += String.fromCharCode(byte);
-        });
-        return btoa(binary);
-    };
 
     const viewProfileImage = (imageUrl) => {
         setProfilePicOption(false);
@@ -63,63 +55,51 @@ function EditProfile() {
 
         reader.onload = (e) => {
             setSelectedImage(e.target.result);
+            setSelectedImagePreview(e.target.result);
         };
 
         // Read the selected file as a data URL
         reader.readAsDataURL(file);
     };
 
-    const uploadPic = async () => {
-        // setSelectedImage(false);
+    const saveChanges = async () => {
+        // Uploading images to cloudinary
+        const form = new FormData();
+        form.append("file", profileImageFile);
+        form.append("upload_preset", "instagram-clone");
+        form.append("cloud_name", "himanshu-instagram-clone-cloud");
+
         try {
-
-            const formData = new FormData();
-            formData.append('file', profileImageFile);
-
-            const res = await fetch('/uploadProfilePic', {
+            // // https://api.cloudinary.com/v1_1/himanshu-instagram-clone-cloud/image/upload
+            const resCloudinary = await fetch("https://api.cloudinary.com/v1_1/himanshu-instagram-clone-cloud/image/upload", {
                 method: 'POST',
-                // Header is not required here
-                headers: {
-                    // 'Content-Type': 'multipart/form-data'
-                },
-                credentials: 'include', // Include cookies in the request
-                body: formData,
+                body: form
             });
 
-            const data = await res.json();
-            if (data) {
-                window.alert(`${data.message}`);
-                window.location.reload();
-                setSelectedImage(null);
-            }
-            else window.alert(`${data.error}`);
-        } catch (error) {
-            console.log("Frontend" + error);
-        }
-    };
+            const dataCloudinary = await resCloudinary.json();
 
-    const saveChanges = async () => {
-        if (editName === user.name && editUsername === user.username && editBio === user.bio) {
-            window.alert("Profile updated successfully");
-            navigate('/profile');
-            return;
-        }
-        const res = await fetch('/saveProfile', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include', // Include cookies in the request
-            body: JSON.stringify({
-                editName, editUsername, editBio
-            })
-        });
-        const data = await res.json();
-        if (res.status !== 201 || !data) window.alert(`${data.error}`);
-        else {
-            window.alert(`${data.message}`);
-            navigate('/profile');
-            window.location.reload();
+            if (dataCloudinary) {
+                setImageUrl(dataCloudinary.url);
+                const res = await fetch('/saveProfile', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include', // Include cookies in the request
+                    body: JSON.stringify({
+                        editName, editUsername, editBio, pic:imageUrl
+                    })
+                });
+                const data = await res.json();
+                if (res.status !== 201 || !data) window.alert(`${data.error}`);
+                else {
+                    window.alert(`${data.message}`);
+                    navigate('/profile');
+                    window.location.reload();
+                }
+            }
+        } catch (error) {
+            console.log(error);
         }
     };
 
@@ -140,10 +120,9 @@ function EditProfile() {
 
                 <div className='pt-7 pb-3 flex flex-col items-center space-y-3' onClick={() => { setProfilePicOption(true) }}>
                     <div className='w-[90px] h-[90px] border-2 rounded-full overflow-hidden'>
-                        {user?.profilePicture &&
-                            <img
-                                src={`data:${user?.profilePicture.contentType};base64,${uint8ArrayToBase64(user?.profilePicture.data.data)}`}
-                                alt="" className='w-full h-full rounded-full' />}
+                        <img
+                            src={selectedImage || user?.profilePic}
+                            alt="" className='w-full h-full rounded-full' />
                     </div>
                     <div className='text-blue-500 text-[17px] font-bold'>
                         Edit picture
@@ -153,11 +132,11 @@ function EditProfile() {
                 <div className='p-3 text-start space-y-5'>
                     <div className='flex flex-col'>
                         <label htmlFor='name' className='text-neutral-300'>Name</label>
-                        <input type="text" id='name' value={editName} className='p-1 text-[18px] outline-0 bg-black border-b-2' autoComplete='false' onChange={(e) => {setEditName(e.target.value); setIsEdit(true)}} />
+                        <input type="text" id='name' value={editName} className='p-1 text-[18px] outline-0 bg-black border-b-2' autoComplete='false' onChange={(e) => { setEditName(e.target.value); setIsEdit(true) }} />
                     </div>
                     <div className='flex flex-col'>
                         <label htmlFor='username' className='text-neutral-300'>Username</label>
-                        <input type="text" id='username' value={editUsername} className='p-1 text-[18px] outline-0 bg-black border-b-2' autoComplete='false' onChange={(e) => {setEditUsername(e.target.value); setIsEdit(true)}} />
+                        <input type="text" id='username' value={editUsername} className='p-1 text-[18px] outline-0 bg-black border-b-2' autoComplete='false' onChange={(e) => { setEditUsername(e.target.value); setIsEdit(true) }} />
                     </div>
                     <div className='flex flex-col'>
                         <label htmlFor='bio' className='text-neutral-300'>Bio</label>
@@ -173,7 +152,7 @@ function EditProfile() {
                         <CloseIcon />
                     </div>
                     <div className='space-y-5'>
-                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold' onClick={() => viewProfileImage(`data:${user?.profilePicture.contentType};base64,${uint8ArrayToBase64(user?.profilePicture.data.data)}`)}>Preview Profile pic</div>
+                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold' onClick={() => viewProfileImage(user?.profilePic)}>Preview Profile pic</div>
                         <div className='px-7 py-3 text-sm bg-neutral-800 font-bold'>
                             <label htmlFor="fileInput">Change Profile pic</label>
                             <input type="file" id='fileInput' style={{ display: 'none' }} onChange={handleFileChange} />
@@ -195,16 +174,16 @@ function EditProfile() {
             }
 
             {/* Previewing selected image file */}
-            {selectedImage &&
+            {selectedImagePreview &&
                 <div className='h-[100vh] w-[100%] absolute backdrop-blur-xl flex flex-col items-center justify-center space-y-5'>
                     <div>
                         <img src={selectedImage} alt="" />
                     </div>
                     <div className='p-2 w-[100%] flex justify-between'>
-                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold rounded-lg' onClick={() => setSelectedImage(null)}>
+                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold rounded-lg' onClick={() => { setSelectedImagePreview(null); setSelectedImage(null); }}>
                             Cancel
                         </div>
-                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold rounded-lg' onClick={uploadPic}>
+                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold rounded-lg' onClick={() => { setSelectedImagePreview(null); setIsEdit(true); }}>
                             Confirm
                         </div>
                     </div>

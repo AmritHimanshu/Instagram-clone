@@ -36,16 +36,8 @@ function Home() {
     }
 
     useEffect(() => {
-        getPosts();
+        // getPosts();
     }, [])
-
-    function uint8ArrayToBase64(uint8Array) {
-        let binary = '';
-        uint8Array.forEach((byte) => {
-            binary += String.fromCharCode(byte);
-        });
-        return btoa(binary);
-    }
 
     return (
         <>
@@ -98,12 +90,12 @@ function Home() {
                 </div>
 
                 {/* Post Section */}
-                {allPosts?.map((post, index) => (
-                    <div key={index} className='my-3'>
+                {/* {allPosts?.map((post, index) => ( */}
+                    <div key='index' className='my-3'>
                         <div className='p-3 flex items-center justify-between'>
                             <div className='flex items-center space-x-2'>
-                                <img src={`data:${post.userImage?.contentType};base64,${uint8ArrayToBase64(post.userImage?.data.data)}`} alt="" className='w-[35px] h-[35px] rounded-full' />
-                                <span className='font-bold'>{post.username}</span>
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYscfUBUbqwGd_DHVhG-ZjCOD7MUpxp4uhNe7toUg4ug&s" alt="" className='w-[35px] h-[35px] rounded-full' />
+                                <span className='font-bold'>Shalini_0_</span>
                             </div>
                             <div className='flex items-center space-x-3'>
                                 <div className='py-2 px-3 text-white font-bold bg-neutral-80 border-[1px] rounded-xl'>Follow</div>
@@ -112,7 +104,7 @@ function Home() {
                         </div>
 
                         <div>
-                            <img src={`data:${post.postImage?.contentType};base64,${uint8ArrayToBase64(post.postImage?.data.data)}`} alt="" className='m-auto' />
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYscfUBUbqwGd_DHVhG-ZjCOD7MUpxp4uhNe7toUg4ug&s" alt="" className='m-auto' />
                         </div>
 
                         <div className='p-3 flex items-center justify-between'>
@@ -128,10 +120,10 @@ function Home() {
 
                         <div className='px-3 text-start'>
                             <div>48,185 likes</div>
-                            <div><span className='font-bold'>{post.username}</span> {post.caption}</div>
+                            <div><span className='font-bold'>Vikash</span>Testing the development</div>
                         </div>
                     </div>
-                ))}
+                {/* ))} */}
             </div>
             <Footer />
         </>

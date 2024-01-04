@@ -39,9 +39,10 @@ const userSchema = new mongoose.Schema({
             }
         }
     ],
-    profilePicture: {
-        data: Buffer,
-        contentType: String
+    profilePic: {
+        type: String,
+        required: true,
+        default: 'https://upload.wikimedia.org/wikipedia/commons/6/67/User_Avatar.png'
     },
     bio: {
         type: String,

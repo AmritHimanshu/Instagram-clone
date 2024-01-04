@@ -28,15 +28,6 @@ function Profile() {
         else setStoryStatus(true);
     }
 
-    // Helper function to convert Uint8Array to Base64
-    function uint8ArrayToBase64(uint8Array) {
-        let binary = '';
-        uint8Array.forEach((byte) => {
-            binary += String.fromCharCode(byte);
-        });
-        return btoa(binary);
-    }
-
     const userPost = async () => {
         // https://instagram-clone-1-api.onrender.com
         try {
@@ -81,10 +72,10 @@ function Profile() {
                 <div className='p-5'>
                     <div className='grid grid-rows-1 grid-cols-4 place-items-center'>
                         <div className='w-[90px] h-[90px] border-2 rounded-full overflow-hidden'>
-                            {user?.profilePicture &&
+                            {user?.profilePic &&
                                 <img
-                                    src={`data:${user?.profilePicture.contentType};base64,${uint8ArrayToBase64(user?.profilePicture.data.data)}`}
-                                    alt="" className='w-full h-full rounded-full' onClick={() => setProfilePic(`data:${user?.profilePicture.contentType};base64,${uint8ArrayToBase64(user?.profilePicture.data.data)}`)} />}
+                                src={user?.profilePic}
+                                alt="" className='w-full h-full rounded-full' onClick={() => setProfilePic(user?.profilePic)} />}
                         </div>
                         <div>
                             <div className='font-bold'>{posts?.length}</div>
@@ -143,11 +134,11 @@ function Profile() {
                     </div>
                     {postStatus === 'posts' && <div className='mt-1 grid grid-cols-3 gap-1'>
 
-                        {posts?.map((post, index) => (
-                            <div key={index}>
-                                <img src={`data:${post.postImage.contentType};base64,${uint8ArrayToBase64(post.postImage.data.data)}`} alt="" />
+                        {/* {posts?.map((post, index) => ( */}
+                            <div key="index">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYscfUBUbqwGd_DHVhG-ZjCOD7MUpxp4uhNe7toUg4ug&s" alt="" />
                             </div>
-                        ))}
+                         {/* ))} */}
 
                     </div>}
                 </div>

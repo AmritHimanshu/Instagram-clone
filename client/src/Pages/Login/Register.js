@@ -26,7 +26,8 @@ function Register() {
         if (password !== cpassword) {
             return window.alert("Password and Confirm password not match");
         }
-        const res = await fetch('https://instagram-clone-1-api.onrender.com/register', {
+        // // https://instagram-clone-1-api.onrender.com
+        const res = await fetch('/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
