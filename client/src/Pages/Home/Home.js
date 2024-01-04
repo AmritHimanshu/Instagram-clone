@@ -26,6 +26,7 @@ function Home() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
+                credentials: 'include', // Include cookies in the request
             });
 
             if (res.status !== 200) {

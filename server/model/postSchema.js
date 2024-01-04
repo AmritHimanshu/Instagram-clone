@@ -12,7 +12,7 @@ const postSchema = new mongoose.Schema({
     },
     postedBy: {
         type: ObjectId,
-        ref:"USER"
+        ref: "USER"
     }
 });
 
