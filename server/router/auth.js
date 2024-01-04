@@ -158,7 +158,7 @@ router.post('/uploadPost', authenticate, async (req, res) => {
         const post = new Post({
             caption,
             photo: pic,
-            postedBy: req.userID
+            postedBy: req.rootUser
         });
 
         const postUpload = await post.save();
@@ -186,7 +186,7 @@ router.get('/getUserPost', authenticate, async (req, res) => {
 
 router.get('/getAllPost', async (req, res) => {
     try {
-        const allPost = await Post.find();
+        const allPost = await Post.find().populate("postedBy","_id name");
         res.status(200).send(allPost);
     } catch (error) {
         console.log("GetAllPost" + error);

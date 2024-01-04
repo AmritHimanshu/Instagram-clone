@@ -61,7 +61,6 @@ function Post() {
                     })
                 });
                 const data = await res.json();
-                console.log(data);
                 if (data) {
                     window.alert(`${data.message}`);
                     navigate('/');
