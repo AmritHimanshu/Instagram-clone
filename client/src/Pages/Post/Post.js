@@ -44,8 +44,8 @@ function Post() {
 
             const dataCloudinary = await resCloudinary.json();
 
+            setImageUrl(dataCloudinary.url);
             if (dataCloudinary) {
-                setImageUrl(dataCloudinary.url);
                 const res = await fetch('/uploadPost', {
                     method: "POST",
                     headers: {
@@ -58,10 +58,11 @@ function Post() {
                     })
                 });
                 const data = await res.json();
+                console.log(data);
                 if (data) {
                     window.alert(`${data.message}`);
-                    navigate('/');
-                    window.location.reload();
+                    // navigate('/');
+                    // window.location.reload();
                 }
                 else window.alert(`${data.error}`);
             }

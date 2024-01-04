@@ -164,7 +164,6 @@ router.post('/uploadPost', authenticate, async (req, res) => {
         const postUpload = await post.save();
 
         if (postUpload) {
-            console.log(postUpload)
             return res.status(201).json({ message: "Post uploaded successfully" });
         }
         else {
