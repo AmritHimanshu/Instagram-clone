@@ -14,7 +14,7 @@ import Logo from '../Images/InstagramTextLogo.png';
 
 function Home() {
 
-    const [allPosts, setAllPosts] = useState();
+    const [posts, setPosts] = useState();
 
     const user = useSelector(selectUser);
     const navigate = useNavigate();
@@ -34,7 +34,7 @@ function Home() {
             }
             else {
                 const data = await res.json();
-                setAllPosts(data.reverse());
+                setPosts(data.reverse());
             }
         } catch (error) {
             console.log("getPosts" + error);
@@ -43,7 +43,7 @@ function Home() {
 
     useEffect(() => {
         // if (!user) navigate('/login');
-        // getPosts();
+        getPosts();
     }, [])
 
     return (
@@ -97,12 +97,12 @@ function Home() {
                 </div>
 
                 {/* Post Section */}
-                {/* {allPosts?.map((post, index) => ( */}
-                    <div key='index' className='my-3'>
+                {posts?.map((post, index) => (
+                    <div key={index} className='my-3'>
                         <div className='p-3 flex items-center justify-between'>
                             <div className='flex items-center space-x-2'>
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYscfUBUbqwGd_DHVhG-ZjCOD7MUpxp4uhNe7toUg4ug&s" alt="" className='w-[35px] h-[35px] rounded-full' />
-                                <span className='font-bold'>Shalini_0_</span>
+                                <img src={post.postedBy.profilePic} alt="" className='w-[35px] h-[35px] rounded-full' />
+                                <span className='font-bold'>{post.postedBy.username}</span>
                             </div>
                             <div className='flex items-center space-x-3'>
                                 <div className='py-2 px-3 text-white font-bold bg-neutral-80 border-[1px] rounded-xl'>Follow</div>
@@ -111,7 +111,7 @@ function Home() {
                         </div>
 
                         <div>
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYscfUBUbqwGd_DHVhG-ZjCOD7MUpxp4uhNe7toUg4ug&s" alt="" className='m-auto' />
+                            <img src={post.photo} alt="" className='m-auto' />
                         </div>
 
                         <div className='p-3 flex items-center justify-between'>
@@ -127,10 +127,10 @@ function Home() {
 
                         <div className='px-3 text-start'>
                             <div>48,185 likes</div>
-                            <div><span className='font-bold'>Vikash</span>Testing the development</div>
+                            <div><span className='font-bold mr-2'>Vikash</span>{post.caption}</div>
                         </div>
                     </div>
-                {/* ))} */}
+                ))}
             </div>
             <Footer />
         </>

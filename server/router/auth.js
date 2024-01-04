@@ -186,7 +186,7 @@ router.get('/getUserPost', authenticate, async (req, res) => {
 
 router.get('/getAllPost', async (req, res) => {
     try {
-        const allPost = await Post.find().populate("postedBy","_id name");
+        const allPost = await Post.find().populate("postedBy","_id username profilePic");
         res.status(200).send(allPost);
     } catch (error) {
         console.log("GetAllPost" + error);
