@@ -7,7 +7,6 @@ function Post() {
 
     const [image, setImage] = useState();
     const [caption, setCaption] = useState('');
-    const [imageUrl, setImageUrl] = useState('');
     const [imagePreview, setImagePreview] = useState('');
     const [isEdit, setIsEdit] = useState(false);
 
@@ -44,8 +43,8 @@ function Post() {
 
             const dataCloudinary = await resCloudinary.json();
 
-            setImageUrl(dataCloudinary.url);
-            if (dataCloudinary) {
+            if (dataCloudinary && dataCloudinary.url) {
+                const imageUrl = dataCloudinary.url;
                 const res = await fetch('/uploadPost', {
                     method: "POST",
                     headers: {
@@ -61,8 +60,8 @@ function Post() {
                 console.log(data);
                 if (data) {
                     window.alert(`${data.message}`);
-                    // navigate('/');
-                    // window.location.reload();
+                    navigate('/');
+                    window.location.reload();
                 }
                 else window.alert(`${data.error}`);
             }
