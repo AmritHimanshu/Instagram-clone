@@ -38,8 +38,9 @@ function Profile() {
     }
 
     const userPost = async () => {
+        // https://instagram-clone-1-api.onrender.com
         try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/getUserPost', {
+            const res = await fetch('/getUserPost', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'

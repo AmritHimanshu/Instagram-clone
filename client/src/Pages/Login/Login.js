@@ -19,7 +19,7 @@ function Login() {
 
     const callLogOut = async () => {
         try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/logout', {
+            const res = await fetch('/logout', {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json', // For cookies
@@ -49,7 +49,7 @@ function Login() {
         const { email, password } = user;
         if (!email || !password) return window.alert("Fill all the fields");
 
-        const res = await fetch('https://instagram-clone-1-api.onrender.com/signin', {
+        const res = await fetch('/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

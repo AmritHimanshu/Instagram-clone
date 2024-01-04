@@ -1,14 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const multer = require('multer');
 const authenticate = require('../middleware/authenticate');
 
 const cookieParser = require("cookie-parser");
 router.use(cookieParser());
-
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
 
 const User = require('../model/userSchema');
 const Post = require('../model/postSchema');
@@ -49,8 +45,8 @@ router.post('/signin', async (req, res) => {
 
     try {
         const emailLogin = await User.findOne({ email: email });
-        // const usernameLogin = await User.findOne({ username: email });
-        // const phoneLogin = await User.findOne({ phone: email });
+        const usernameLogin = await User.findOne({ username: email });
+        const phoneLogin = await User.findOne({ phone: email });
 
         if (emailLogin) {
             const isMatch = await bcrypt.compare(password, emailLogin.password);
@@ -72,53 +68,53 @@ router.post('/signin', async (req, res) => {
                 res.status(400).json({ error: "Invalid Credentials" });
             }
         }
-        // else if (usernameLogin) {
-        //     const isMatch = await bcrypt.compare(password, usernameLogin.password);
+        else if (usernameLogin) {
+            const isMatch = await bcrypt.compare(password, usernameLogin.password);
 
-        //     const Token = await usernameLogin.generateAuthToken();
+            const Token = await usernameLogin.generateAuthToken();
 
-        //     res.cookie("jwtoken", Token, {
-        //         expires: new Date(Date.now() + 25892000000),
-        //         httpOnly: true,
-        //         secure: true,  // Mark as secure if using HTTPS
-        //         sameSite: 'None',  // Set SameSite attribute for cross-origin requests
-        //         path: '/',
-        //     });
+            res.cookie("jwtoken", Token, {
+                expires: new Date(Date.now() + 25892000000),
+                httpOnly: true,
+                secure: true,  // Mark as secure if using HTTPS
+                sameSite: 'None',  // Set SameSite attribute for cross-origin requests
+                path: '/',
+            });
 
-        //     if (isMatch) {
-        //         res.status(200).json(usernameLogin);
-        //     }
-        //     else {
-        //         res.status(400).json({ error: "Invalid Credentials" });
-        //     }
-        // }
-        // else if (phoneLogin) {
-        //     const isMatch = await bcrypt.compare(password, phoneLogin.password);
+            if (isMatch) {
+                res.status(200).json(usernameLogin);
+            }
+            else {
+                res.status(400).json({ error: "Invalid Credentials" });
+            }
+        }
+        else if (phoneLogin) {
+            const isMatch = await bcrypt.compare(password, phoneLogin.password);
 
-        //     const Token = await phoneLogin.generateAuthToken();
+            const Token = await phoneLogin.generateAuthToken();
 
-        //     res.cookie("jwtoken", Token, {
-        //         expires: new Date(Date.now() + 25892000000),
-        //         httpOnly: true,
-        //         secure: true,  // Mark as secure if using HTTPS
-        //         sameSite: 'None',  // Set SameSite attribute for cross-origin requests
-        //         path: '/',
-        //     });
+            res.cookie("jwtoken", Token, {
+                expires: new Date(Date.now() + 25892000000),
+                httpOnly: true,
+                secure: true,  // Mark as secure if using HTTPS
+                sameSite: 'None',  // Set SameSite attribute for cross-origin requests
+                path: '/',
+            });
 
-        //     if (isMatch) {
-        //         res.status(200).json(phoneLogin);
-        //     }
-        //     else {
-        //         res.status(400).json({ error: "Invalid Credentials" });
-        //     }
-        // }
+            if (isMatch) {
+                res.status(200).json(phoneLogin);
+            }
+            else {
+                res.status(400).json({ error: "Invalid Credentials" });
+            }
+        }
         else res.status(400).json({ error: "Invalid Credentials" });
     } catch (error) {
         console.log(error);
     }
 })
 
-router.post('/uploadProfilePic', authenticate, upload.single('file'), async (req, res) => {
+router.post('/uploadProfilePic', authenticate, async (req, res) => {
     try {
         req.rootUser.profilePicture = {
             data: req.file.buffer,
@@ -151,44 +147,28 @@ router.post('/saveProfile', authenticate, async (req, res) => {
     }
 })
 
-router.post('/uploadPost', authenticate, upload.single('image'), async (req, res) => {
+router.post('/uploadPost', authenticate, async (req, res) => {
     try {
-        const imageFile = req.file;
-        const postImage = {
-            data: imageFile.buffer,
-            contentType:imageFile.mimetype,
+        const { caption, pic } = req.body;
+        if (!pic) {
+            return res.status(422).json({ error: "Please select photo to upload" });
         }
-        const caption = req.body.caption;
-        const username = req.rootUser.username;
-        const userImage = req.rootUser.profilePicture;
 
-        const post = new Post({ postImage, caption, username, userImage });
+        const post = new Post({
+            caption,
+            photo: pic,
+            postedBy: req.userID
+        });
+
         const postUpload = await post.save();
 
         if (postUpload) {
+            console.log(postUpload)
             return res.status(201).json({ message: "Post uploaded successfully" });
         }
         else {
-            return res.status(500).json({ error: "Post is not uploaded try after sometime" });
+            return res.status(500).json({ error: "Post is not uploaded, try after sometime" });
         }
-
-        // // ---------- Saving Post in the user collection ----------
-
-        // // First way for userSchema
-        // const post = {
-        //     image: {
-        //         data: imageFile.buffer,
-        //         contentType: imageFile.mimetype,
-        //     },
-        //     caption: caption,
-        // };
-        // const userPost = await req.rootUser.addPost(post);
-
-        // // Second way for userSchema
-        // req.rootUser.posts.push(post);
-        // await req.rootUser.save();
-
-        // res.status(201).send({ message: 'Profile picture uploaded successfully' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
@@ -206,11 +186,11 @@ router.get('/getUserPost', authenticate, async (req, res) => {
 
 router.get('/getAllPost', async (req, res) => {
     try {
-    const allPost = await Post.find();
+        const allPost = await Post.find();
         res.status(200).send(allPost);
     } catch (error) {
         console.log("GetAllPost" + error);
-        res.status(500).send({error:error})
+        res.status(500).send({ error: error })
     }
 })
 

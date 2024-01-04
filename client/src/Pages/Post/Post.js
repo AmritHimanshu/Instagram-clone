@@ -7,50 +7,66 @@ function Post() {
 
     const [image, setImage] = useState();
     const [caption, setCaption] = useState('');
-    const [imageFile, setImageFile] = useState();
+    const [imageUrl, setImageUrl] = useState('');
+    const [imagePreview, setImagePreview] = useState('');
     const [isEdit, setIsEdit] = useState(false);
 
     const navigate = useNavigate();
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
-        setImageFile(file);
+        setImage(file);
         if (file) {
             const reader = new FileReader();
 
             reader.readAsDataURL(file);
 
             reader.onload = (e) => {
-                setImage(e.target.result);
+                setImagePreview(e.target.result);
             }
             setIsEdit(true);
         }
     };
 
     const handleUpload = async () => {
-        try {
-            const formData = new FormData();
-            formData.append('image', imageFile);
-            formData.append('caption', caption);
+        // Uploading images to cloudinary
+        const form = new FormData();
+        form.append("file", image);
+        form.append("upload_preset", "instagram-clone");
+        form.append("cloud_name", "himanshu-instagram-clone-cloud");
 
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/uploadPost', {
+        try {
+            // // https://api.cloudinary.com/v1_1/himanshu-instagram-clone-cloud/image/upload
+            const resCloudinary = await fetch("https://api.cloudinary.com/v1_1/himanshu-instagram-clone-cloud/image/upload", {
                 method: 'POST',
-                headers: {
-                    // 'Content-Type': 'multipart/form-data',
-                },
-                credentials: 'include', // Include cookies in the request
-                body: formData,
+                body: form
             });
 
-            const data = await res.json();
-            if (data) {
-                window.alert(`${data.message}`);
-                navigate('/');
-                window.location.reload();
+            const dataCloudinary = await resCloudinary.json();
+
+            if (dataCloudinary) {
+                setImageUrl(dataCloudinary.url);
+                const res = await fetch('/uploadPost', {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include', // Include cookies in the request
+                    body: JSON.stringify({
+                        caption,
+                        pic: imageUrl
+                    })
+                });
+                const data = await res.json();
+                if (data) {
+                    window.alert(`${data.message}`);
+                    navigate('/');
+                    window.location.reload();
+                }
+                else window.alert(`${data.error}`);
             }
-            else window.alert(`${data.error}`);
         } catch (error) {
-            console.error('Error uploading image:', error.message);
+            console.log("Post: ", error);
         }
     }
 
@@ -68,8 +84,8 @@ function Post() {
                 </div>
 
                 <div className='p-3 space-y-10'>
-                    <div className={`w-[100%] min-h-[300px] flex items-center justify-center ${!image && "border-[1px] border-neutral-600"}`}>
-                        {image && <img src={image} alt="" />}
+                    <div className={`w-[100%] min-h-[300px] flex items-center justify-center ${!imagePreview && "border-[1px] border-neutral-600"}`}>
+                        {imagePreview && <img src={imagePreview} alt="" />}
                     </div>
 
                     <div className='px-7 py-3 text-sm bg-neutral-800 font-bold'>
@@ -79,7 +95,7 @@ function Post() {
 
                     <div className='flex flex-col text-start'>
                         <label htmlFor="caption" className="text-neutral-300">Enter caption</label>
-                        <input type="text" id='caption' name='caption' value={caption} className='p-1 text-[18px] outline-0 bg-black border-b-2' autoComplete='false' onChange={(e)=>setCaption(e.target.value)} />
+                        <input type="text" id='caption' name='caption' value={caption} className='p-1 text-[18px] outline-0 bg-black border-b-2 placeholder:text-sm' placeholder='Enter your caption.....' autoComplete='false' onChange={(e) => setCaption(e.target.value)} />
                     </div>
                 </div>
             </div>

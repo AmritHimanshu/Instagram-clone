@@ -39,18 +39,6 @@ const userSchema = new mongoose.Schema({
             }
         }
     ],
-    // posts: [
-    //     {
-    //         image: {
-    //             data: Buffer,
-    //             contentType: String
-    //         },
-    //         caption: {
-    //             type: String,
-    //             required: true,
-    //         }
-    //     }
-    // ],
     profilePicture: {
         data: Buffer,
         contentType: String
@@ -76,17 +64,6 @@ userSchema.methods.generateAuthToken = async function () {
         this.tokens = this.tokens.concat({ token: Token });
         await this.save();
         return Token;
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-// Saving posts by the user
-userSchema.methods.addPost = async function (post) {
-    try {
-        this.posts = this.posts.concat(post);
-        await this.save();
-        return this.posts;
     } catch (error) {
         console.log(error);
     }

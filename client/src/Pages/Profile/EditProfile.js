@@ -76,7 +76,7 @@ function EditProfile() {
             const formData = new FormData();
             formData.append('file', profileImageFile);
 
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/uploadProfilePic', {
+            const res = await fetch('/uploadProfilePic', {
                 method: 'POST',
                 // Header is not required here
                 headers: {
@@ -104,7 +104,7 @@ function EditProfile() {
             navigate('/profile');
             return;
         }
-        const res = await fetch('https://instagram-clone-1-api.onrender.com/saveProfile', {
+        const res = await fetch('/saveProfile', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
