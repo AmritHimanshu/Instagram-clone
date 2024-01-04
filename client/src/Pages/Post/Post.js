@@ -75,8 +75,7 @@ function Post() {
     }
 
     useEffect(() => {
-        if (!user) navigate('/login');
-        console.log(user)
+        // if (!user) navigate('/login');
     }, [])
 
     return (
