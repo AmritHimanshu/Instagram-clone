@@ -177,7 +177,7 @@ router.post('/uploadPost', authenticate, async (req, res) => {
 
 router.get('/getUserPost', authenticate, async (req, res) => {
     try {
-        const userPost = await Post.find({ username: req.rootUser.username });
+        const userPost = await Post.find({ postedBy: req.userID });
         res.status(200).send(userPost);
     } catch (error) {
         console.log("GetUserPost" + error);

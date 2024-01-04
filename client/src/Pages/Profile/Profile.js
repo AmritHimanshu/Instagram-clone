@@ -134,11 +134,11 @@ function Profile() {
                     </div>
                     {postStatus === 'posts' && <div className='mt-1 grid grid-cols-3 gap-1'>
 
-                        {/* {posts?.map((post, index) => ( */}
-                            <div key="index">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYscfUBUbqwGd_DHVhG-ZjCOD7MUpxp4uhNe7toUg4ug&s" alt="" />
+                        {posts?.map((post, index) => (
+                            <div key={index}>
+                            <img src={post.photo} alt="" />
                             </div>
-                         {/* ))} */}
+                         ))}
 
                     </div>}
                 </div>
