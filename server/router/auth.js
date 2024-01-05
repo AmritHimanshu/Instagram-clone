@@ -186,7 +186,7 @@ router.get('/getUserPost', authenticate, async (req, res) => {
 
 router.get('/getAllPost', authenticate, async (req, res) => {
     try {
-        const allPost = await Post.find().populate("postedBy", "_id username profilePic");
+        const allPost = await Post.find().populate("postedBy", "_id username profilePic").populate("comments.postedBy","_id username");
         res.status(200).send(allPost);
     } catch (error) {
         console.log("GetAllPost" + error);
@@ -219,6 +219,26 @@ router.put('/unlike', authenticate, async (req, res) => {
         }).populate("postedBy", "_id username profilePic");
         if (unlike) {
             return res.status(201).json(unlike);
+        }
+    } catch (error) {
+        return res.status(422).json({ error: error });
+    }
+})
+
+router.put('/comment', authenticate, async (req, res) => {
+    try {
+        const { yourComment, postId } = req.body;
+        const comment = {
+            comment: yourComment,
+            postedBy: req.rootUser
+        };
+        const addedComment = await Post.findByIdAndUpdate(postId, {
+            $push: { comments: comment }
+        }, {
+            new: true
+        }).populate("postedBy", "_id username").populate("comments.postedBy", "_id username");
+        if (addedComment) {
+            return res.status(201).json(addedComment);
         }
     } catch (error) {
         return res.status(422).json({ error: error });

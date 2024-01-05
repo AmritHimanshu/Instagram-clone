@@ -16,9 +16,16 @@ import Logo from '../Images/InstagramTextLogo.png';
 function Home() {
 
     const [posts, setPosts] = useState();
+    const [showComment, setShowComment] = useState('');
+    const [yourComment, setYourComment] = useState('');
 
     const user = useSelector(selectUser);
     const navigate = useNavigate();
+
+    const openComment = (index) => {
+        if (showComment !== index) setShowComment(index);
+        else setShowComment('');
+    }
 
     const getPosts = async () => {
         try {
@@ -78,7 +85,7 @@ function Home() {
             }
 
         } catch (error) {
-            console.log("likes ", error);
+            console.log(error);
         }
     }
 
@@ -111,7 +118,39 @@ function Home() {
             }
 
         } catch (error) {
-            console.log("unlike ", error);
+            console.log(error);
+        }
+    }
+
+    const sendComment = async (postId) => {
+        if (!yourComment) return;
+        try {
+            const res = await fetch('https://instagram-clone-1-api.onrender.com/comment', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    yourComment: yourComment,
+                    postId: postId
+                })
+            });
+            const data = await res.json();
+            if (res.status !== 201 || !data) {
+                const error = new Error(res.error);
+                throw error;
+            }
+            else {
+                setYourComment('');
+                const newPost = posts.map((post) => {
+                    if (post._id === data._id) return data;
+                    else return post;
+                })
+                setPosts(newPost);
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -189,13 +228,39 @@ function Home() {
                                 {
                                     post?.likes.includes(user?._id) ? <FavoriteIcon style={{ fontSize: '30px', color: "red" }} onClick={() => { unlikePost(post._id) }} /> : <FavoriteBorderOutlinedIcon style={{ fontSize: '30px' }} onClick={() => { likePost(post._id) }} />
                                 }
-                                <ChatBubbleOutlineOutlinedIcon style={{ fontSize: '30px' }} />
+
+                                <ChatBubbleOutlineOutlinedIcon style={{ fontSize: '30px' }} onClick={() => openComment(index)} />
+
                                 <SendOutlinedIcon style={{ fontSize: '30px' }} />
                             </div>
                             <div>
                                 <BookmarkBorderOutlinedIcon style={{ fontSize: '30px' }} />
                             </div>
                         </div>
+
+                        {showComment === index &&
+                            <div className='text-start mb-2 px-2 py-5 border-neutral-700 border-y-[1px] bg-neutral-800'>
+                                <div className='text-neutral-300'>comments</div>
+                                <div className='py-2'>
+
+                                    {post.comments?.map((comment, index) => (
+                                        <div key={index} className='my-1 flex items-center space-x-2'>
+                                            <div className='font-bold'>{comment.postedBy.username}</div>
+                                            <div>{comment.comment}</div>
+                                        </div>
+                                    ))}
+
+                                </div>
+
+                                <div>
+                                    <form action="" onSubmit={()=>sendComment(post._id)} className='flex items-center justify-between space-x-1'>
+                                        <input type="text" id="yourComment" value={yourComment} className='p-1 text-[16px] w-full outline-0 bg-black border-[1px] border-neutral-600 placeholder:text-[14px] placeholder:text-neutral-500' placeholder='Enter your comment' autoComplete='false' onChange={(e) => setYourComment(e.target.value)} />
+
+                                        <button className='p-1'>Post</button>
+                                    </form>
+                                </div>
+                            </div>
+                        }
 
                         <div className='px-3 text-start'>
                             <div>{post.likes.length} likes</div>
