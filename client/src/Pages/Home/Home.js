@@ -122,7 +122,8 @@ function Home() {
         }
     }
 
-    const sendComment = async (postId) => {
+    const sendComment = async (e, postId) => {
+        e.preventDefault();
         if (!yourComment) return;
         try {
             const res = await fetch('https://instagram-clone-1-api.onrender.com/comment', {
@@ -253,7 +254,7 @@ function Home() {
                                 </div>
 
                                 <div>
-                                    <form action="" onSubmit={()=>sendComment(post._id)} className='flex items-center justify-between space-x-1'>
+                                    <form action="" onSubmit={(e)=>sendComment(e,post._id)} className='flex items-center justify-between space-x-1'>
                                         <input type="text" id="yourComment" value={yourComment} className='p-1 text-[16px] w-full outline-0 bg-black border-[1px] border-neutral-600 placeholder:text-[14px] placeholder:text-neutral-500' placeholder='Enter your comment' autoComplete='false' onChange={(e) => setYourComment(e.target.value)} />
 
                                         <button className='p-1'>Post</button>

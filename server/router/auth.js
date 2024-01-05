@@ -236,7 +236,7 @@ router.put('/comment', authenticate, async (req, res) => {
             $push: { comments: comment }
         }, {
             new: true
-        }).populate("postedBy", "_id username").populate("comments.postedBy", "_id username");
+        }).populate("postedBy", "_id username profilePic").populate("comments.postedBy", "_id username");
         if (addedComment) {
             return res.status(201).json(addedComment);
         }
