@@ -20,6 +20,7 @@ function Home() {
     const [yourComment, setYourComment] = useState('');
 
     const user = useSelector(selectUser);
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -195,7 +196,7 @@ function Home() {
                 dispatch(login(data));
             }
         } catch (error) {
-            console.log("follow ",error);
+            console.log("follow ", error);
         }
     }
 
@@ -259,7 +260,13 @@ function Home() {
                                 <span className='font-bold'>{post.postedBy.username}</span>
                             </div>
                             <div className='flex items-center space-x-3'>
-                                <div className='py-2 px-3 text-white font-bold bg-neutral-80 border-[1px] rounded-xl' onClick={() => follow(post.postedBy._id)}>Follow</div>
+                                <div className='py-2 px-3 text-white font-bold bg-neutral-80 border-[1px] rounded-xl' onClick={() => follow(post.postedBy._id)}>
+
+                                    {
+                                        user?.followings.some(following => (following.following === post.postedBy._id)) ? <div>Unfollow</div> : <div>Follow</div>
+                                    }
+
+                                </div>
                                 <MoreVertOutlinedIcon />
                             </div>
                         </div>

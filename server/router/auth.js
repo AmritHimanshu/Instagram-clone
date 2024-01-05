@@ -235,12 +235,25 @@ router.put('/following', authenticate, async (req, res) => {
             return res.status(400).json({ error: "You can't follow yourself" });
         }
 
-        if (req.rootUser.followings.some(user => user.following._id.equals(req.body.id))) {
-            return res.status(400).json({ error: "You already follow this user" });
-        }
-
         const followingUser = await User.findById(req.body.id);
 
+        // Removing from the following
+        if (req.rootUser.followings.some(user => user.following._id.equals(req.body.id))) {
+
+            const updateUser = await User.findByIdAndUpdate(req.rootUser._id, {
+                $pull: { followings: { following: followingUser } }
+            }, {
+                new: true
+            });
+
+            await User.findByIdAndUpdate(followingUser._id, {
+                $pull: { followers: { follower: req.rootUser } }
+            });
+
+            return res.status(201).json(updateUser);
+        }
+
+        // Adding followings and followers
         if (!followingUser) {
             return res.status(400).json({ error: "User not found" });
         }
