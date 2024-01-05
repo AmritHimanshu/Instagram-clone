@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { ObjectId } = mongoose.Schema.Types;
 
 const userSchema = new mongoose.Schema({
     email: {
@@ -47,6 +48,22 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: true,
     },
+    followers: [
+        {
+            follower: {
+                type: ObjectId,
+                ref: "USER"
+            }
+        }
+    ],
+    followings: [
+        {
+            following: {
+                type: ObjectId,
+                ref: "USER"
+            }
+        }
+    ]
 });
 
 userSchema.pre('save', async function (next) {

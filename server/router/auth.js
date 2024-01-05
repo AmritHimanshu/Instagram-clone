@@ -114,23 +114,6 @@ router.post('/signin', async (req, res) => {
     }
 })
 
-router.post('/uploadProfilePic', authenticate, async (req, res) => {
-    try {
-        req.rootUser.profilePicture = {
-            data: req.file.buffer,
-            contentType: req.file.mimetype,
-        };
-
-        // Save the updated user document
-        await req.rootUser.save();
-
-        res.status(201).send({ message: 'Profile picture uploaded successfully' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-})
-
 router.post('/saveProfile', authenticate, async (req, res) => {
     const { editName, editUsername, editBio, pic } = req.body;
     try {
@@ -186,7 +169,7 @@ router.get('/getUserPost', authenticate, async (req, res) => {
 
 router.get('/getAllPost', authenticate, async (req, res) => {
     try {
-        const allPost = await Post.find().populate("postedBy", "_id username profilePic").populate("comments.postedBy","_id username");
+        const allPost = await Post.find().populate("postedBy", "_id username profilePic").populate("comments.postedBy", "_id username");
         res.status(200).send(allPost);
     } catch (error) {
         console.log("GetAllPost" + error);
@@ -240,6 +223,43 @@ router.put('/comment', authenticate, async (req, res) => {
         if (addedComment) {
             return res.status(201).json(addedComment);
         }
+    } catch (error) {
+        return res.status(422).json({ error: error });
+    }
+})
+
+router.put('/following', authenticate, async (req, res) => {
+    try {
+
+        if (req.rootUser._id.equals(req.body.id)) {
+            return res.status(400).json({ error: "You can't follow yourself" });
+        }
+
+        if (req.rootUser.followings.some(user => user.following._id.equals(req.body.id))) {
+            return res.status(400).json({ error: "You already follow this user" });
+        }
+
+        const followingUser = await User.findById(req.body.id);
+
+        if (!followingUser) {
+            return res.status(400).json({ error: "User not found" });
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(req.rootUser._id, {
+            $push: { followings: { following: followingUser } }
+        }, {
+            new: true
+        });
+
+        await User.findByIdAndUpdate(
+            followingUser._id,
+            { $push: { followers: { follower: req.rootUser } } }
+        );
+
+        if (updatedUser) {
+            res.status(201).json(updatedUser);
+        }
+        else res.status(400).json({ error: "Some error" });
     } catch (error) {
         return res.status(422).json({ error: error });
     }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../features/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { login, selectUser } from '../../features/userSlice';
 import Footer from '../Footer/Footer';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -21,6 +21,7 @@ function Home() {
 
     const user = useSelector(selectUser);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const openComment = (index) => {
         if (showComment !== index) setShowComment(index);
@@ -173,6 +174,31 @@ function Home() {
         }
     }
 
+    const follow = async (id) => {
+        try {
+            const res = await fetch('https://instagram-clone-1-api.onrender.com/following', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    id: id
+                })
+            });
+
+            const data = await res.json();
+            if (res.status !== 201) {
+                console.log(data.error);
+            }
+            else {
+                dispatch(login(data));
+            }
+        } catch (error) {
+            console.log("follow ",error);
+        }
+    }
+
 
     return (
         <>
@@ -233,7 +259,7 @@ function Home() {
                                 <span className='font-bold'>{post.postedBy.username}</span>
                             </div>
                             <div className='flex items-center space-x-3'>
-                                <div className='py-2 px-3 text-white font-bold bg-neutral-80 border-[1px] rounded-xl'>Follow</div>
+                                <div className='py-2 px-3 text-white font-bold bg-neutral-80 border-[1px] rounded-xl' onClick={() => follow(post.postedBy._id)}>Follow</div>
                                 <MoreVertOutlinedIcon />
                             </div>
                         </div>
@@ -272,7 +298,7 @@ function Home() {
                                 </div>
 
                                 <div>
-                                    <form action="" onSubmit={(e)=>sendComment(e,post._id)} className='flex items-center justify-between space-x-1'>
+                                    <form action="" onSubmit={(e) => sendComment(e, post._id)} className='flex items-center justify-between space-x-1'>
                                         <input type="text" id="yourComment" value={yourComment} className='p-1 text-[16px] w-full outline-0 bg-black border-[1px] border-neutral-600 placeholder:text-[14px] placeholder:text-neutral-500' placeholder='Enter your comment' autoComplete='false' onChange={(e) => setYourComment(e.target.value)} />
 
                                         <button className='p-1'>Post</button>
