@@ -27,6 +27,24 @@ function Home() {
         else setShowComment('');
     }
 
+    const getData = async () => {
+        try {
+            const res = await fetch('https://instagram-clone-1-api.onrender.com/getData', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include', // Include cookies in the request
+            });
+
+            if (res.status !== 200) {
+                navigate('/login');
+            }
+        } catch (error) {
+            // console.log(error);
+        }
+    }
+
     const getPosts = async () => {
         try {
             const res = await fetch('https://instagram-clone-1-api.onrender.com/getAllPost', {
@@ -46,12 +64,12 @@ function Home() {
                 setPosts(data.reverse());
             }
         } catch (error) {
-            console.log("getPosts" + error);
+            // console.log("getPosts" + error);
         }
     }
 
     useEffect(() => {
-        // if (!user) navigate('/login');
+        getData();
         getPosts();
     }, [])
 
@@ -85,7 +103,7 @@ function Home() {
             }
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     }
 
@@ -118,7 +136,7 @@ function Home() {
             }
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     }
 
@@ -151,7 +169,7 @@ function Home() {
                 setPosts(newPost);
             }
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     }
 

@@ -28,6 +28,24 @@ function Profile() {
         else setStoryStatus(true);
     }
 
+    const getData = async () => {
+        try {
+            const res = await fetch('https://instagram-clone-1-api.onrender.com/getData', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include', // Include cookies in the request
+            });
+
+            if (res.status !== 200) {
+                navigate('/login');
+            }
+        } catch (error) {
+            // console.log(error);
+        }
+    }
+
     const userPost = async () => {
         // https://instagram-clone-1-api.onrender.com
         try {
@@ -48,7 +66,7 @@ function Profile() {
                 setPosts(data);
             }
         } catch (error) {
-            console.log("UserPost" + error);
+            // console.log("UserPost" + error);
         }
     }
 
@@ -57,7 +75,7 @@ function Profile() {
     }, [user])
 
     useEffect(() => {
-        // if (!user) navigate('/login');
+        getData();
     }, [])
 
     return (
