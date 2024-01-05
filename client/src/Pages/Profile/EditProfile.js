@@ -12,11 +12,9 @@ function EditProfile() {
     const user = useSelector(selectUser);
 
     const [profilePicOption, setProfilePicOption] = useState(false);
-    const [imagePreview, setImagePreview] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
     const [selectedImagePreview, setSelectedImagePreview] = useState(null);
     const [profileImageFile, setProfileImageFile] = useState(null);
-    const [imageUrl, setImageUrl] = useState('');
     const [isEdit, setIsEdit] = useState(false);
 
     const [editName, setEditName] = useState(user?.name || '');
@@ -36,11 +34,6 @@ function EditProfile() {
         }
     }, [user]);
 
-    const viewProfileImage = (imageUrl) => {
-        setProfilePicOption(false);
-        setImagePreview(imageUrl);
-    };
-
     const handleFileChange = (e) => {
         setProfilePicOption(false);
         const file = e.target.files[0];
@@ -53,13 +46,14 @@ function EditProfile() {
     const displaySelectedImage = (file) => {
         const reader = new FileReader();
 
-        reader.onload = (e) => {
-            setSelectedImage(e.target.result);
-            setSelectedImagePreview(e.target.result);
-        };
-
         // Read the selected file as a data URL
         reader.readAsDataURL(file);
+
+        reader.onload = (e) => {
+            setSelectedImagePreview(e.target.result);
+            setSelectedImage(e.target.result);
+        };
+
     };
 
     const saveChanges = async () => {
@@ -69,34 +63,36 @@ function EditProfile() {
         form.append("upload_preset", "instagram-clone");
         form.append("cloud_name", "himanshu-instagram-clone-cloud");
 
+        let imageUrl = user?.profilePic;
+
         try {
             // // https://api.cloudinary.com/v1_1/himanshu-instagram-clone-cloud/image/upload
-            const resCloudinary = await fetch("https://api.cloudinary.com/v1_1/himanshu-instagram-clone-cloud/image/upload", {
-                method: 'POST',
-                body: form
-            });
-
-            const dataCloudinary = await resCloudinary.json();
-
-            if (dataCloudinary) {
-                setImageUrl(dataCloudinary.url);
-                const res = await fetch('https://instagram-clone-1-api.onrender.com/saveProfile', {
+            if (profileImageFile) {
+                const resCloudinary = await fetch("https://api.cloudinary.com/v1_1/himanshu-instagram-clone-cloud/image/upload", {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    credentials: 'include', // Include cookies in the request
-                    body: JSON.stringify({
-                        editName, editUsername, editBio, pic: imageUrl
-                    })
+                    body: form
                 });
-                const data = await res.json();
-                if (res.status !== 201 || !data) window.alert(`${data.error}`);
-                else {
-                    window.alert(`${data.message}`);
-                    navigate('/profile');
-                    window.location.reload();
-                }
+
+                const dataCloudinary = await resCloudinary.json();
+                imageUrl = dataCloudinary.url;
+            }
+
+            const res = await fetch('https://instagram-clone-1-api.onrender.com/saveProfile', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include', // Include cookies in the request
+                body: JSON.stringify({
+                    editName, editUsername, editBio, pic: imageUrl
+                })
+            });
+            const data = await res.json();
+            if (res.status !== 201 || !data) window.alert(`${data.error}`);
+            else {
+                window.alert(`${data.message}`);
+                navigate('/profile');
+                window.location.reload();
             }
         } catch (error) {
             console.log(error);
@@ -156,22 +152,11 @@ function EditProfile() {
                         <CloseIcon />
                     </div>
                     <div className='space-y-5'>
-                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold' onClick={() => viewProfileImage(user?.profilePic)}>Preview Profile pic</div>
                         <div className='px-7 py-3 text-sm bg-neutral-800 font-bold'>
                             <label htmlFor="fileInput">Change Profile pic</label>
                             <input type="file" id='fileInput' style={{ display: 'none' }} onChange={handleFileChange} />
                         </div>
                     </div>
-                </div>
-            </div>
-
-            {/* Previewing profile pic */}
-            <div className={`w-[100%] absolute backdrop-blur-xl flex flex-col items-center justify-center space-y-3 ${imagePreview ? 'h-[100vh] opacity-100' : 'h-0 opacity-0'} duration-300`}>
-                <div className='w-[100%] p-2 text-end' onClick={() => setImagePreview(null)}>
-                    <CloseIcon />
-                </div>
-                <div>
-                    <img src={imagePreview} alt="" />
                 </div>
             </div>
 
