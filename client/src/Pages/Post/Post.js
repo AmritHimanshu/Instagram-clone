@@ -64,7 +64,6 @@ function Post() {
                 if (data) {
                     window.alert(`${data.message}`);
                     navigate('/');
-                    window.location.reload();
                 }
                 else window.alert(`${data.error}`);
             }

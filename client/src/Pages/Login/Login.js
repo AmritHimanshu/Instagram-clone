@@ -29,6 +29,7 @@ function Login() {
             });
 
             const data = await res.json();
+            localStorage.clear();
 
             if (!res.status === 200) {
                 const error = new Error(res.error);
@@ -64,6 +65,8 @@ function Login() {
         if (res.status === 400 || !data) window.alert(`${data.error}`);
         else if (res.status === 422) window.alert(`${data.error}`);
         else {
+            const item = JSON.parse(localStorage.getItem('item'));
+            localStorage.setItem('item', JSON.stringify(data));
             window.alert("Signin successfully");
             navigate('/');
             window.location.reload();
