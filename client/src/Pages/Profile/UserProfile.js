@@ -190,7 +190,7 @@ function UserProfile() {
                     {postStatus === 'posts' && <div className='mt-1 grid grid-cols-3 gap-1'>
 
                         {posts?.map((post, index) => (
-                            <div key={index}>
+                            <div key={index} onClick={() => navigate(`/profile/${userId}/posts`)}>
                                 <img src={post.photo} alt="" />
                             </div>
                         ))}

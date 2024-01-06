@@ -8,6 +8,7 @@ import EditProfile from './Pages/Profile/EditProfile';
 import UserProfile from './Pages/Profile/UserProfile';
 import Post from './Pages/Post/Post';
 import ViewPost from './Pages/Profile/ViewPost';
+import UserViewPost from './Pages/Profile/UserViewPost';
 import Login from './Pages/Login/Login';
 import Register from './Pages/Login/Register';
 import './App.css';
@@ -55,10 +56,11 @@ function App() {
           <Route exact path='/profile' element={<Profile />} />
           <Route exact path='/edit-profile' element={<EditProfile />} />
           <Route exact path='/uploadPost' element={<Post />} />
-          <Route exact path='/viewUserPosts' element={<ViewPost />} />
+          <Route exact path='/viewMyPosts' element={<ViewPost />} />
           <Route exact path='/login' element={<Login />} />
           <Route exact path='/register' element={<Register />} />
           <Route path='/profile/:userId' element={<UserProfile />} />
+          <Route path='/profile/:userId/posts' element={<UserViewPost />} />
           <Route path='*' element={<Login />} />
         </Routes>
       </Router>

@@ -158,25 +158,6 @@ router.post('/uploadPost', authenticate, async (req, res) => {
     }
 })
 
-router.get('/getPost', authenticate, async (req, res) => {
-    try {
-        const userPost = await Post.find({ postedBy: req.userID }).populate("postedBy","_id username profilePic");
-        res.status(200).send(userPost);
-    } catch (error) {
-        console.log("GetPost" + error);
-    }
-})
-
-router.get('/getAllPost', authenticate, async (req, res) => {
-    try {
-        const allPost = await Post.find().populate("postedBy", "_id username profilePic").populate("comments.postedBy", "_id username");
-        res.status(200).send(allPost);
-    } catch (error) {
-        console.log("GetAllPost" + error);
-        res.status(500).send({ error: error })
-    }
-})
-
 // Put is used when we update the data in the schema
 router.put('/like', authenticate, async (req, res) => {
     try {
@@ -294,6 +275,36 @@ router.delete('/delete', authenticate, async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(422).json({ error: "Internal server error" });
+    }
+})
+
+
+router.get('/getPost', authenticate, async (req, res) => {
+    try {
+        const userPost = await Post.find({ postedBy: req.userID }).populate("postedBy", "_id username profilePic");
+        res.status(200).send(userPost);
+    } catch (error) {
+        console.log("GetPost" + error);
+    }
+})
+
+router.get('/getUserPost/:id', authenticate, async (req, res) => {
+    try {
+        const userPost = await Post.find({ postedBy: req.params.id }).populate("postedBy", "_id username profilePic");
+        res.status(200).json(userPost);
+    } catch (error) {
+        console.log(error);
+        res.status(422).json({ error: "Internal server error" });
+    }
+})
+
+router.get('/getAllPost', authenticate, async (req, res) => {
+    try {
+        const allPost = await Post.find().populate("postedBy", "_id username profilePic").populate("comments.postedBy", "_id username");
+        res.status(200).send(allPost);
+    } catch (error) {
+        console.log("GetAllPost" + error);
+        res.status(500).send({ error: error })
     }
 })
 

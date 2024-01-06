@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { login, selectUser } from '../../features/userSlice';
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../features/userSlice';
 import Footer from '../Footer/Footer';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
-import AddIcon from '@mui/icons-material/Add';
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import BookmarkOutlinedIcon from '@mui/icons-material/BookmarkOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
-import Logo from '../Images/InstagramTextLogo.png';
 
-function Home() {
+function UserViewPost() {
 
-    const [posts, setPosts] = useState();
     const [showComment, setShowComment] = useState('');
     const [yourComment, setYourComment] = useState('');
+    const [posts, setPosts] = useState();
 
     const user = useSelector(selectUser);
 
+    const { userId } = useParams();
+
     const navigate = useNavigate();
-    const dispatch = useDispatch();
 
     const openComment = (index) => {
         if (showComment !== index) setShowComment(index);
@@ -30,6 +30,7 @@ function Home() {
     }
 
     const getData = async () => {
+        // https://instagram-clone-1-api.onrender.com
         try {
             const res = await fetch('https://instagram-clone-1-api.onrender.com/getData', {
                 method: 'GET',
@@ -47,9 +48,10 @@ function Home() {
         }
     }
 
-    const getPosts = async () => {
+    const userPost = async () => {
+        // https://instagram-clone-1-api.onrender.com
         try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/getAllPost', {
+            const res = await fetch(`https://instagram-clone-1-api.onrender.com/getUserPost/${userId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -66,15 +68,14 @@ function Home() {
                 setPosts(data.reverse());
             }
         } catch (error) {
-            // console.log("getPosts" + error);
+            // console.log("UserPost" + error);
         }
     }
 
     useEffect(() => {
         getData();
-        getPosts();
+        userPost();
     }, [])
-
 
     const likePost = async (postId) => {
         try {
@@ -175,99 +176,25 @@ function Home() {
         }
     }
 
-    const follow = async (id) => {
-        try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/following', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    id: id
-                })
-            });
-
-            const data = await res.json();
-            if (res.status !== 201) {
-                console.log(data.error);
-            }
-            else {
-                dispatch(login(data));
-            }
-        } catch (error) {
-            console.log("follow ", error);
-        }
-    }
-
 
     return (
         <>
-            {/* Header */}
-            <div className='h-[93vh] max-w-[414px] overflow-y-scroll no-scrollbar'>
-                <div className='p-3 flex items-center justify-between bg-black sticky top-[0px]'>
-                    <div className='w-[35%]'><img src={Logo} alt="" /></div>
-                    <div className='space-x-6'>
-                        <FavoriteBorderOutlinedIcon style={{ fontSize: "30px" }} />
-                        <SendOutlinedIcon style={{ fontSize: "30px" }} />
+            <div className='h-[92vh] bg-black overflow-y-scroll no-scrollbar'>
+                {/* Header */}
+                <div className='p-3 bg-black flex items-center justify-between sticky top-[0px]'>
+                    <div className='text-[19px] font-bold flex items-center'>
+                        <KeyboardBackspaceIcon style={{ fontSize: '35px', marginRight: "10px", cursor: "pointer" }} onClick={() => navigate(`/profile/${userId}`)} />
+                        Posts
                     </div>
                 </div>
 
-                {/* Story Section */}
-                <div className='p-3 w-[100%] overflow-x-scroll no-scrollbar border-b-[1px] border-neutral-700'>
-                    <div className='flex space-x-4 min-w-max'>
-                        <div className='text-center'>
-                            <div className='w-[80px] h-[80px] rounded-full border-[1px] flex items-center justify-center'><AddIcon style={{ fontSize: '40px' }} /></div>
-                            <div className='mt-1'>New</div>
-                        </div>
-
-                        <div className='w-[100px] flex flex-col items-center'>
-                            <div className='w-[80px] h-[80px] rounded-full overflow-hidden'>
-                                <img src="https://www.indiafilings.com/learn/wp-content/uploads/2023/03/Can-a-single-person-own-a-firm-in-India.jpg" alt="" className='w-[80px] h-[80px]' />
-                            </div>
-                            <div className='mt-1 text-[14px]'>shalinikumar231</div>
-                        </div>
-
-                        <div className='w-[100px] flex flex-col items-center'>
-                            <div className='w-[80px] h-[80px] rounded-full overflow-hidden'>
-                                <img src="https://img.freepik.com/free-photo/photo-joyful-dark-skinned-woman-dances-carefree-keeps-fists-raised-looks-positively-aside-dressed-casual-jumper-moves_273609-45244.jpg" alt="" className='w-[80px] h-[80px]' />
-                            </div>
-                            <div className='mt-1 text-[14px]'>mech_queen_</div>
-                        </div>
-
-                        <div className='w-[100px] flex flex-col items-center'>
-                            <div className='w-[80px] h-[80px] rounded-full overflow-hidden'>
-                                <img src="https://i0.wp.com/post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/04/GettyImages-659856561_header-1024x575.jpg?w=1155&h=1528" alt="" className='w-[80px] h-[80px]' />
-                            </div>
-                            <div className='mt-1 text-[14px]'>ezsnippet</div>
-                        </div>
-
-                        <div className='w-[100px] flex flex-col items-center'>
-                            <div className='w-[80px] h-[80px] rounded-full overflow-hidden'>
-                                <img src="https://images.pexels.com/photos/39866/entrepreneur-startup-start-up-man-39866.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="" className='w-[80px] h-[80px]' />
-                            </div>
-                            <div className='mt-1 text-[14px]'>tanii_official</div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Post Section */}
+                {/* Posts section */}
                 {posts?.map((post, index) => (
                     <div key={index} className='my-3'>
                         <div className='p-3 flex items-center justify-between'>
-                            <div className='flex items-center space-x-2' onClick={()=>navigate(`/profile/${post.postedBy._id}`)}>
+                            <div className='flex items-center space-x-2 cursor-pointer'>
                                 <img src={post.postedBy.profilePic} alt="" className='w-[35px] h-[35px] rounded-full' />
                                 <span className='font-bold'>{post.postedBy.username}</span>
-                            </div>
-                            <div className='flex items-center space-x-3'>
-                                <div className='py-2 px-3 text-white font-bold bg-neutral-80 border-[1px] rounded-xl' onClick={() => follow(post.postedBy._id)}>
-
-                                    {
-                                        user?.followings.some(following => (following.following === post.postedBy._id)) ? <div>Unfollow</div> : <div>Follow</div>
-                                    }
-
-                                </div>
-                                <MoreVertOutlinedIcon />
                             </div>
                         </div>
 
@@ -278,10 +205,10 @@ function Home() {
                         <div className='p-3 flex items-center justify-between'>
                             <div className='space-x-5 flex items-center'>
                                 {
-                                    post?.likes.includes(user?._id) ? <FavoriteIcon style={{ fontSize: '30px', color: "red" }} onClick={() => { unlikePost(post._id) }} /> : <FavoriteBorderOutlinedIcon style={{ fontSize: '30px' }} onClick={() => { likePost(post._id) }} />
+                                    post?.likes.includes(user?._id) ? <FavoriteIcon style={{ fontSize: '30px', color: "red", cursor: 'pointer' }} onClick={() => { unlikePost(post._id) }} /> : <FavoriteBorderOutlinedIcon style={{ fontSize: '30px', cursor: 'pointer' }} onClick={() => { likePost(post._id) }} />
                                 }
 
-                                <ChatBubbleOutlineOutlinedIcon style={{ fontSize: '30px' }} onClick={() => openComment(index)} />
+                                <ChatBubbleOutlineOutlinedIcon style={{ fontSize: '30px', cursor: 'pointer' }} onClick={() => openComment(index)} />
 
                                 <SendOutlinedIcon style={{ fontSize: '30px' }} />
                             </div>
@@ -321,9 +248,10 @@ function Home() {
                     </div>
                 ))}
             </div>
+
             <Footer />
         </>
     )
 }
 
-export default Home
+export default UserViewPost
