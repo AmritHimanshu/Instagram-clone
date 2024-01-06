@@ -100,7 +100,7 @@ function Post() {
             <div className='h-[100vh]'>
                 <div className='p-3 text-start flex items-center justify-between'>
                     <div className='text-start flex items-center'>
-                        <KeyboardBackspaceIcon style={{ fontSize: '35px' }} onClick={() => navigate('/profile')} />
+                        <KeyboardBackspaceIcon style={{ fontSize: '35px', cursor: 'pointer' }} onClick={() => navigate('/profile')} />
                         <div className='mx-5 text-[23px] font-bold'>Post</div>
                     </div>
                     <div>
@@ -114,7 +114,7 @@ function Post() {
                     </div>
 
                     <div className='px-7 py-3 text-sm bg-neutral-800 font-bold'>
-                        <label htmlFor="fileInput">Upload photo</label>
+                        <label htmlFor="fileInput" className='cursor-pointer'>Upload photo</label>
                         <input type="file" id='fileInput' style={{ display: 'none' }} onChange={handleFileChange} />
                     </div>
 

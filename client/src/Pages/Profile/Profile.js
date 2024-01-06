@@ -49,7 +49,7 @@ function Profile() {
     const userPost = async () => {
         // https://instagram-clone-1-api.onrender.com
         try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/getUserPost', {
+            const res = await fetch('https://instagram-clone-1-api.onrender.com/getPost', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -72,7 +72,7 @@ function Profile() {
 
     useEffect(() => {
         userPost();
-    }, [user])
+    }, [])
 
     useEffect(() => {
         getData();
@@ -83,10 +83,10 @@ function Profile() {
             <div className='h-[92vh] overflow-x-scroll no-scrollbar'>
                 {/* Profile header */}
                 <div className='p-3 flex items-center justify-between'>
-                    <div className='text-[19px] font-bold flex items-center'>{user?.username} {user && <KeyboardArrowDownIcon />}</div>
+                    <div className='text-[19px] font-bold flex items-center cursor-default'>{user?.username} {user && <KeyboardArrowDownIcon />}</div>
                     <div className='flex items-center space-x-5'>
-                        <div className='w-[30px] h-[30px] border-2 rounded-lg'><AddIcon onClick={() => navigate('/uploadPost')} /></div>
-                        <div><MenuIcon style={{ fontSize: '40px' }} onClick={() => navigate('/login')} /></div>
+                        <div className='w-[30px] h-[30px] border-2 rounded-lg cursor-pointer'><AddIcon onClick={() => navigate('/uploadPost')} /></div>
+                        <div><MenuIcon style={{ fontSize: '40px',cursor:'pointer' }} onClick={() => navigate('/login')} /></div>
                     </div>
                 </div>
 
@@ -157,7 +157,7 @@ function Profile() {
                     {postStatus === 'posts' && <div className='mt-1 grid grid-cols-3 gap-1'>
 
                         {posts?.map((post, index) => (
-                            <div key={index}>
+                            <div key={index} onClick={() => navigate('/viewUserPosts')}>
                                 <img src={post.photo} alt="" />
                             </div>
                         ))}

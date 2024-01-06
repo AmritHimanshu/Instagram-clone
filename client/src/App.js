@@ -7,6 +7,7 @@ import Profile from './Pages/Profile/Profile';
 import EditProfile from './Pages/Profile/EditProfile';
 import UserProfile from './Pages/Profile/UserProfile';
 import Post from './Pages/Post/Post';
+import ViewPost from './Pages/Profile/ViewPost';
 import Login from './Pages/Login/Login';
 import Register from './Pages/Login/Register';
 import './App.css';
@@ -47,13 +48,14 @@ function App() {
   }, [])
 
   return (
-    <div className="App bg-black text-white max-w-[414px] min-h-[100vh] m-auto flex flex-col justify-between relative">
+    <div className="App bg-black text-white max-w-[414px] min-h-[100vh] m-auto flex flex-col justify-between relative cursor-default">
       <Router>
         <Routes>
           <Route exact path='/' element={<Home />} />
           <Route exact path='/profile' element={<Profile />} />
           <Route exact path='/edit-profile' element={<EditProfile />} />
           <Route exact path='/uploadPost' element={<Post />} />
+          <Route exact path='/viewUserPosts' element={<ViewPost />} />
           <Route exact path='/login' element={<Login />} />
           <Route exact path='/register' element={<Register />} />
           <Route path='/profile/:userId' element={<UserProfile />} />

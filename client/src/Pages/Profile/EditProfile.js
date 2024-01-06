@@ -128,7 +128,7 @@ function EditProfile() {
             <div className='h-[100vh]'>
                 <div className='p-3 text-start flex items-center justify-between'>
                     <div className='text-start flex items-center'>
-                        <KeyboardBackspaceIcon style={{ fontSize: '35px' }} onClick={() => navigate('/profile')} />
+                        <KeyboardBackspaceIcon style={{ fontSize: '35px',cursor:'pointer' }} onClick={() => navigate('/profile')} />
                         <div className='mx-5 text-[23px] font-bold'>Edit profile</div>
                     </div>
                     {isEdit && <div onClick={saveChanges}>
@@ -136,7 +136,7 @@ function EditProfile() {
                     </div>}
                 </div>
 
-                <div className='pt-7 pb-3 flex flex-col items-center space-y-3' onClick={() => { setProfilePicOption(true) }}>
+                <div className='pt-7 pb-3 flex flex-col items-center space-y-3 cursor-pointer' onClick={() => { setProfilePicOption(true) }}>
                     <div className='w-[90px] h-[90px] border-2 rounded-full overflow-hidden'>
                         <img
                             src={selectedImage || user?.profilePic}
@@ -167,11 +167,11 @@ function EditProfile() {
             <div className={`w-[100%] backdrop-blur-md absolute bottom-0 ${profilePicOption ? "h-[100vh] opacity-100" : "h-0 opacity-0"} duration-300`}>
                 <div className='h-[20vh] absolute bottom-10 w-[100%] bg-black flex flex-col items-center justify-center'>
                     <div className='w-[100%] p-2 text-end' onClick={() => setProfilePicOption(false)}>
-                        <CloseIcon />
+                        <CloseIcon style={{cursor:'pointer'}} />
                     </div>
                     <div className='space-y-5'>
                         <div className='px-7 py-3 text-sm bg-neutral-800 font-bold'>
-                            <label htmlFor="fileInput">Change Profile pic</label>
+                            <label htmlFor="fileInput" className='cursor-pointer'>Change Profile pic</label>
                             <input type="file" id='fileInput' style={{ display: 'none' }} onChange={handleFileChange} />
                         </div>
                     </div>
@@ -185,10 +185,10 @@ function EditProfile() {
                         <img src={selectedImage} alt="" />
                     </div>
                     <div className='p-2 w-[100%] flex justify-between'>
-                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold rounded-lg' onClick={() => { setSelectedImagePreview(null); setSelectedImage(null); }}>
+                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold rounded-lg cursor-pointer' onClick={() => { setSelectedImagePreview(null); setSelectedImage(null); }}>
                             Cancel
                         </div>
-                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold rounded-lg' onClick={() => { setSelectedImagePreview(null); setIsEdit(true); }}>
+                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold rounded-lg cursor-pointer' onClick={() => { setSelectedImagePreview(null); setIsEdit(true); }}>
                             Confirm
                         </div>
                     </div>

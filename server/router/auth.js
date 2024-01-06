@@ -158,12 +158,12 @@ router.post('/uploadPost', authenticate, async (req, res) => {
     }
 })
 
-router.get('/getUserPost', authenticate, async (req, res) => {
+router.get('/getPost', authenticate, async (req, res) => {
     try {
-        const userPost = await Post.find({ postedBy: req.userID });
+        const userPost = await Post.find({ postedBy: req.userID }).populate("postedBy","_id username profilePic");
         res.status(200).send(userPost);
     } catch (error) {
-        console.log("GetUserPost" + error);
+        console.log("GetPost" + error);
     }
 })
 
@@ -275,6 +275,25 @@ router.put('/following', authenticate, async (req, res) => {
         else res.status(400).json({ error: "Some error" });
     } catch (error) {
         return res.status(422).json({ error: error });
+    }
+})
+
+router.delete('/delete', authenticate, async (req, res) => {
+    try {
+        const post = await Post.findById(req.body.postId);
+        if (!post) {
+            return res.status(404).json({ error: "Post not found" });
+        }
+        if (req.rootUser._id.equals(post.postedBy)) {
+            await post.deleteOne(); // Invoke remove() to delete the post
+            res.status(201).json({ message: "Post deleted successfully" });
+        }
+        else {
+            return res.status(422).json({ error: "You can't delete this post" });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(422).json({ error: "Internal server error" });
     }
 })
 

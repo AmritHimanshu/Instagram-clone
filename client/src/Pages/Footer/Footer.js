@@ -20,7 +20,7 @@ function Footer() {
         <div className='py-3 px-1 flex items-center justify-between border-t-[1px] border-neutral-700'>
             <div><NavLink to="/">{pathname === "/" ? <HomeIcon style={{ fontSize: "40px" }} /> : <HomeOutlinedIcon style={{ fontSize: "40px" }} /> }</NavLink></div>
             <div><SearchOutlinedIcon style={{ fontSize: "40px" }} /></div>
-            <div className='border-2 rounded-lg max-w-min'><AddIcon style={{ fontSize: "30px" }} onClick={() => navigate('/uploadPost')} /></div>
+            <div className='border-2 rounded-lg max-w-min cursor-pointer'><AddIcon style={{ fontSize: "30px" }} onClick={() => navigate('/uploadPost')} /></div>
             <div><SlideshowOutlinedIcon style={{ fontSize: "40px" }} /></div>
             <NavLink to="/profile"><div className={`w-[40px] h-[40px] border-2 rounded-full overflow-hidden ${pathname === "/profile" ? 'border-2' : ''}`}>
                 {user?.profilePic &&
