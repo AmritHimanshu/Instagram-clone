@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { login, selectUser } from '../../features/userSlice';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
@@ -18,8 +20,10 @@ function UserProfile() {
     const [profilePic, setProfilePic] = useState(null);
     const [user, setUser] = useState();
     const [posts, setPosts] = useState();
-
+    
+    const yourData = useSelector(selectUser);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const storyArrow = () => {
         if (storyStatus) setStoryStatus(false);
@@ -74,6 +78,33 @@ function UserProfile() {
         getUserData();
     },[])
 
+    const follow = async (id) => {
+        try {
+            const res = await fetch('https://instagram-clone-1-api.onrender.com/following', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    id: id
+                })
+            });
+
+            const data = await res.json();
+            if (res.status !== 201) {
+                console.log(data.error);
+            }
+            else {
+                dispatch(login(data));
+                getUserData();
+            }
+        } catch (error) {
+            console.log("follow ", error);
+        }
+    }
+
+
     return (
         <>
             <div className='h-[92vh] overflow-x-scroll no-scrollbar'>
@@ -113,10 +144,18 @@ function UserProfile() {
                         <div className='text-[15px] w-[50%]'>{user?.bio}</div>
                     </div>
 
-                    {/* <div className='mt-4 flex items-center justify-evenly'>
-                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold rounded-lg cursor-pointer'>Follow</div>
+                    <div className='mt-4 flex items-center justify-evenly'>
+                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold rounded-lg cursor-pointer' onClick={() => follow(user?._id)}>
+
+                            {
+                                user?.followers.some(follower => (follower.follower === yourData._id)) ? ("Following") : (
+                                    user?.followings.some(following=>(following.following === yourData._id)) ? ("Follow back") : ("Follow")
+                                )
+                            }
+
+                        </div>
                         <div className='px-7 py-3 text-sm bg-neutral-800 font-bold rounded-lg cursor-pointer'>Share profile</div>
-                    </div> */}
+                    </div>
                 </div>
 
                 {/* Story highlights section */}
