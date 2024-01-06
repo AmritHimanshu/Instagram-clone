@@ -278,6 +278,21 @@ router.put('/following', authenticate, async (req, res) => {
     }
 })
 
+router.get('/getUserData/:id', authenticate, async (req, res) => {
+    // console.log(req.params.id)
+    try {
+        const user = await User.findOne({ _id: req.params.id }).select("-password -cpassword -phone -tokens");
+        if (!user) {
+            return res.status(422).json({ error: "user not found" });
+        }
+        const posts = await Post.find({ postedBy: req.params.id });
+        res.status(200).json({ user, posts });
+    } catch (error) {
+        console.log(error);
+        res.status(422).json({ error: 'User not found' });
+    }
+})
+
 router.get('/getData', authenticate, (req, res) => {
     res.status(200).send(req.rootUser);
 });

@@ -255,7 +255,7 @@ function Home() {
                 {posts?.map((post, index) => (
                     <div key={index} className='my-3'>
                         <div className='p-3 flex items-center justify-between'>
-                            <div className='flex items-center space-x-2'>
+                            <div className='flex items-center space-x-2' onClick={()=>navigate(`/profile/${post.postedBy._id}`)}>
                                 <img src={post.postedBy.profilePic} alt="" className='w-[35px] h-[35px] rounded-full' />
                                 <span className='font-bold'>{post.postedBy.username}</span>
                             </div>

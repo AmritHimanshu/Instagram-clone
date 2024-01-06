@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../features/userSlice';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import { useNavigate, useParams } from 'react-router-dom';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import AddIcon from '@mui/icons-material/Add';
-import MenuIcon from '@mui/icons-material/Menu';
 import GridOnIcon from '@mui/icons-material/GridOn';
 import AssignmentIndOutlinedIcon from '@mui/icons-material/AssignmentIndOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import Footer from '../Footer/Footer';
 
-function Profile() {
+function UserProfile() {
+
+    const { userId } = useParams();
 
     const [storyStatus, setStoryStatus] = useState(true);
     const [postStatus, setPostStatus] = useState('posts');
     const [profilePic, setProfilePic] = useState(null);
+    const [user, setUser] = useState();
     const [posts, setPosts] = useState();
-
-    const user = useSelector(selectUser);
 
     const navigate = useNavigate();
 
@@ -46,10 +44,9 @@ function Profile() {
         }
     }
 
-    const userPost = async () => {
-        // https://instagram-clone-1-api.onrender.com
+    const getUserData = async () => {
         try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/getUserPost', {
+            const res = await fetch(`https://instagram-clone-1-api.onrender.com/getUserData/${userId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -57,36 +54,35 @@ function Profile() {
                 credentials: 'include', // Include cookies in the request
             });
 
+            const data = await res.json();
             if (res.status !== 200) {
-                const error = new Error(res.error);
-                throw error;
+                window.alert(`${data.error}`);
+                navigate('/');
             }
             else {
-                const data = await res.json();
-                setPosts(data.reverse());
+                setUser(data.user);
+                setPosts(data.posts.reverse());
             }
+
         } catch (error) {
-            // console.log("UserPost" + error);
+            console.log(error);
         }
     }
 
     useEffect(() => {
-        userPost();
-    }, [user])
-
-    useEffect(() => {
         getData();
-    }, [])
+        getUserData();
+    },[])
 
     return (
         <>
             <div className='h-[92vh] overflow-x-scroll no-scrollbar'>
                 {/* Profile header */}
                 <div className='p-3 flex items-center justify-between'>
-                    <div className='text-[19px] font-bold flex items-center'>{user?.username} {user && <KeyboardArrowDownIcon />}</div>
-                    <div className='flex items-center space-x-5'>
-                        <div className='w-[30px] h-[30px] border-2 rounded-lg'><AddIcon onClick={() => navigate('/uploadPost')} /></div>
-                        <div><MenuIcon style={{ fontSize: '40px' }} onClick={() => navigate('/login')} /></div>
+                    <div className='text-[19px] font-bold flex items-center'>
+                        <KeyboardBackspaceIcon style={{ fontSize: '35px', marginRight: "10px" }} onClick={() => navigate('/')} />
+                        {user?.username}
+                        <KeyboardArrowDownIcon />
                     </div>
                 </div>
 
@@ -94,10 +90,9 @@ function Profile() {
                 <div className='p-5'>
                     <div className='grid grid-rows-1 grid-cols-4 place-items-center'>
                         <div className='w-[90px] h-[90px] border-2 rounded-full overflow-hidden'>
-                            {user?.profilePic &&
-                                <img
-                                    src={user?.profilePic}
-                                    alt="" className='w-full h-full rounded-full' onClick={() => setProfilePic(user?.profilePic)} />}
+                            <img
+                                src={user?.profilePic}
+                                alt="" className='w-full h-full rounded-full' onClick={() => setProfilePic(`${user?.profilePic}`)} />
                         </div>
                         <div>
                             <div className='font-bold'>{posts?.length}</div>
@@ -118,15 +113,14 @@ function Profile() {
                         <div className='text-[15px] w-[50%]'>{user?.bio}</div>
                     </div>
 
-                    <div className='mt-4 flex items-center justify-evenly'>
-                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold rounded-lg cursor-pointer' onClick={() => navigate('/edit-profile')}>Edit profile</div>
+                    {/* <div className='mt-4 flex items-center justify-evenly'>
+                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold rounded-lg cursor-pointer'>Follow</div>
                         <div className='px-7 py-3 text-sm bg-neutral-800 font-bold rounded-lg cursor-pointer'>Share profile</div>
-                        <div className='px-3 py-2 bg-neutral-800 rounded-lg cursor-pointer'><PersonAddIcon /></div>
-                    </div>
+                    </div> */}
                 </div>
 
                 {/* Story highlights section */}
-                <div className='text-start'>
+                <div className='text-start border-neutral-600 border-t-[1px]'>
                     <div className='py-2 px-5 flex justify-between'>
                         <div>
                             <div className='text-[15px] font-bold'>Story highlights</div>
@@ -185,4 +179,4 @@ function Profile() {
     )
 }
 
-export default Profile
+export default UserProfile
