@@ -71,11 +71,8 @@ function Profile() {
     }
 
     useEffect(() => {
-        userPost();
-    }, [])
-
-    useEffect(() => {
         getData();
+        userPost();
     }, [])
 
     return (
