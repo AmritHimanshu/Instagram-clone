@@ -14,6 +14,9 @@ import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutline
 
 function UserViewPost() {
 
+    const BASE_URL = "https://instagram-clone-1-api.onrender.com";
+    // const BASE_URL = "http://localhost:5000";
+
     const [showComment, setShowComment] = useState('');
     const [yourComment, setYourComment] = useState('');
     const [posts, setPosts] = useState();
@@ -32,7 +35,7 @@ function UserViewPost() {
     const getData = async () => {
         // https://instagram-clone-1-api.onrender.com
         try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/getData', {
+            const res = await fetch(`${BASE_URL}/getData`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -51,7 +54,7 @@ function UserViewPost() {
     const userPost = async () => {
         // https://instagram-clone-1-api.onrender.com
         try {
-            const res = await fetch(`https://instagram-clone-1-api.onrender.com/getUserPost/${userId}`, {
+            const res = await fetch(`${BASE_URL}/getUserPost/${userId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -79,7 +82,7 @@ function UserViewPost() {
 
     const likePost = async (postId) => {
         try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/like', {
+            const res = await fetch(`${BASE_URL}/like`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -112,7 +115,7 @@ function UserViewPost() {
 
     const unlikePost = async (postId) => {
         try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/unlike', {
+            const res = await fetch(`${BASE_URL}/unlike`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -147,7 +150,7 @@ function UserViewPost() {
         e.preventDefault();
         if (!yourComment) return;
         try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/comment', {
+            const res = await fetch(`${BASE_URL}/comment`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'

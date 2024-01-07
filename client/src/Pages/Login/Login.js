@@ -5,6 +5,9 @@ import Logo from '../Images/InstagramTextLogo.png'
 
 function Login() {
 
+    const BASE_URL = "https://instagram-clone-1-api.onrender.com";
+    // const BASE_URL = "http://localhost:5000";
+
     const navigate = useNavigate();
 
     const [user, setUser] = useState({
@@ -19,7 +22,7 @@ function Login() {
 
     const callLogOut = async () => {
         try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/logout', {
+            const res = await fetch(`${BASE_URL}/logout`, {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json', // For cookies
@@ -49,7 +52,7 @@ function Login() {
         const { email, password } = user;
         if (!email || !password) return window.alert("Fill all the fields");
 
-        const res = await fetch('https://instagram-clone-1-api.onrender.com/signin', {
+        const res = await fetch(`${BASE_URL}/signin`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -14,6 +14,9 @@ import Footer from '../Footer/Footer';
 
 function Profile() {
 
+    const BASE_URL = "https://instagram-clone-1-api.onrender.com";
+    // const BASE_URL = "http://localhost:5000";
+
     const [storyStatus, setStoryStatus] = useState(true);
     const [postStatus, setPostStatus] = useState('posts');
     const [profilePic, setProfilePic] = useState(null);
@@ -30,7 +33,7 @@ function Profile() {
 
     const getData = async () => {
         try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/getData', {
+            const res = await fetch(`${BASE_URL}/getData`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -49,7 +52,7 @@ function Profile() {
     const userPost = async () => {
         // https://instagram-clone-1-api.onrender.com
         try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/getPost', {
+            const res = await fetch(`${BASE_URL}/getPost`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'

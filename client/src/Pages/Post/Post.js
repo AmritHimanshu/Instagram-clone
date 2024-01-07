@@ -7,6 +7,9 @@ import CheckIcon from '@mui/icons-material/Check';
 
 function Post() {
 
+    const BASE_URL = "https://instagram-clone-1-api.onrender.com";
+    // const BASE_URL = "http://localhost:5000";
+
     const [image, setImage] = useState();
     const [caption, setCaption] = useState('');
     const [imagePreview, setImagePreview] = useState('');
@@ -49,7 +52,7 @@ function Post() {
 
             if (dataCloudinary && dataCloudinary.url) {
                 const imageUrl = dataCloudinary.url;
-                const res = await fetch('https://instagram-clone-1-api.onrender.com/uploadPost', {
+                const res = await fetch(`${BASE_URL}/uploadPost`, {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/json',
@@ -74,7 +77,7 @@ function Post() {
 
     const getData = async () => {
         try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/getData', {
+            const res = await fetch(`${BASE_URL}/getData`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'

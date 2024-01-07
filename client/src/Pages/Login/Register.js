@@ -5,6 +5,9 @@ import Logo from '../Images/InstagramTextLogo.png';
 
 function Register() {
 
+    const BASE_URL = "https://instagram-clone-1-api.onrender.com";
+    // const BASE_URL = "http://localhost:5000";
+
     const navigate = useNavigate();
 
     const [user, setUser] = useState({
@@ -27,7 +30,7 @@ function Register() {
             return window.alert("Password and Confirm password not match");
         }
         // // https://instagram-clone-1-api.onrender.com
-        const res = await fetch('https://instagram-clone-1-api.onrender.com/register', {
+        const res = await fetch(`${BASE_URL}/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

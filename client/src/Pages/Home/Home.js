@@ -15,6 +15,9 @@ import Logo from '../Images/InstagramTextLogo.png';
 
 function Home() {
 
+    const BASE_URL = "https://instagram-clone-1-api.onrender.com";
+    // const BASE_URL = "http://localhost:5000";
+
     const [posts, setPosts] = useState();
     const [showComment, setShowComment] = useState('');
     const [yourComment, setYourComment] = useState('');
@@ -31,7 +34,7 @@ function Home() {
 
     const getData = async () => {
         try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/getData', {
+            const res = await fetch(`${BASE_URL}/getData`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -49,7 +52,7 @@ function Home() {
 
     const getPosts = async () => {
         try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/getAllPost', {
+            const res = await fetch(`${BASE_URL}/getAllPost`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -78,7 +81,7 @@ function Home() {
 
     const likePost = async (postId) => {
         try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/like', {
+            const res = await fetch(`${BASE_URL}/like`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -111,7 +114,7 @@ function Home() {
 
     const unlikePost = async (postId) => {
         try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/unlike', {
+            const res = await fetch(`${BASE_URL}/unlike`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -146,7 +149,7 @@ function Home() {
         e.preventDefault();
         if (!yourComment) return;
         try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/comment', {
+            const res = await fetch(`${BASE_URL}/comment`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -177,7 +180,7 @@ function Home() {
 
     const follow = async (id) => {
         try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/following', {
+            const res = await fetch(`${BASE_URL}/following`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'

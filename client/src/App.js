@@ -17,11 +17,12 @@ function App() {
 
   const dispatch = useDispatch();
 
-  // https://instagram-clone-1-api.onrender.com
+  const BASE_URL = "https://instagram-clone-1-api.onrender.com";
+  // const BASE_URL = "http://localhost:5000";
 
   const getData = async () => {
     try {
-      const res = await fetch('https://instagram-clone-1-api.onrender.com/getData', {
+      const res = await fetch(`${BASE_URL}/getData`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'

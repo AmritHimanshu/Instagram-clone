@@ -8,6 +8,9 @@ import CheckIcon from '@mui/icons-material/Check';
 
 function EditProfile() {
 
+    const BASE_URL = "https://instagram-clone-1-api.onrender.com";
+    // const BASE_URL = "http://localhost:5000";
+
     const navigate = useNavigate();
     const user = useSelector(selectUser);
 
@@ -77,7 +80,7 @@ function EditProfile() {
                 imageUrl = dataCloudinary.url;
             }
 
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/saveProfile', {
+            const res = await fetch(`${BASE_URL}/saveProfile`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -101,7 +104,7 @@ function EditProfile() {
 
     const getData = async () => {
         try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/getData', {
+            const res = await fetch(`${BASE_URL}/getData`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'

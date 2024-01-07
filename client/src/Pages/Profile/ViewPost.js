@@ -14,6 +14,9 @@ import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutline
 
 function ViewPost() {
 
+    const BASE_URL = "https://instagram-clone-1-api.onrender.com";
+    // const BASE_URL = "http://localhost:5000";
+
     const user = useSelector(selectUser);
 
     const [showComment, setShowComment] = useState('');
@@ -30,7 +33,7 @@ function ViewPost() {
     const getData = async () => {
         // https://instagram-clone-1-api.onrender.com
         try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/getData', {
+            const res = await fetch(`${BASE_URL}/getData`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -49,7 +52,7 @@ function ViewPost() {
     const userPost = async () => {
         // https://instagram-clone-1-api.onrender.com
         try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/getPost', {
+            const res = await fetch(`${BASE_URL}/getPost`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -77,7 +80,7 @@ function ViewPost() {
 
     const likePost = async (postId) => {
         try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/like', {
+            const res = await fetch(`${BASE_URL}/like`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -110,7 +113,7 @@ function ViewPost() {
 
     const unlikePost = async (postId) => {
         try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/unlike', {
+            const res = await fetch(`${BASE_URL}/unlike`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -145,7 +148,7 @@ function ViewPost() {
         e.preventDefault();
         if (!yourComment) return;
         try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/comment', {
+            const res = await fetch(`${BASE_URL}/comment`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -176,7 +179,7 @@ function ViewPost() {
 
     const deletePost = async (postId) => {
         try {
-            const res = await fetch('https://instagram-clone-1-api.onrender.com/delete', {
+            const res = await fetch(`${BASE_URL}/delete`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
