@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "./features/userSlice";
 import Home from './Pages/Home/Home';
@@ -16,7 +16,6 @@ import './App.css';
 function App() {
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const BASE_URL = "https://instagram-clone-1-api.onrender.com";
   // const BASE_URL = "http://localhost:5000";
@@ -34,7 +33,6 @@ function App() {
       if (res.status !== 200) {
         const error = new Error(res.error);
         throw error;
-        // navigate('/login');
       }
 
       else {
