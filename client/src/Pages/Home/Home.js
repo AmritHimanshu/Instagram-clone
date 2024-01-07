@@ -15,8 +15,9 @@ import Logo from '../Images/InstagramTextLogo.png';
 
 function Home() {
 
-    const BASE_URL = "https://instagram-clone-1-api.onrender.com";
+    const BASE_URL = "https://instagram-clone-api-six.vercel.app/";
     // const BASE_URL = "http://localhost:5000";
+    // const BASE_URL = "https://instagram-clone-1-api.onrender.com";
 
     const [posts, setPosts] = useState([]);
     const [showComment, setShowComment] = useState('');
