@@ -21,7 +21,6 @@ function Home() {
     const [posts, setPosts] = useState([]);
     const [showComment, setShowComment] = useState('');
     const [yourComment, setYourComment] = useState('');
-    console.log("posts ", posts)
 
     const user = useSelector(selectUser);
 
@@ -69,7 +68,6 @@ function Home() {
             }
             else {
                 const data = await res.json();
-                console.log(data);
                 setPosts((posts) => [...posts, ...data]);
             }
         } catch (error) {
