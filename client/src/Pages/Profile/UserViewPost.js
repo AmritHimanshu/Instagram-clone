@@ -19,7 +19,7 @@ function UserViewPost() {
 
     const [showComment, setShowComment] = useState('');
     const [yourComment, setYourComment] = useState('');
-    const [posts, setPosts] = useState();
+    const [posts, setPosts] = useState([]);
 
     const user = useSelector(selectUser);
 
@@ -68,7 +68,7 @@ function UserViewPost() {
             }
             else {
                 const data = await res.json();
-                setPosts(data.reverse());
+                setPosts((posts) => [...posts, ...data]);
             }
         } catch (error) {
             // console.log("UserPost" + error);

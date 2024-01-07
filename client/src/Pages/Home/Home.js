@@ -18,14 +18,17 @@ function Home() {
     const BASE_URL = "https://instagram-clone-1-api.onrender.com";
     // const BASE_URL = "http://localhost:5000";
 
-    const [posts, setPosts] = useState();
+    const [posts, setPosts] = useState([]);
     const [showComment, setShowComment] = useState('');
     const [yourComment, setYourComment] = useState('');
+    console.log("posts ", posts)
 
     const user = useSelector(selectUser);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    let limit = 2;
+    let skip = 0;
 
     const openComment = (index) => {
         if (showComment !== index) setShowComment(index);
@@ -52,7 +55,7 @@ function Home() {
 
     const getPosts = async () => {
         try {
-            const res = await fetch(`${BASE_URL}/getAllPost`, {
+            const res = await fetch(`${BASE_URL}/getAllPost?limit=${limit}&skip=${skip}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -66,16 +69,29 @@ function Home() {
             }
             else {
                 const data = await res.json();
-                setPosts(data.reverse());
+                console.log(data);
+                setPosts((posts) => [...posts, ...data]);
             }
         } catch (error) {
             // console.log("getPosts" + error);
         }
     }
 
+    const handleScroll = () => {
+        if (document.documentElement.clientHeight + window.pageYOffset >= document.documentElement.scrollHeight) {
+            skip = skip + 2;
+            getPosts();
+        }
+    }
+
     useEffect(() => {
         getData();
         getPosts();
+
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        }
     }, [])
 
 

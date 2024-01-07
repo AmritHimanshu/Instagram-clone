@@ -66,7 +66,7 @@ function Profile() {
             }
             else {
                 const data = await res.json();
-                setPosts(data.reverse());
+                setPosts(data);
             }
         } catch (error) {
             // console.log("UserPost" + error);

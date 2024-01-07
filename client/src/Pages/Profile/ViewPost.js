@@ -21,7 +21,7 @@ function ViewPost() {
 
     const [showComment, setShowComment] = useState('');
     const [yourComment, setYourComment] = useState('');
-    const [posts, setPosts] = useState();
+    const [posts, setPosts] = useState([]);
 
     const navigate = useNavigate();
 
@@ -66,7 +66,7 @@ function ViewPost() {
             }
             else {
                 const data = await res.json();
-                setPosts(data.reverse());
+                setPosts((posts) => [...posts, ...data]);
             }
         } catch (error) {
             // console.log("UserPost" + error);

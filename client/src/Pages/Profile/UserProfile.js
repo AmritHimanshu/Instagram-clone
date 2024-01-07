@@ -68,7 +68,7 @@ function UserProfile() {
             }
             else {
                 setUser(data.user);
-                setPosts(data.posts.reverse());
+                setPosts(data.posts);
             }
 
         } catch (error) {
