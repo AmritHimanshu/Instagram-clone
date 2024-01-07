@@ -27,7 +27,7 @@ function Home() {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    let limit = 2;
+    let limit = 3;
     let skip = 0;
 
     const openComment = (index) => {
@@ -78,7 +78,7 @@ function Home() {
 
     const handleScroll = () => {
         if (document.documentElement.clientHeight + window.pageYOffset >= document.documentElement.scrollHeight) {
-            skip = skip + 2;
+            skip = skip + 3;
             getPosts();
         }
     }
