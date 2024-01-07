@@ -32,8 +32,8 @@ function App() {
       });
 
       if (res.status !== 200) {
-        // const error = new Error(res.error);
-        // throw error;
+        const error = new Error(res.error);
+        throw error;
         // navigate('/login');
       }
 
