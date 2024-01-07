@@ -18,13 +18,15 @@ function ViewPost() {
     // const BASE_URL = "http://localhost:5000";
     // const BASE_URL = "https://instagram-clone-1-api.onrender.com";
 
-    const user = useSelector(selectUser);
-
     const [showComment, setShowComment] = useState('');
     const [yourComment, setYourComment] = useState('');
     const [posts, setPosts] = useState([]);
 
+    const user = useSelector(selectUser);
+
     const navigate = useNavigate();
+    let limit = 5;
+    let skip = 0;
 
     const openComment = (index) => {
         if (showComment !== index) setShowComment(index);
@@ -53,7 +55,7 @@ function ViewPost() {
     const userPost = async () => {
         // https://instagram-clone-1-api.onrender.com
         try {
-            const res = await fetch(`${BASE_URL}/getPost`, {
+            const res = await fetch(`${BASE_URL}/getPost?limit=${limit}&skip=${skip}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -77,7 +79,20 @@ function ViewPost() {
     useEffect(() => {
         getData();
         userPost();
+
+        window.addEventListener("scroll", handleScroll, true);
+        return () => {
+            window.removeEventListener("scroll", handleScroll, true);
+        }
     }, [])
+
+    const handleScroll = () => {
+
+        if (document.documentElement.clientHeight + window.pageYOffset >= document.documentElement.scrollHeight) {
+            skip = skip + 5;
+            userPost();
+        }
+    }
 
     const likePost = async (postId) => {
         try {
@@ -220,7 +235,7 @@ function ViewPost() {
                 {posts?.map((post, index) => (
                     <div key={index} className='my-3'>
                         <div className='p-3 flex items-center justify-between'>
-                            <div className='flex items-center space-x-2 cursor-pointer'>
+                            <div className='flex items-center space-x-2'>
                                 <img src={post.postedBy.profilePic} alt="" className='w-[35px] h-[35px] rounded-full' />
                                 <span className='font-bold'>{post.postedBy.username}</span>
                             </div>

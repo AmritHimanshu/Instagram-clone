@@ -87,7 +87,7 @@ function Profile() {
                     <div className='text-[19px] font-bold flex items-center cursor-default'>{user?.username} {user && <KeyboardArrowDownIcon />}</div>
                     <div className='flex items-center space-x-5'>
                         <div className='w-[30px] h-[30px] border-2 rounded-lg cursor-pointer'><AddIcon onClick={() => navigate('/uploadPost')} /></div>
-                        <div><MenuIcon style={{ fontSize: '40px',cursor:'pointer' }} onClick={() => navigate('/login')} /></div>
+                        <div><MenuIcon style={{ fontSize: '40px', cursor: 'pointer' }} onClick={() => navigate('/login')} /></div>
                     </div>
                 </div>
 
@@ -98,7 +98,7 @@ function Profile() {
                             {user?.profilePic &&
                                 <img
                                     src={user?.profilePic}
-                                    alt="" className='w-full h-full rounded-full' onClick={() => setProfilePic(user?.profilePic)} />}
+                                    alt="" className='w-full h-full rounded-full cursor-pointer' onClick={() => setProfilePic(user?.profilePic)} />}
                         </div>
                         <div>
                             <div className='font-bold'>{posts?.length}</div>
@@ -121,8 +121,8 @@ function Profile() {
 
                     <div className='mt-4 flex items-center justify-evenly'>
                         <div className='px-7 py-3 text-sm bg-neutral-800 font-bold rounded-lg cursor-pointer' onClick={() => navigate('/edit-profile')}>Edit profile</div>
-                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold rounded-lg cursor-pointer'>Share profile</div>
-                        <div className='px-3 py-2 bg-neutral-800 rounded-lg cursor-pointer'><PersonAddIcon /></div>
+                        <div className='px-7 py-3 text-sm bg-neutral-800 font-bold rounded-lg'>Share profile</div>
+                        <div className='px-3 py-2 bg-neutral-800 rounded-lg'><PersonAddIcon /></div>
                     </div>
                 </div>
 
@@ -133,7 +133,7 @@ function Profile() {
                             <div className='text-[15px] font-bold'>Story highlights</div>
                             {storyStatus && <div className='text-[15px]'>Keep your favorite stories on your profile</div>}
                         </div>
-                        {storyStatus ? <div><KeyboardArrowUpIcon onClick={storyArrow} /></div> : <div><KeyboardArrowDownIcon onClick={storyArrow} /></div>}
+                        {storyStatus ? <div><KeyboardArrowUpIcon style={{ cursor: 'pointer' }} onClick={storyArrow} /></div> : <div><KeyboardArrowDownIcon style={{ cursor: 'pointer' }} onClick={storyArrow} /></div>}
                     </div>
                     {storyStatus && <div className='w-[100%] overflow-x-scroll no-scrollbar'>
                         <div className='py-3 px-2 flex space-x-3 min-w-max'>
@@ -152,13 +152,13 @@ function Profile() {
                 {/* Post and reels section */}
                 <div className='mt-5'>
                     <div className='grid grid-rows-1 grid-cols-2'>
-                        <div className={`py-3 ${postStatus === 'posts' && 'border-b-2'}`} onClick={() => setPostStatus('posts')}><GridOnIcon style={{ fontSize: '30px' }} /></div>
-                        <div className={`py-3 ${postStatus === 'reels' && 'border-b-2'}`} onClick={() => setPostStatus('reels')}><AssignmentIndOutlinedIcon style={{ fontSize: '35px' }} /></div>
+                        <div className={`py-3 ${postStatus === 'posts' && 'border-b-2'}`} onClick={() => setPostStatus('posts')}><GridOnIcon style={{ fontSize: '30px', cursor: 'pointer' }} /></div>
+                        <div className={`py-3 ${postStatus === 'reels' && 'border-b-2'}`} onClick={() => setPostStatus('reels')}><AssignmentIndOutlinedIcon style={{ fontSize: '35px', cursor: 'pointer' }} /></div>
                     </div>
                     {postStatus === 'posts' && <div className='mt-1 grid grid-cols-3 gap-1'>
 
                         {posts?.map((post, index) => (
-                            <div key={index} onClick={() => navigate('/viewMyPosts')}>
+                            <div key={index} className='cursor-pointer' onClick={() => navigate('/viewMyPosts')}>
                                 <img src={post.photo} alt="" />
                             </div>
                         ))}
@@ -171,7 +171,7 @@ function Profile() {
             {profilePic &&
                 <div className='h-[92vh] w-[100%] absolute backdrop-blur-xl flex flex-col items-center justify-center space-y-3'>
                     <div className='w-[100%] p-2 text-end' onClick={() => setProfilePic(null)}>
-                        <CloseIcon />
+                        <CloseIcon style={{ cursor: 'pointer' }} />
                     </div>
                     <div>
                         <img src={profilePic} alt="" />

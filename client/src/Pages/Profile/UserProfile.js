@@ -24,7 +24,7 @@ function UserProfile() {
     const [profilePic, setProfilePic] = useState(null);
     const [user, setUser] = useState();
     const [posts, setPosts] = useState();
-    
+
     const yourData = useSelector(selectUser);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -80,7 +80,7 @@ function UserProfile() {
     useEffect(() => {
         getData();
         getUserData();
-    },[])
+    }, [])
 
     const follow = async (id) => {
         try {
@@ -115,7 +115,7 @@ function UserProfile() {
                 {/* Profile header */}
                 <div className='p-3 flex items-center justify-between'>
                     <div className='text-[19px] font-bold flex items-center'>
-                        <KeyboardBackspaceIcon style={{ fontSize: '35px', marginRight: "10px" }} onClick={() => navigate('/')} />
+                        <KeyboardBackspaceIcon style={{ fontSize: '35px', marginRight: "10px", cursor: 'pointer' }} onClick={() => navigate('/')} />
                         {user?.username}
                         <KeyboardArrowDownIcon />
                     </div>
@@ -153,7 +153,7 @@ function UserProfile() {
 
                             {
                                 user?.followers.some(follower => (follower.follower === yourData._id)) ? ("Following") : (
-                                    user?.followings.some(following=>(following.following === yourData._id)) ? ("Follow back") : ("Follow")
+                                    user?.followings.some(following => (following.following === yourData._id)) ? ("Follow back") : ("Follow")
                                 )
                             }
 
@@ -188,13 +188,13 @@ function UserProfile() {
                 {/* Post and reels section */}
                 <div className='mt-5'>
                     <div className='grid grid-rows-1 grid-cols-2'>
-                        <div className={`py-3 ${postStatus === 'posts' && 'border-b-2'}`} onClick={() => setPostStatus('posts')}><GridOnIcon style={{ fontSize: '30px' }} /></div>
-                        <div className={`py-3 ${postStatus === 'reels' && 'border-b-2'}`} onClick={() => setPostStatus('reels')}><AssignmentIndOutlinedIcon style={{ fontSize: '35px' }} /></div>
+                        <div className={`py-3 ${postStatus === 'posts' && 'border-b-2'}`} onClick={() => setPostStatus('posts')}><GridOnIcon style={{ fontSize: '30px', cursor: 'pointer' }} /></div>
+                        <div className={`py-3 ${postStatus === 'reels' && 'border-b-2'}`} onClick={() => setPostStatus('reels')}><AssignmentIndOutlinedIcon style={{ fontSize: '35px', cursor: 'pointer' }} /></div>
                     </div>
                     {postStatus === 'posts' && <div className='mt-1 grid grid-cols-3 gap-1'>
 
                         {posts?.map((post, index) => (
-                            <div key={index} onClick={() => navigate(`/profile/${userId}/posts`)}>
+                            <div key={index} className='cursor-pointer' onClick={() => navigate(`/profile/${userId}/posts`)}>
                                 <img src={post.photo} alt="" />
                             </div>
                         ))}

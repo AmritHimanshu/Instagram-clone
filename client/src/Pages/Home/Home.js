@@ -27,7 +27,7 @@ function Home() {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    let limit = 3;
+    let limit = 5;
     let skip = 0;
 
     const openComment = (index) => {
@@ -76,22 +76,25 @@ function Home() {
         }
     }
 
-    const handleScroll = () => {
-        if (document.documentElement.clientHeight + window.pageYOffset >= document.documentElement.scrollHeight) {
-            skip = skip + 3;
-            getPosts();
-        }
-    }
+
 
     useEffect(() => {
         getData();
         getPosts();
 
-        window.addEventListener("scroll", handleScroll);
+        window.addEventListener("scroll", handleScroll, true);
         return () => {
-            window.removeEventListener("scroll", handleScroll);
+            window.removeEventListener("scroll", handleScroll, true);
         }
     }, [])
+
+    const handleScroll = () => {
+
+        if (document.documentElement.clientHeight + window.pageYOffset >= document.documentElement.scrollHeight) {
+            skip = skip + 5;
+            getPosts();
+        }
+    }
 
 
     const likePost = async (postId) => {
@@ -273,12 +276,12 @@ function Home() {
                 {posts?.map((post, index) => (
                     <div key={index} className='my-3'>
                         <div className='p-3 flex items-center justify-between'>
-                            <div className='flex items-center space-x-2' onClick={()=>navigate(`/profile/${post.postedBy._id}`)}>
+                            <div className='flex items-center space-x-2 cursor-pointer' onClick={() => navigate(`/profile/${post.postedBy._id}`)}>
                                 <img src={post.postedBy.profilePic} alt="" className='w-[35px] h-[35px] rounded-full' />
                                 <span className='font-bold'>{post.postedBy.username}</span>
                             </div>
                             <div className='flex items-center space-x-3'>
-                                <div className='py-2 px-3 text-white font-bold bg-neutral-80 border-[1px] rounded-xl' onClick={() => follow(post.postedBy._id)}>
+                                <div className='py-2 px-3 text-white font-bold bg-neutral-80 border-[1px] rounded-xl cursor-pointer' onClick={() => follow(post.postedBy._id)}>
 
                                     {
                                         user?.followings.some(following => (following.following === post.postedBy._id)) ? <div>Unfollow</div> : <div>Follow</div>
@@ -296,10 +299,10 @@ function Home() {
                         <div className='p-3 flex items-center justify-between'>
                             <div className='space-x-5 flex items-center'>
                                 {
-                                    post?.likes.includes(user?._id) ? <FavoriteIcon style={{ fontSize: '30px', color: "red" }} onClick={() => { unlikePost(post._id) }} /> : <FavoriteBorderOutlinedIcon style={{ fontSize: '30px' }} onClick={() => { likePost(post._id) }} />
+                                    post?.likes.includes(user?._id) ? <FavoriteIcon style={{ fontSize: '30px', color: "red", cursor: 'pointer' }} onClick={() => { unlikePost(post._id) }} /> : <FavoriteBorderOutlinedIcon style={{ fontSize: '30px', cursor: 'pointer' }} onClick={() => { likePost(post._id) }} />
                                 }
 
-                                <ChatBubbleOutlineOutlinedIcon style={{ fontSize: '30px' }} onClick={() => openComment(index)} />
+                                <ChatBubbleOutlineOutlinedIcon style={{ fontSize: '30px', cursor: 'pointer' }} onClick={() => openComment(index)} />
 
                                 <SendOutlinedIcon style={{ fontSize: '30px' }} />
                             </div>

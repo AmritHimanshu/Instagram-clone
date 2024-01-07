@@ -281,7 +281,9 @@ router.delete('/delete', authenticate, async (req, res) => {
 
 router.get('/getPost', authenticate, async (req, res) => {
     try {
-        const userPost = await Post.find({ postedBy: req.userID }).populate("postedBy", "_id username profilePic").sort("-createdAt");
+        let limit = req.query.limit;
+        let skip = req.query.skip;
+        const userPost = await Post.find({ postedBy: req.userID }).populate("postedBy", "_id username profilePic").limit(parseInt(limit)).skip(parseInt(skip)).sort("-createdAt");
         res.status(200).send(userPost);
     } catch (error) {
         console.log("GetPost" + error);
@@ -290,7 +292,9 @@ router.get('/getPost', authenticate, async (req, res) => {
 
 router.get('/getUserPost/:id', authenticate, async (req, res) => {
     try {
-        const userPost = await Post.find({ postedBy: req.params.id }).populate("postedBy", "_id username profilePic").sort("-createdAt");
+        let limit = req.query.limit;
+        let skip = req.query.skip;
+        const userPost = await Post.find({ postedBy: req.params.id }).populate("postedBy", "_id username profilePic").limit(parseInt(limit)).skip(parseInt(skip)).sort("-createdAt");
         res.status(200).json(userPost);
     } catch (error) {
         console.log(error);
