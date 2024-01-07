@@ -14,7 +14,7 @@ import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutline
 
 function UserViewPost() {
 
-    const BASE_URL = "https://instagram-clone-api-six.vercel.app/";
+    const BASE_URL = "https://instagram-clone-api-six.vercel.app";
     // const BASE_URL = "http://localhost:5000";
     // const BASE_URL = "https://instagram-clone-1-api.onrender.com";
 
