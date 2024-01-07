@@ -18,8 +18,8 @@ function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // const BASE_URL = "https://instagram-clone-1-api.onrender.com";
-  const BASE_URL = "http://localhost:5000";
+  const BASE_URL = "https://instagram-clone-1-api.onrender.com";
+  // const BASE_URL = "http://localhost:5000";
 
   const getData = async () => {
     try {
