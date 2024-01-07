@@ -29,7 +29,6 @@ function Login() {
             });
 
             const data = await res.json();
-            localStorage.clear();
 
             if (!res.status === 200) {
                 const error = new Error(res.error);
