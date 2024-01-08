@@ -11,8 +11,8 @@ const PORT = process.env.PORT || 5000;
 require('./db/conn');
 
 app.use(cors({
-    // origin:true,
-    origin:"https://instagram-clone-six-pi.vercel.app",
+    origin:true,
+    // origin:"https://instagram-clone-six-pi.vercel.app",
     credentials: true,  // Enable credentials (cookies)
 }));
 

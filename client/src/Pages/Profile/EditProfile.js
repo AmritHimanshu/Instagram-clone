@@ -135,11 +135,11 @@ function EditProfile() {
             <div className='h-[100vh]'>
                 <div className='p-3 text-start flex items-center justify-between'>
                     <div className='text-start flex items-center'>
-                        <KeyboardBackspaceIcon style={{ fontSize: '35px',cursor:'pointer' }} onClick={() => navigate('/profile')} />
+                        <KeyboardBackspaceIcon style={{ fontSize: '35px', cursor: 'pointer' }} onClick={() => navigate('/profile')} />
                         <div className='mx-5 text-[23px] font-bold'>Edit profile</div>
                     </div>
                     {isEdit && <div onClick={saveChanges}>
-                        <CheckIcon style={{ fontSize: '35px' }} />
+                        <CheckIcon style={{ fontSize: '35px', cursor: 'pointer' }} />
                     </div>}
                 </div>
 
@@ -174,7 +174,7 @@ function EditProfile() {
             <div className={`w-[100%] backdrop-blur-md absolute bottom-0 ${profilePicOption ? "h-[100vh] opacity-100" : "h-0 opacity-0"} duration-300`}>
                 <div className='h-[20vh] absolute bottom-10 w-[100%] bg-black flex flex-col items-center justify-center'>
                     <div className='w-[100%] p-2 text-end' onClick={() => setProfilePicOption(false)}>
-                        <CloseIcon style={{cursor:'pointer'}} />
+                        <CloseIcon style={{ cursor: 'pointer' }} />
                     </div>
                     <div className='space-y-5'>
                         <div className='px-7 py-3 text-sm bg-neutral-800 font-bold'>
