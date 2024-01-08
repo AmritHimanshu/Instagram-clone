@@ -1,4 +1,0 @@
-{
-    "BASE_URL" : "https://instagram-clone-api-six.vercel.app",
-    "IMAGE_BASE_URL" : "https://api.cloudinary.com/v1_1/himanshu-instagram-clone-cloud/image/upload"
-}
