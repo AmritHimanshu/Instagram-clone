@@ -75,7 +75,7 @@ function EditProfile() {
         try {
             // // https://api.cloudinary.com/v1_1/himanshu-instagram-clone-cloud/image/upload
             if (profileImageFile) {
-                const resCloudinary = await fetch("https://api.cloudinary.com/v1_1/himanshu-instagram-clone-cloud/image/upload", {
+                const resCloudinary = await fetch(`${IMAGE_BASE_URL}`, {
                     method: 'POST',
                     body: form
                 });
