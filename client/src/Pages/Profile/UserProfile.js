@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, selectUser } from '../../features/userSlice';
+import Config from "../../config.json";
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
@@ -13,9 +14,9 @@ import Footer from '../Footer/Footer';
 
 function UserProfile() {
 
-    const BASE_URL = "https://instagram-clone-api-six.vercel.app";
+    const BASE_URL = Config.BASE_URL;
+
     // const BASE_URL = "http://localhost:5000";
-    // const BASE_URL = "https://instagram-clone-1-api.onrender.com";
 
     const { userId } = useParams();
 

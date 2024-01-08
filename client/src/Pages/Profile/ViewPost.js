@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
+import Config from "../../config.json";
 import Footer from '../Footer/Footer';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
@@ -14,9 +15,9 @@ import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutline
 
 function ViewPost() {
 
-    const BASE_URL = "https://instagram-clone-api-six.vercel.app";
+    const BASE_URL = Config.BASE_URL;
+
     // const BASE_URL = "http://localhost:5000";
-    // const BASE_URL = "https://instagram-clone-1-api.onrender.com";
 
     const [showComment, setShowComment] = useState('');
     const [yourComment, setYourComment] = useState('');

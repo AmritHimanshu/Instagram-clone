@@ -2,15 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
+import Config from "../../config.json";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 
 function EditProfile() {
 
-    const BASE_URL = "https://instagram-clone-api-six.vercel.app";
+    const IMAGE_BASE_URL = Config.IMAGE_BASE_URL;
+
+    const BASE_URL = Config.BASE_URL;
+
     // const BASE_URL = "http://localhost:5000";
-    // const BASE_URL = "https://instagram-clone-1-api.onrender.com";
 
     const navigate = useNavigate();
     const user = useSelector(selectUser);

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, selectUser } from '../../features/userSlice';
+import Config from "../../config.json";
 import Footer from '../Footer/Footer';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -15,9 +16,9 @@ import Logo from '../Images/InstagramTextLogo.png';
 
 function Home() {
 
-    const BASE_URL = "https://instagram-clone-api-six.vercel.app";
+    const BASE_URL = Config.BASE_URL;
+
     // const BASE_URL = "http://localhost:5000";
-    // const BASE_URL = "https://instagram-clone-1-api.onrender.com";
 
     const [posts, setPosts] = useState([]);
     const [showComment, setShowComment] = useState('');

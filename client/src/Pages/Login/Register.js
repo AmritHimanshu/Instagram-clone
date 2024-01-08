@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Config from "../../config.json";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Logo from '../Images/InstagramTextLogo.png';
 
 function Register() {
 
-    const BASE_URL = "https://instagram-clone-api-six.vercel.app";
+    const BASE_URL = Config.BASE_URL;
+
     // const BASE_URL = "http://localhost:5000";
-    // const BASE_URL = "https://instagram-clone-1-api.onrender.com";
 
     const navigate = useNavigate();
 
