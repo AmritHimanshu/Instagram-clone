@@ -294,7 +294,7 @@ function Home() {
                         </div>
 
                         <div>
-                            <img src={post.photo} alt="" className='m-auto' />
+                            <img src={post.photo} alt="" className='m-auto object-contain aspect-square' />
                         </div>
 
                         <div className='p-3 flex items-center justify-between'>

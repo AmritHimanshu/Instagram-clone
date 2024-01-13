@@ -99,7 +99,7 @@ function Profile() {
                             {user?.profilePic &&
                                 <img
                                     src={user?.profilePic}
-                                    alt="" className='w-full h-full rounded-full cursor-pointer' onClick={() => setProfilePic(user?.profilePic)} />}
+                                alt="" className='object-contain aspect-square rounded-full cursor-pointer' onClick={() => setProfilePic(user?.profilePic)} />}
                         </div>
                         <div>
                             <div className='font-bold'>{posts?.length}</div>
@@ -160,7 +160,7 @@ function Profile() {
 
                         {posts?.map((post, index) => (
                             <div key={index} className='cursor-pointer' onClick={() => navigate('/viewMyPosts')}>
-                                <img src={post.photo} alt="" />
+                                <img src={post.photo} alt="" className='object-contain aspect-square' />
                             </div>
                         ))}
 
