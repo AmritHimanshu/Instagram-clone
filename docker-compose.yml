@@ -20,6 +20,6 @@ services:
       - "5000:5000"
     volumes:
       - ./server:/Instagram-clone/server
-    environment:
-      - DATABASE=${DATABASE}  # Load the MongoDB connection string from .env
-      - PORT=${PORT}
+    # environment:
+    #   - DATABASE=${DATABASE}  # Load the MongoDB connection string from .env
+    #   - PORT=${PORT}
