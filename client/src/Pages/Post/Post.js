@@ -2,17 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
-import Config from "../../config.json";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import CheckIcon from '@mui/icons-material/Check';
 
 function Post() {
 
-    const IMAGE_BASE_URL = Config.IMAGE_BASE_URL;
+    const IMAGE_BASE_URL = process.env.REACT_APP_IMAGE_BASE_URL;
     
-    const BASE_URL = Config.BASE_URL;
-
-    // const BASE_URL = "http://localhost:5000";
+    const BASE_URL = process.env.REACT_APP_BASE_URL;
 
     const [image, setImage] = useState();
     const [caption, setCaption] = useState('');
@@ -46,7 +43,6 @@ function Post() {
         form.append("cloud_name", "himanshu-instagram-clone-cloud");
 
         try {
-            // // https://api.cloudinary.com/v1_1/himanshu-instagram-clone-cloud/image/upload
             const resCloudinary = await fetch(`${IMAGE_BASE_URL}`, {
                 method: 'POST',
                 body: form

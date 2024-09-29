@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Config from "../../config.json";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Logo from '../Images/InstagramTextLogo.png';
 
 function Register() {
 
-    const BASE_URL = Config.BASE_URL;
-
-    // const BASE_URL = "http://localhost:5000";
+    const BASE_URL = process.env.REACT_APP_BASE_URL;
 
     const navigate = useNavigate();
 
@@ -31,7 +28,6 @@ function Register() {
         if (password !== cpassword) {
             return window.alert("Password and Confirm password not match");
         }
-        // // https://instagram-clone-1-api.onrender.com
         const res = await fetch(`${BASE_URL}/register`, {
             method: 'POST',
             headers: {

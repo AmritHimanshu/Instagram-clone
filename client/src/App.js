@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "./features/userSlice";
-import Config from "./config.json";
 import Home from './Pages/Home/Home';
 import Profile from './Pages/Profile/Profile';
 import EditProfile from './Pages/Profile/EditProfile';
@@ -16,9 +15,7 @@ import './App.css';
 
 function App() {
 
-  const BASE_URL = Config.BASE_URL;
-
-  // const BASE_URL = "http://localhost:5000";
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   const dispatch = useDispatch();
 

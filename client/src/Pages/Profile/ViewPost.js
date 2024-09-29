@@ -2,22 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
-import Config from "../../config.json";
 import Footer from '../Footer/Footer';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
-import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import BookmarkOutlinedIcon from '@mui/icons-material/BookmarkOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 
 function ViewPost() {
 
-    const BASE_URL = Config.BASE_URL;
-
-    // const BASE_URL = "http://localhost:5000";
+    const BASE_URL = process.env.REACT_APP_BASE_URL;
 
     const [showComment, setShowComment] = useState('');
     const [yourComment, setYourComment] = useState('');
@@ -35,7 +30,6 @@ function ViewPost() {
     }
 
     const getData = async () => {
-        // https://instagram-clone-1-api.onrender.com
         try {
             const res = await fetch(`${BASE_URL}/getData`, {
                 method: 'GET',
@@ -54,7 +48,6 @@ function ViewPost() {
     }
 
     const userPost = async () => {
-        // https://instagram-clone-1-api.onrender.com
         try {
             const res = await fetch(`${BASE_URL}/getPost?limit=${limit}&skip=${skip}`, {
                 method: 'GET',
