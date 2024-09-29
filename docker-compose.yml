@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  client:
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/Instagram-clone/client
+    depends_on:
+      - server
+
+  server:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./server:/Instagram-clone/server
+    environment:
+      - DATABASE=${DATABASE}  # Load the MongoDB connection string from .env
+      - PORT=${PORT}
