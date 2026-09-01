@@ -26,7 +26,7 @@ function App() {
         headers: {
           'Content-Type': 'application/json'
         },
-        credentials: 'include', // Include cookies in the request
+        credentials: 'include',
       });
 
       if (res.status !== 200) {
