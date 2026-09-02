@@ -16,7 +16,7 @@ function Post() {
     const [imagePreview, setImagePreview] = useState('');
     const [isEdit, setIsEdit] = useState(false);
 
-    const user = useSelector(selectUser);
+    // const user = useSelector(selectUser);
 
     const navigate = useNavigate();
 
