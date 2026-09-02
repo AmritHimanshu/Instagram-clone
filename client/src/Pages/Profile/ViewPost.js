@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
@@ -29,7 +29,7 @@ function ViewPost() {
         else setShowComment('');
     }
 
-    const getData = async () => {
+    const getData = useCallback(async () => {
         try {
             const res = await fetch(`${BASE_URL}/getData`, {
                 method: 'GET',
@@ -45,9 +45,9 @@ function ViewPost() {
         } catch (error) {
             // console.log(error);
         }
-    }
+    }, [])
 
-    const userPost = async () => {
+    const userPost = useCallback(async () => {
         try {
             const res = await fetch(`${BASE_URL}/getPost?limit=${limit}&skip=${skip}`, {
                 method: 'GET',
@@ -68,7 +68,7 @@ function ViewPost() {
         } catch (error) {
             // console.log("UserPost" + error);
         }
-    }
+    }, [])
 
     useEffect(() => {
         getData();
@@ -78,15 +78,15 @@ function ViewPost() {
         return () => {
             window.removeEventListener("scroll", handleScroll, true);
         }
-    }, [])
+    }, [getData, userPost, handleScroll])
 
-    const handleScroll = () => {
+    const handleScroll = useCallback(() => {
 
         if (document.documentElement.clientHeight + window.pageYOffset >= document.documentElement.scrollHeight) {
             skip = skip + 5;
             userPost();
         }
-    }
+    }, [])
 
     const likePost = async (postId) => {
         try {
