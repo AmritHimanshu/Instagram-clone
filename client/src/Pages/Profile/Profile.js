@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
@@ -30,7 +30,7 @@ function Profile() {
         else setStoryStatus(true);
     }
 
-    const getData = async () => {
+    const getData = useCallback(async () => {
         try {
             const res = await fetch(`${BASE_URL}/getData`, {
                 method: 'GET',
@@ -46,9 +46,9 @@ function Profile() {
         } catch (error) {
             // console.log(error);
         }
-    }
+    }, [])
 
-    const userPost = async () => {
+    const userPost = useCallback(async () => {
         try {
             const res = await fetch(`${BASE_URL}/getPost`, {
                 method: 'GET',
@@ -69,12 +69,12 @@ function Profile() {
         } catch (error) {
             // console.log("UserPost" + error);
         }
-    }
+    }, [])
 
     useEffect(() => {
         getData();
         userPost();
-    }, [])
+    }, [getData, userPost])
 
     return (
         <>
